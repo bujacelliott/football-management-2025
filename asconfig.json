@@ -1,0 +1,21 @@
+{
+	"config": "air",
+	"compilerOptions": {
+		"source-path": [
+			"src"
+		],
+		"library-path": [
+			"libs"
+		],
+		"output": "bin/UFM.swf",
+		"default-background-color": "#808080",
+		"default-frame-rate": 30,
+		"default-size": {
+			"width": 800,
+			"height": 800
+		},
+		"swf-version": 11
+	},
+	"application": "src/UFM-app.xml",
+	"mainClass": "Preloader"
+}
