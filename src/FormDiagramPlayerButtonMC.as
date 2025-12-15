@@ -1,0 +1,28 @@
+package
+{
+   import flash.display.MovieClip;
+   import flash.text.TextField;
+   
+   [Embed(source="/_assets/assets.swf", symbol="symbol427")]
+   public dynamic class FormDiagramPlayerButtonMC extends MovieClip
+   {
+      
+      public var tf:TextField;
+      
+      public var bg:MovieClip;
+      
+      public var light:MovieClip;
+      
+      public function FormDiagramPlayerButtonMC()
+      {
+         super();
+         addFrameScript(0,this.frame1);
+      }
+      
+      internal function frame1() : *
+      {
+         stop();
+      }
+   }
+}
+

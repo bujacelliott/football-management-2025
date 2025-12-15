@@ -1,0 +1,8 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	worktree = /Users/u5599074/Documents/UFM
+	ignorecase = true
+	precomposeunicode = true
