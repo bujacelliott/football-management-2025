@@ -133,7 +133,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
       
       private function clickPaginButton(param1:MouseEvent) : void
       {
-         var _loc2_:int = int(this.pagingButtons.indexOf(param1.currentTarget));
+         var _loc2_:int = int(this.pagingButtons.indexOf(param1.currentTarget as ChumpButton));
          dispatchEvent(new IntEvent(GOTO_PAGE,_loc2_ + this.offset));
       }
    }

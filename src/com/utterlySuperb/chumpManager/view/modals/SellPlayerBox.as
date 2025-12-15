@@ -72,7 +72,7 @@ package com.utterlySuperb.chumpManager.view.modals
       
       private function acceptOfferHandler(param1:Event) : void
       {
-         var _loc2_:Club = this.buyClubs[this.acceptButtons.indexOf(param1.target)];
+         var _loc2_:Club = this.buyClubs[this.acceptButtons.indexOf(param1.target as ChumpButton)];
          Main.currentGame.clubCash += TransfersEngine.getPlayerOffer(_loc2_,this.player);
          TransfersEngine.transferPlayer(this.player,_loc2_,Main.currentGame.playerClub);
          this.makeChoiceHandler(null);

@@ -6,6 +6,7 @@ package com.utterlySuperb.chumpManager.view.screens
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.view.ui.buttons.LoadGameButton;
    import com.utterlySuperb.text.TextHelper;
+   import com.utterlySuperb.ui.buttons.TextButton;
    import flash.events.Event;
    import flash.text.TextField;
    
@@ -43,10 +44,10 @@ package com.utterlySuperb.chumpManager.view.screens
       
       override protected function clickButtonHandler(param1:Event) : void
       {
-         if(SavesManager.games[buttons.indexOf(param1.target)])
+         if(SavesManager.games[buttons.indexOf(param1.target as TextButton)])
          {
             GameEngine.makeGame();
-            Main.currentGame = SavesManager.games[buttons.indexOf(param1.target)];
+            Main.currentGame = SavesManager.games[buttons.indexOf(param1.target as TextButton)];
             SavesManager.loadCurrentGame();
             Main.instance.showScreen(Screen.MAIN_SCREEN);
             TeamHelper.updateTeams();

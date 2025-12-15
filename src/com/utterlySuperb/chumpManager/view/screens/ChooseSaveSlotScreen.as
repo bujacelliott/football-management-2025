@@ -10,6 +10,7 @@ package com.utterlySuperb.chumpManager.view.screens
    import com.utterlySuperb.events.IntEvent;
    import com.utterlySuperb.text.TextHelper;
    import com.utterlySuperb.ui.ModalDialogue;
+   import com.utterlySuperb.ui.buttons.TextButton;
    import flash.events.Event;
    import flash.text.TextField;
    
@@ -52,7 +53,7 @@ package com.utterlySuperb.chumpManager.view.screens
       override protected function clickButtonHandler(param1:Event) : void
       {
          var _loc2_:ModalDialogue = null;
-         this.selectedSlot = buttons.indexOf(param1.target);
+         this.selectedSlot = buttons.indexOf(param1.target as TextButton);
          if(SavesManager.games[this.selectedSlot])
          {
             _loc2_ = new ModalDialogue(CopyManager.getCopy("areYouSure"),CopyManager.getCopy("overwriteSave"),[CopyManager.getCopy("ok"),CopyManager.getCopy("cancel")]);

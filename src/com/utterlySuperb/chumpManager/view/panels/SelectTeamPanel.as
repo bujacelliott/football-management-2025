@@ -177,7 +177,7 @@ package com.utterlySuperb.chumpManager.view.panels
       
       private function overTeamHandler(param1:Event) : void
       {
-         var _loc2_:int = int(this.teamButtons.indexOf(param1.target));
+         var _loc2_:int = int(this.teamButtons.indexOf(param1.target as TeamButton));
          var _loc3_:Club = TeamButton(param1.target).club;
          var _loc4_:* = this.makeTextBig(_loc3_.name,22) + "<br>";
          _loc4_ = _loc4_ + (CopyManager.getCopy("clubProfile") + this.makeTextBig(_loc3_.profile.toString()) + "<br>");
