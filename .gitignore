@@ -1,4 +1,23 @@
+# Build output
 bin/
-tools/
+
+# macOS
 .DS_Store
-*.sol
+
+# IDE
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# ActionScript/Flash
+*.swc
+*.cache
+
+# Logs
+*.log
+
+# Claude
+.claude/plans/
