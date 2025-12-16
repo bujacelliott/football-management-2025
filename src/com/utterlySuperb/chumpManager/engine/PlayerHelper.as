@@ -127,8 +127,8 @@ package com.utterlySuperb.chumpManager.engine
          {
             _loc2_.progressType = param1.@progressType;
          }
-         var _loc4_:int = 30;
-         if(!isNaN(param1.@ageImprovement) && int(param1.@ageImprovement) > 0)
+         var _loc4_:int = 0;
+         if(!isNaN(param1.@ageImprovement) && String(param1.@ageImprovement).length > 0)
          {
             _loc4_ = int(param1.@ageImprovement);
          }
@@ -359,7 +359,7 @@ package com.utterlySuperb.chumpManager.engine
          var _loc11_:int = 0;
          var _loc2_:Game = Main.currentGame;
          var _loc3_:Date = _loc2_.currentDate;
-         _loc2_.currentDate = new Date(2010,7,11);
+         _loc2_.currentDate = new Date(2025,7,11);
          var _loc4_:Array = new Array();
          var _loc5_:Number = average(param1.minStats);
          var _loc6_:Number = average(param1.statClimb);
@@ -831,4 +831,3 @@ package com.utterlySuperb.chumpManager.engine
       }
    }
 }
-
