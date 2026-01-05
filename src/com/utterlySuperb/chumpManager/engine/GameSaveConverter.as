@@ -31,6 +31,7 @@ package com.utterlySuperb.chumpManager.engine
          _loc2_.clubsOb = {};
          _loc2_.version = param1.version;
          _loc2_.slotNumber = param1.slotNumber;
+         _loc2_.mainLeagueNum = param1.mainLeagueNum;
          _loc2_.firstWeekend = param1.firstWeekend;
          _loc2_.currentDate = param1.currentDate;
          _loc2_.savedPlayers = {"playersList":[]};
@@ -359,6 +360,14 @@ package com.utterlySuperb.chumpManager.engine
          _loc5_ = new Game();
          _loc5_.version = param1.version;
          _loc5_.slotNumber = param1.slotNumber;
+         if("mainLeagueNum" in param1)
+         {
+            _loc5_.mainLeagueNum = param1.mainLeagueNum;
+         }
+         else
+         {
+            _loc5_.mainLeagueNum = 0;
+         }
          _loc5_.firstWeekend = param1.firstWeekend;
          _loc5_.currentDate = param1.currentDate;
          _loc6_ = 0;

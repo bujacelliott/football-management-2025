@@ -4,8 +4,8 @@ package
    import flash.events.Event;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
+   import flash.media.SoundMixer;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol122")]
    public class MouseBreakerSplash extends MovieClip
    {
       
@@ -20,6 +20,8 @@ package
       private var bgColour:Number;
       
       public var mc:MovieClip;
+      
+      private var stopSoundLoop:Boolean = false;
       
       public function MouseBreakerSplash(param1:Number = 13056, param2:int = 0)
       {
@@ -37,9 +39,10 @@ package
          graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
          mc = new mb_intro();
          addChild(mc);
-         mc.x = stage.stageWidth / 2;
-         mc.y = stage.stageHeight / 2;
+         mc.x = 0;
+         mc.y = 0;
          mc.addEventListener(Event.COMPLETE,finishAnimationHandler);
+         addEventListener(Event.ENTER_FRAME,this.silenceLoop);
          if(stayTime > 0)
          {
             doneTimer = false;
@@ -55,6 +58,8 @@ package
          doneTimer = true;
          if(doneAnimation)
          {
+            SoundMixer.stopAll();
+            this.stopSoundLoop = true;
             dispatchEvent(new Event(FINISH_SPLASH));
          }
       }
@@ -65,8 +70,20 @@ package
          doneAnimation = true;
          if(doneTimer)
          {
+            SoundMixer.stopAll();
+            this.stopSoundLoop = true;
             dispatchEvent(new Event(FINISH_SPLASH));
          }
+      }
+
+      private function silenceLoop(param1:Event) : void
+      {
+         if(this.stopSoundLoop)
+         {
+            removeEventListener(Event.ENTER_FRAME,this.silenceLoop);
+            return;
+         }
+         SoundMixer.stopAll();
       }
    }
 }

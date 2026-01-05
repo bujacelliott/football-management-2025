@@ -29,6 +29,15 @@ package com.utterlySuperb.chumpManager.view.ui.buttons
          super();
          this.mc = new FormDiagramPlayerButtonMC();
          addChild(this.mc);
+         this.stopAllFrames(this.mc);
+         if(this.mc["bg"])
+         {
+            this.gotoSafeFrame(this.mc["bg"],1);
+         }
+         if(this.mc["light"])
+         {
+            this.gotoSafeFrame(this.mc["light"],1);
+         }
          this.setNormal();
       }
       
@@ -74,6 +83,32 @@ package com.utterlySuperb.chumpManager.view.ui.buttons
          else
          {
             this.mc.light.gotoAndStop(1);
+         }
+      }
+
+      private function stopAllFrames(param1:MovieClip) : void
+      {
+         try
+         {
+            param1.stop();
+         }
+         catch(e:Error)
+         {
+         }
+      }
+
+      private function gotoSafeFrame(param1:MovieClip, param2:int) : void
+      {
+         if(!param1)
+         {
+            return;
+         }
+         try
+         {
+            param1.gotoAndStop(param2);
+         }
+         catch(e:Error)
+         {
          }
       }
    }

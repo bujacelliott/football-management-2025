@@ -278,9 +278,9 @@ def all_positions(raw: str) -> list:
     return seen or ["cm"]
 
 def multi_pos_rating(stats: dict, positions: list) -> float:
+    # Use pure average across positions; no extra bonus for multi-role players.
     scores = [position_rating(stats, p) for p in positions]
-    avg = sum(scores)/len(scores)
-    return avg * (0.95 + len(positions)/20.0)
+    return sum(scores) / len(scores)
 
 
 # Precompute sums to avoid recomputing per row
@@ -343,6 +343,24 @@ def scale_stats(stats: Dict[str, float], factor: float) -> Dict[str, int]:
     return {k: int(round(clamp(v * factor))) for k, v in stats.items()}
 
 
+def scale_to_target(stats: Dict[str, float], positions: List[str], overall_val: float) -> (Dict[str, int], float, int):
+    target, target_hi = target_rating(overall_val)
+    base_rating = multi_pos_rating(stats, positions)
+    if base_rating <= 0:
+        scaled = {k: 40 for k in stats.keys()}
+        return scaled, target, star_from_rating(target)
+    factor = target / base_rating
+    scaled_float = {k: v * factor for k, v in stats.items()}
+    scaled_rating = multi_pos_rating(scaled_float, positions)
+    if scaled_rating > target_hi:
+        adjust = target_hi / scaled_rating if scaled_rating else 1
+        scaled_float = {k: v * adjust for k, v in scaled_float.items()}
+        scaled_rating = multi_pos_rating(scaled_float, positions)
+    scaled = {k: int(round(clamp(v))) for k, v in scaled_float.items()}
+    scaled_rating = multi_pos_rating(scaled, positions)
+    return scaled, scaled_rating, star_from_rating(scaled_rating)
+
+
 def map_position(raw: str) -> str:
     return POS_MAP.get(raw.split(",")[0].strip().upper(), "")
 
@@ -383,28 +401,25 @@ def convert_row(row: Dict[str, str]) -> Dict[str, str]:
         return {}
     is_gk = pos == "gk"
     stats = build_keeper_stats(row) if is_gk else build_outfield_stats(row)
-    base = multi_pos_rating(stats, pos_list)
-    target, target_max = target_rating(num(row["overall"]))
-    factor = target / base if base else 1
-    scaled_float = {k: v * factor for k, v in stats.items()}
-    scaled_rating = multi_pos_rating(scaled_float, pos_list)
-    if scaled_rating > target_max:
-        adjust = target_max / scaled_rating if scaled_rating else 1
-        scaled_float = {k: v * adjust for k, v in scaled_float.items()}
-        scaled_rating = multi_pos_rating(scaled_float, pos_list)
-    scaled = {k: int(round(clamp(v))) for k, v in scaled_float.items()}
-    scaled_rating = multi_pos_rating(scaled, pos_list)
+
+    scaled_ca, rating_ca, stars_ca = scale_to_target(stats, pos_list, num(row["overall"]))
+    scaled_pa, rating_pa, stars_pa = scale_to_target(stats, pos_list, num(row.get("potential", row.get("overall", 0))))
+
     return {
         "name": fix_name(row["short_name"], row["long_name"]),
         "pos": pos,
         "positions_full": map_positions_full(row["player_positions"]),
         "fifa_overall": row["overall"],
-        "game_rating": round(scaled_rating, 2),
-        "stars": star_from_rating(scaled_rating),
+        "fifa_potential": row.get("potential", row.get("overall", "")),
+        "game_rating_ca": round(rating_ca, 2),
+        "stars_ca": stars_ca,
+        "game_rating_pa": round(rating_pa, 2),
+        "stars_pa": stars_pa,
         "nat": nat_code(row["nationality_name"]),
         "dob": fmt_date(row["dob"]),
         "number": row["club_jersey_number"] or "0",
-        "scaled_stats": scaled,
+        "scaled_stats_ca": scaled_ca,
+        "scaled_stats_pa": scaled_pa,
     }
 
 
@@ -422,15 +437,20 @@ def run(csv_path: Path, club: str) -> List[Dict[str, str]]:
 
 
 def write_csv(rows: List[Dict[str, str]], out_path: Path) -> None:
-    stat_keys = sorted({k for r in rows for k in r["scaled_stats"].keys()})
+    if not rows:
+        return
+    stat_keys = sorted({k for r in rows for k in r["scaled_stats_ca"].keys()})
     fieldnames = [
         "name",
         "pos",
         "positions_full",
         "fifa_overall",
-        "game_rating",
-        "stars",
-    ] + [f"stat_{k}" for k in stat_keys]
+        "fifa_potential",
+        "game_rating_ca",
+        "stars_ca",
+        "game_rating_pa",
+        "stars_pa",
+    ] + [f"stat_{k}_ca" for k in stat_keys] + [f"stat_{k}_pa" for k in stat_keys]
     with out_path.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -440,15 +460,59 @@ def write_csv(rows: List[Dict[str, str]], out_path: Path) -> None:
                 "pos": r["pos"],
                 "positions_full": r["positions_full"],
                 "fifa_overall": r["fifa_overall"],
-                "game_rating": r["game_rating"],
-                "stars": r["stars"],
+                "fifa_potential": r["fifa_potential"],
+                "game_rating_ca": r["game_rating_ca"],
+                "stars_ca": r["stars_ca"],
+                "game_rating_pa": r["game_rating_pa"],
+                "stars_pa": r["stars_pa"],
             }
             for k in stat_keys:
-                row_out[f"stat_{k}"] = r["scaled_stats"].get(k, "")
+                row_out[f"stat_{k}_ca"] = r["scaled_stats_ca"].get(k, "")
+                row_out[f"stat_{k}_pa"] = r["scaled_stats_pa"].get(k, "")
             writer.writerow(row_out)
 
 
+def _placeholder_players(club_name: str) -> List[Dict[str, str]]:
+    """Return a small placeholder squad if no data was found for the club."""
+    squad: List[Dict[str, str]] = []
+    # 2 GK, 6 DEF, 6 MID, 4 FWD
+    def add(name_suffix: str, pos: str) -> None:
+        squad.append(
+            {
+                "name": f"{club_name} {name_suffix}",
+                "dob": "01-01-1999",
+                "positions_full": pos,
+                "pos": pos.split("-")[0],
+                "nat": "xx",
+                "number": "0",
+                "scaled_stats_ca": {"passing": 60, "tackling": 60, "shooting": 60, "crossing": 60, "heading": 60, "dribbling": 60, "speed": 60, "max_stamina": 60, "aggression": 60, "strength": 60, "fitness": 60, "creativity": 60, "catching": 60, "shot_stopping": 60, "distribution": 60, "keeper_fitness": 60, "keeper_stamina": 40},
+                "scaled_stats_pa": {"passing": 65, "tackling": 65, "shooting": 65, "crossing": 65, "heading": 65, "dribbling": 65, "speed": 65, "max_stamina": 65, "aggression": 65, "strength": 65, "fitness": 65, "creativity": 65, "catching": 65, "shot_stopping": 65, "distribution": 65, "keeper_fitness": 65, "keeper_stamina": 45},
+            }
+        )
+    for i in range(2):
+        add(f"GK{i+1}", "gk")
+    for i in range(6):
+        add(f"DEF{i+1}", "cb-fb")
+    for i in range(6):
+        add(f"MID{i+1}", "cm-dm")
+    for i in range(4):
+        add(f"FWD{i+1}", "cf")
+    return squad
+
+
 def write_xml_block(rows: List[Dict[str, str]], club_name: str) -> str:
+    def esc(val: str) -> str:
+        return (
+            val.replace("&", "&amp;")
+            .replace("\"", "&quot;")
+            .replace("'", "&apos;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+        )
+
+    if not rows:
+        rows = _placeholder_players(club_name)
+
     lines = [
         '<club shirtColor="0x000000" sleevesColor="0xFFFFFF" stripesType="none" scoreMultiplier="1" attackScore="A" defendScore="B">',
         f'\t\t<name><![CDATA[{club_name}]]></name>',
@@ -457,17 +521,19 @@ def write_xml_block(rows: List[Dict[str, str]], club_name: str) -> str:
     ]
     for r in rows:
         lines.append(
-            f'\t\t\t<player id="{r["name"]}" name="{r["name"]}" birthday="{r["dob"]}" positions="{r["positions_full"]}" nationality="{r["nat"]}" number="{r["number"]}" ageImprovement="0">'
+            f'\t\t\t<player id="{esc(r["name"])}" name="{esc(r["name"])}" birthday="{r["dob"]}" positions="{r["positions_full"]}" nationality="{r["nat"]}" number="{r["number"]}" ageImprovement="0">'
         )
         if r["pos"] == "gk":
-            s = r["scaled_stats"]
+            s = r["scaled_stats_ca"]
+            pa = r["scaled_stats_pa"]
             lines.append(
-                f'\t\t\t\t<stats catching="{s.get("catching",0)}" shotStopping="{s.get("shot_stopping",0)}" distribution="{s.get("distribution",0)}" fitness="{s.get("keeper_fitness",0)}" stamina="{s.get("keeper_stamina",0)}"/>'
+                f'\t\t\t\t<stats catching="{s.get("catching",0)}" shotStopping="{s.get("shot_stopping",0)}" distribution="{s.get("distribution",0)}" fitness="{s.get("keeper_fitness",0)}" stamina="{s.get("keeper_stamina",0)}" paCatching="{pa.get("catching",0)}" paShotStopping="{pa.get("shot_stopping",0)}" paDistribution="{pa.get("distribution",0)}" paFitness="{pa.get("keeper_fitness",0)}" paStamina="{pa.get("keeper_stamina",0)}"/>'
             )
         else:
-            s = r["scaled_stats"]
+            s = r["scaled_stats_ca"]
+            pa = r["scaled_stats_pa"]
             lines.append(
-                f'\t\t\t\t<stats passing="{s.get("passing",0)}" tackling="{s.get("tackling",0)}" shooting="{s.get("shooting",0)}" crossing="{s.get("crossing",0)}" heading="{s.get("heading",0)}" dribbling="{s.get("dribbling",0)}" speed="{s.get("speed",0)}" stamina="{s.get("max_stamina",0)}" aggression="{s.get("aggression",0)}" strength="{s.get("strength",0)}" fitness="{s.get("fitness",0)}" creativity="{s.get("creativity",0)}"/>'
+                f'\t\t\t\t<stats passing="{s.get("passing",0)}" tackling="{s.get("tackling",0)}" shooting="{s.get("shooting",0)}" crossing="{s.get("crossing",0)}" heading="{s.get("heading",0)}" dribbling="{s.get("dribbling",0)}" speed="{s.get("speed",0)}" stamina="{s.get("max_stamina",0)}" aggression="{s.get("aggression",0)}" strength="{s.get("strength",0)}" fitness="{s.get("fitness",0)}" creativity="{s.get("creativity",0)}" paPassing="{pa.get("passing",0)}" paTackling="{pa.get("tackling",0)}" paShooting="{pa.get("shooting",0)}" paCrossing="{pa.get("crossing",0)}" paHeading="{pa.get("heading",0)}" paDribbling="{pa.get("dribbling",0)}" paSpeed="{pa.get("speed",0)}" paStamina="{pa.get("max_stamina",0)}" paAggression="{pa.get("aggression",0)}" paStrength="{pa.get("strength",0)}" paFitness="{pa.get("fitness",0)}" paCreativity="{pa.get("creativity",0)}"/>'
             )
         lines.append("\t\t\t</player>")
     lines.append("\t\t</players>")
@@ -486,7 +552,7 @@ def main() -> None:
     rows = run(csv_path, club_name)
     write_csv(rows, out_path)
     print(f"Wrote {len(rows)} players to {out_path}")
-    # Also print XML block to stdout for convenience
+    # Also print XML block to stdout for convenience (uses current-ability stats)
     print(write_xml_block(rows, club_name))
 
 

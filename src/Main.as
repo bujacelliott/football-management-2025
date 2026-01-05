@@ -19,6 +19,9 @@ package
    import com.utterlySuperb.ui.Tooltip;
    import com.utterlySuperb.utils.GetURL;
    import flash.display.Sprite;
+   import flash.display.StageAlign;
+   import flash.display.StageDisplayState;
+   import flash.display.StageScaleMode;
    import flash.events.Event;
    import flash.text.TextField;
    
@@ -45,6 +48,8 @@ package
       
       private var pleaseWait:PleaseWaitModal;
       
+      private var appContainer:Sprite;
+      
       public function Main()
       {
          super();
@@ -70,13 +75,32 @@ package
       
       private function init(param1:Event = null) : void
       {
+         if(stage)
+         {
+            stage.align = StageAlign.TOP_LEFT;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
+            try
+            {
+               stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+            }
+            catch(err:Error)
+            {
+            }
+         }
          this.bg = new Background();
          addChild(this.bg);
+         this.appContainer = new Sprite();
+         addChild(this.appContainer);
          _instance = this;
          removeEventListener(Event.ADDED_TO_STAGE,this.init);
          var _loc2_:MouseBreakerSplash = new MouseBreakerSplash();
          _loc2_.addEventListener(MouseBreakerSplash.FINISH_SPLASH,this.finishSplashHandler);
          addChild(_loc2_);
+         if(stage)
+         {
+            stage.addEventListener(Event.RESIZE,this.onStageResize);
+            this.layoutStage();
+         }
       }
       
       private function finishSplashHandler(param1:Event) : void
@@ -115,13 +139,14 @@ package
          CopyManager.init(CopyManager.ENGLISH);
          TweenPlugin.activate([ColorTransformPlugin,TintPlugin,AutoAlphaPlugin,BlurFilterPlugin]);
          this.gameHolder = new Sprite();
-         addChild(this.gameHolder);
+         this.appContainer.addChild(this.gameHolder);
          this.tooltip = new Tooltip();
-         addChild(this.tooltip);
+         this.appContainer.addChild(this.tooltip);
          var _loc1_:TextField = new TextField();
          TextHelper.doTextField2(_loc1_,Styles.MAIN_FONT,14,0,{"multiline":true});
          this.tooltip.addTextField(_loc1_);
          this.showScreen(Screen.START_SCREEN);
+         this.layoutStage();
       }
       
       public function showScreen(param1:String) : void
@@ -171,6 +196,30 @@ package
          else
          {
             TweenLite.to(this.bg.manager,1,{"alpha":1});
+         }
+      }
+
+      private function onStageResize(param1:Event) : void
+      {
+         this.layoutStage();
+      }
+
+      private function layoutStage() : void
+      {
+         if(!stage || !this.appContainer)
+         {
+            return;
+         }
+         var _loc1_:Number = Math.min(stage.stageWidth / Globals.GAME_WIDTH,stage.stageHeight / Globals.GAME_HEIGHT);
+         this.appContainer.scaleX = this.appContainer.scaleY = _loc1_;
+         this.appContainer.x = (stage.stageWidth - Globals.GAME_WIDTH * _loc1_) / 2;
+         this.appContainer.y = (stage.stageHeight - Globals.GAME_HEIGHT * _loc1_) / 2;
+         if(this.bg)
+         {
+            this.bg.width = stage.stageWidth;
+            this.bg.height = stage.stageHeight;
+            this.bg.x = 0;
+            this.bg.y = 0;
          }
       }
    }

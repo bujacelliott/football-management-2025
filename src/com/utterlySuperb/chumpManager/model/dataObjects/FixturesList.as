@@ -101,12 +101,13 @@ package com.utterlySuperb.chumpManager.model.dataObjects
                   break;
                case "domesticAll":
                   _loc10_ = 0;
-                  while(_loc10_ < param1.leagues.length)
+                  _loc9_ = param1.getDomesticLeagues();
+                  while(_loc10_ < _loc9_.length)
                   {
                      _loc11_ = 0;
-                     while(_loc11_ < param1.leagues[_loc10_].entrants.length)
+                     while(_loc11_ < _loc9_[_loc10_].entrants.length)
                      {
-                        _loc6_.addEntrant(param1.leagues[_loc10_].entrants[_loc11_].club);
+                        _loc6_.addEntrant(_loc9_[_loc10_].entrants[_loc11_].club);
                         _loc11_++;
                      }
                      _loc10_++;
@@ -138,13 +139,16 @@ package com.utterlySuperb.chumpManager.model.dataObjects
                         _loc6_.addEntrant(param1.leagueCupWinner);
                      }
                   }
-                  _loc8_ = int(_loc6_.entrants.length);
-                  _loc9_ = param1.otherLeagues[0].entrants.slice();
-                  while(_loc6_.entrants.length < Math.min(16,_loc8_ + param1.otherLeagues[0].entrants.length))
+                  if(param1.otherLeagues && param1.otherLeagues.length > 0)
                   {
-                     _loc12_ = int(Math.random() * _loc9_.length);
-                     _loc6_.addEntrant(_loc9_[_loc12_].club);
-                     _loc9_.splice(_loc12_,1);
+                     _loc8_ = int(_loc6_.entrants.length);
+                     _loc9_ = param1.otherLeagues[0].entrants.slice();
+                     while(_loc6_.entrants.length < Math.min(16,_loc8_ + param1.otherLeagues[0].entrants.length))
+                     {
+                        _loc12_ = int(Math.random() * _loc9_.length);
+                        _loc6_.addEntrant(_loc9_[_loc12_].club);
+                        _loc9_.splice(_loc12_,1);
+                     }
                   }
                   break;
                case "europeRest":
@@ -156,21 +160,24 @@ package com.utterlySuperb.chumpManager.model.dataObjects
                         _loc6_.addEntrant(param1.leagueWinners[_loc11_]);
                         _loc11_++;
                      }
-                     _loc11_ = 0;
-                     while(_loc11_ < param1.otherLeagues.length)
+                     if(param1.otherLeagues && param1.otherLeagues.length > 0)
                      {
-                        _loc10_ = 0;
-                        while(_loc10_ < param1.otherLeagues[_loc11_].numInEuropeanCup)
+                        _loc11_ = 0;
+                        while(_loc11_ < param1.otherLeagues.length)
                         {
-                           _loc13_ = Math.floor(Math.random() * param1.otherLeagues[_loc11_].entrants.length);
-                           while(_loc6_.hasClub(param1.otherLeagues[_loc11_].entrants[_loc13_].club))
+                           _loc10_ = 0;
+                           while(_loc10_ < param1.otherLeagues[_loc11_].numInEuropeanCup)
                            {
                               _loc13_ = Math.floor(Math.random() * param1.otherLeagues[_loc11_].entrants.length);
+                              while(_loc6_.hasClub(param1.otherLeagues[_loc11_].entrants[_loc13_].club))
+                              {
+                                 _loc13_ = Math.floor(Math.random() * param1.otherLeagues[_loc11_].entrants.length);
+                              }
+                              _loc6_.addEntrant(param1.otherLeagues[_loc11_].entrants[_loc13_].club);
+                              _loc10_++;
                            }
-                           _loc6_.addEntrant(param1.otherLeagues[_loc11_].entrants[_loc13_].club);
-                           _loc10_++;
+                           _loc11_++;
                         }
-                        _loc11_++;
                      }
                   }
             }
@@ -186,7 +193,11 @@ package com.utterlySuperb.chumpManager.model.dataObjects
             }
             _loc3_++;
          }
-         var _loc4_:League = param1.leagues[0];
+         var _loc4_:League = param1.getMainLeague();
+         if(!_loc4_)
+         {
+            return;
+         }
          this.matches = new Array();
          _loc3_ = 0;
          while(_loc3_ < _loc4_.entrants.length)
@@ -243,7 +254,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects
          var _loc2_:int = 0;
          while(_loc2_ < 2)
          {
-            _loc3_ = Main.currentGame.leagues[0];
+            _loc3_ = Main.currentGame.getMainLeague();
             _loc4_ = this.numbers.slice();
             _loc5_ = [];
             while(_loc4_.length > 0)
@@ -335,7 +346,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects
             }
             _loc1_++;
          }
-         if(this.weeks[this.weeks.length - 1].length < Main.currentGame.leagues[0].entrants.length / 2)
+         if(this.weeks[this.weeks.length - 1].length < Main.currentGame.getMainLeague().entrants.length / 2)
          {
             _loc7_ = this.weeks[2];
             this.weeks[2] = this.weeks[this.weeks.length - 1];
@@ -462,7 +473,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects
          var _loc7_:Match = null;
          var _loc8_:int = 0;
          var _loc9_:Match = null;
-         var _loc1_:League = Main.currentGame.leagues[0];
+         var _loc1_:League = Main.currentGame.getMainLeague();
          var _loc2_:int = 0;
          while(_loc2_ < this.weeks.length)
          {

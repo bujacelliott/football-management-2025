@@ -91,7 +91,7 @@ package com.utterlySuperb.ui
       
       protected function makeBoxGraphics() : void
       {
-         this.box.graphics.beginFill(3355443,0.9);
+         this.box.graphics.beginFill(0x0d2f1b,0.9);
          this.box.graphics.lineStyle(2,16777215);
          this.box.graphics.drawRoundRect(-10,0,width + 20,height + 20,20,20);
          this.box.x = int(Globals.GAME_WIDTH / 2 - this.box.width / 2);
@@ -128,7 +128,7 @@ package com.utterlySuperb.ui
             this.buttons.push(_loc5_);
             _loc4_++;
          }
-         this.box.graphics.beginFill(3355443,0.9);
+         this.box.graphics.beginFill(0x0d2f1b,0.9);
          this.box.graphics.lineStyle(2,16777215);
          this.box.graphics.drawRoundRect(-10,0,this.box.width + 20,this.box.height + 20,20,20);
       }

@@ -1,0 +1,138 @@
+<record>
+      <!-- resource manager options -->
+
+      <!-- dont preload anything in this folder -->
+      <boolean id="preload" value="false"/>
+
+      <!-- logo mappings -->
+      <!-- the following XML maps pictures inside this folder into other positions
+        in the resource system, which allows this folder to be dropped into any
+        place in the graphics folder and still have the game pick up the graphics
+        files from the correct places
+      -->
+
+      <list id="maps">
+      <record from="athletic club home 2d" to="graphics/pictures/team/1664/kits/home"/>
+          <record from="athletic club home" to="graphics/pictures/team/1664/kit_textures/home"/>
+            <record from="athletic club away 2d" to="graphics/pictures/team/1664/kits/away"/>
+          <record from="athletic club away" to="graphics/pictures/team/1664/kit_textures/away"/>
+            <record from="athletic club third 2d" to="graphics/pictures/team/1664/kits/third"/>
+          <record from="athletic club third" to="graphics/pictures/team/1664/kit_textures/third"/>
+            <record from="atlético madrid home 2d" to="graphics/pictures/team/1687/kits/home"/>
+          <record from="atlético madrid home" to="graphics/pictures/team/1687/kit_textures/home"/>
+            <record from="atlético madrid away 2d" to="graphics/pictures/team/1687/kits/away"/>
+          <record from="atlético madrid away" to="graphics/pictures/team/1687/kit_textures/away"/>
+            <record from="atlético madrid third 2d" to="graphics/pictures/team/1687/kits/third"/>
+          <record from="atlético madrid third" to="graphics/pictures/team/1687/kit_textures/third"/>
+            <record from="ca osasuna home 2d" to="graphics/pictures/team/1685/kits/home"/>
+          <record from="ca osasuna home" to="graphics/pictures/team/1685/kit_textures/home"/>
+            <record from="ca osasuna away 2d" to="graphics/pictures/team/1685/kits/away"/>
+          <record from="ca osasuna away" to="graphics/pictures/team/1685/kit_textures/away"/>
+            <record from="ca osasuna third 2d" to="graphics/pictures/team/1685/kits/third"/>
+          <record from="ca osasuna third" to="graphics/pictures/team/1685/kit_textures/third"/>
+            <record from="celta vigo home 2d" to="graphics/pictures/team/1724/kits/home"/>
+          <record from="celta vigo home" to="graphics/pictures/team/1724/kit_textures/home"/>
+            <record from="celta vigo away 2d" to="graphics/pictures/team/1724/kits/away"/>
+          <record from="celta vigo away" to="graphics/pictures/team/1724/kit_textures/away"/>
+            <record from="celta vigo third 2d" to="graphics/pictures/team/1724/kits/third"/>
+          <record from="celta vigo third" to="graphics/pictures/team/1724/kit_textures/third"/>
+            <record from="deportivo alavés home 2d" to="graphics/pictures/team/1688/kits/home"/>
+          <record from="deportivo alavés home" to="graphics/pictures/team/1688/kit_textures/home"/>
+            <record from="deportivo alavés away 2d" to="graphics/pictures/team/1688/kits/away"/>
+          <record from="deportivo alavés away" to="graphics/pictures/team/1688/kit_textures/away"/>
+            <record from="deportivo alavés third 2d" to="graphics/pictures/team/1688/kits/third"/>
+          <record from="deportivo alavés third" to="graphics/pictures/team/1688/kit_textures/third"/>
+            <record from="elche cf home 2d" to="graphics/pictures/team/1707/kits/home"/>
+          <record from="elche cf home" to="graphics/pictures/team/1707/kit_textures/home"/>
+            <record from="elche cf away 2d" to="graphics/pictures/team/1707/kits/away"/>
+          <record from="elche cf away" to="graphics/pictures/team/1707/kit_textures/away"/>
+            <record from="elche cf third 2d" to="graphics/pictures/team/1707/kits/third"/>
+          <record from="elche cf third" to="graphics/pictures/team/1707/kit_textures/third"/>
+            <record from="fc barcelona home 2d" to="graphics/pictures/team/1708/kits/home"/>
+          <record from="fc barcelona home" to="graphics/pictures/team/1708/kit_textures/home"/>
+            <record from="fc barcelona away 2d" to="graphics/pictures/team/1708/kits/away"/>
+          <record from="fc barcelona away" to="graphics/pictures/team/1708/kit_textures/away"/>
+            <record from="fc barcelona third 2d" to="graphics/pictures/team/1708/kits/third"/>
+          <record from="fc barcelona third" to="graphics/pictures/team/1708/kit_textures/third"/>
+            <record from="getafe cf home 2d" to="graphics/pictures/team/1710/kits/home"/>
+          <record from="getafe cf home" to="graphics/pictures/team/1710/kit_textures/home"/>
+            <record from="getafe cf away 2d" to="graphics/pictures/team/1710/kits/away"/>
+          <record from="getafe cf away" to="graphics/pictures/team/1710/kit_textures/away"/>
+            <record from="getafe cf third 2d" to="graphics/pictures/team/1710/kits/third"/>
+          <record from="getafe cf third" to="graphics/pictures/team/1710/kit_textures/third"/>
+            <record from="girona fc home 2d" to="graphics/pictures/team/814089/kits/home"/>
+          <record from="girona fc home" to="graphics/pictures/team/814089/kit_textures/home"/>
+            <record from="girona fc away 2d" to="graphics/pictures/team/814089/kits/away"/>
+          <record from="girona fc away" to="graphics/pictures/team/814089/kit_textures/away"/>
+            <record from="girona fc third 2d" to="graphics/pictures/team/814089/kits/third"/>
+          <record from="girona fc third" to="graphics/pictures/team/814089/kit_textures/third"/>
+            <record from="levante ud home 2d" to="graphics/pictures/team/1717/kits/home"/>
+          <record from="levante ud home" to="graphics/pictures/team/1717/kit_textures/home"/>
+            <record from="levante ud away 2d" to="graphics/pictures/team/1717/kits/away"/>
+          <record from="levante ud away" to="graphics/pictures/team/1717/kit_textures/away"/>
+            <record from="levante ud third 2d" to="graphics/pictures/team/1717/kits/third"/>
+          <record from="levante ud third" to="graphics/pictures/team/1717/kit_textures/third"/>
+            <record from="rayo vallecano home 2d" to="graphics/pictures/team/1729/kits/home"/>
+          <record from="rayo vallecano home" to="graphics/pictures/team/1729/kit_textures/home"/>
+            <record from="rayo vallecano away 2d" to="graphics/pictures/team/1729/kits/away"/>
+          <record from="rayo vallecano away" to="graphics/pictures/team/1729/kit_textures/away"/>
+            <record from="rayo vallecano third 2d" to="graphics/pictures/team/1729/kits/third"/>
+          <record from="rayo vallecano third" to="graphics/pictures/team/1729/kit_textures/third"/>
+            <record from="rcd espanyol home 2d" to="graphics/pictures/team/1725/kits/home"/>
+          <record from="rcd espanyol home" to="graphics/pictures/team/1725/kit_textures/home"/>
+            <record from="rcd espanyol away 2d" to="graphics/pictures/team/1725/kits/away"/>
+          <record from="rcd espanyol away" to="graphics/pictures/team/1725/kit_textures/away"/>
+            <record from="rcd espanyol third 2d" to="graphics/pictures/team/1725/kits/third"/>
+          <record from="rcd espanyol third" to="graphics/pictures/team/1725/kit_textures/third"/>
+            <record from="rcd mallorca home 2d" to="graphics/pictures/team/1726/kits/home"/>
+          <record from="rcd mallorca home" to="graphics/pictures/team/1726/kit_textures/home"/>
+            <record from="rcd mallorca away 2d" to="graphics/pictures/team/1726/kits/away"/>
+          <record from="rcd mallorca away" to="graphics/pictures/team/1726/kit_textures/away"/>
+            <record from="rcd mallorca third 2d" to="graphics/pictures/team/1726/kits/third"/>
+          <record from="rcd mallorca third" to="graphics/pictures/team/1726/kit_textures/third"/>
+            <record from="real betis home 2d" to="graphics/pictures/team/1733/kits/home"/>
+          <record from="real betis home" to="graphics/pictures/team/1733/kit_textures/home"/>
+            <record from="real betis away 2d" to="graphics/pictures/team/1733/kits/away"/>
+          <record from="real betis away" to="graphics/pictures/team/1733/kit_textures/away"/>
+            <record from="real betis third 2d" to="graphics/pictures/team/1733/kits/third"/>
+          <record from="real betis third" to="graphics/pictures/team/1733/kit_textures/third"/>
+            <record from="real madrid home 2d" to="graphics/pictures/team/1736/kits/home"/>
+          <record from="real madrid home" to="graphics/pictures/team/1736/kit_textures/home"/>
+            <record from="real madrid away 2d" to="graphics/pictures/team/1736/kits/away"/>
+          <record from="real madrid away" to="graphics/pictures/team/1736/kit_textures/away"/>
+            <record from="real madrid third 2d" to="graphics/pictures/team/1736/kits/third"/>
+          <record from="real madrid third" to="graphics/pictures/team/1736/kit_textures/third"/>
+            <record from="real oviedo home 2d" to="graphics/pictures/team/1741/kits/home"/>
+          <record from="real oviedo home" to="graphics/pictures/team/1741/kit_textures/home"/>
+            <record from="real oviedo away 2d" to="graphics/pictures/team/1741/kits/away"/>
+          <record from="real oviedo away" to="graphics/pictures/team/1741/kit_textures/away"/>
+            <record from="real oviedo third 2d" to="graphics/pictures/team/1741/kits/third"/>
+          <record from="real oviedo third" to="graphics/pictures/team/1741/kit_textures/third"/>
+            <record from="real sociedad home 2d" to="graphics/pictures/team/1742/kits/home"/>
+          <record from="real sociedad home" to="graphics/pictures/team/1742/kit_textures/home"/>
+            <record from="real sociedad away 2d" to="graphics/pictures/team/1742/kits/away"/>
+          <record from="real sociedad away" to="graphics/pictures/team/1742/kit_textures/away"/>
+            <record from="real sociedad third 2d" to="graphics/pictures/team/1742/kits/third"/>
+          <record from="real sociedad third" to="graphics/pictures/team/1742/kit_textures/third"/>
+            <record from="sevilla fc home 2d" to="graphics/pictures/team/1759/kits/home"/>
+          <record from="sevilla fc home" to="graphics/pictures/team/1759/kit_textures/home"/>
+            <record from="sevilla fc away 2d" to="graphics/pictures/team/1759/kits/away"/>
+          <record from="sevilla fc away" to="graphics/pictures/team/1759/kit_textures/away"/>
+            <record from="sevilla fc third 2d" to="graphics/pictures/team/1759/kits/third"/>
+          <record from="sevilla fc third" to="graphics/pictures/team/1759/kit_textures/third"/>
+            <record from="valencia cf home 2d" to="graphics/pictures/team/1775/kits/home"/>
+          <record from="valencia cf home" to="graphics/pictures/team/1775/kit_textures/home"/>
+            <record from="valencia cf away 2d" to="graphics/pictures/team/1775/kits/away"/>
+          <record from="valencia cf away" to="graphics/pictures/team/1775/kit_textures/away"/>
+            <record from="valencia cf third 2d" to="graphics/pictures/team/1775/kits/third"/>
+          <record from="valencia cf third" to="graphics/pictures/team/1775/kit_textures/third"/>
+            <record from="villarreal cf home 2d" to="graphics/pictures/team/1777/kits/home"/>
+          <record from="villarreal cf home" to="graphics/pictures/team/1777/kit_textures/home"/>
+            <record from="villarreal cf away 2d" to="graphics/pictures/team/1777/kits/away"/>
+          <record from="villarreal cf away" to="graphics/pictures/team/1777/kit_textures/away"/>
+            <record from="villarreal cf third 2d" to="graphics/pictures/team/1777/kits/third"/>
+          <record from="villarreal cf third" to="graphics/pictures/team/1777/kit_textures/third"/>
+            
+      </list>
+
+      </record>

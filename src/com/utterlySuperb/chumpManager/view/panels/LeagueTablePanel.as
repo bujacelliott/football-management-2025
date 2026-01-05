@@ -42,7 +42,7 @@ package com.utterlySuperb.chumpManager.view.panels
       {
          var _loc2_:String = null;
          var _loc4_:LeagueRowListButton = null;
-         var _loc3_:Array = Main.currentGame.leagues[0].getStandings();
+         var _loc3_:Array = Main.currentGame.getMainLeague().getStandings();
          _loc4_ = new LeagueRowListButton();
          _loc4_.bWidth = 345;
          _loc4_.bHeight = 30;

@@ -1,0 +1,120 @@
+<record>
+      <!-- resource manager options -->
+
+      <!-- dont preload anything in this folder -->
+      <boolean id="preload" value="false"/>
+
+      <!-- logo mappings -->
+      <!-- the following XML maps pictures inside this folder into other positions
+        in the resource system, which allows this folder to be dropped into any
+        place in the graphics folder and still have the game pick up the graphics
+        files from the correct places
+      -->
+
+      <list id="maps">
+      <record from="1. fc heidenheim home 2d" to="graphics/pictures/team/880295/kits/home"/>
+          <record from="1. fc heidenheim home" to="graphics/pictures/team/880295/kit_textures/home"/>
+            <record from="1. fc heidenheim away 2d" to="graphics/pictures/team/880295/kits/away"/>
+          <record from="1. fc heidenheim away" to="graphics/pictures/team/880295/kit_textures/away"/>
+            <record from="1. fc heidenheim third 2d" to="graphics/pictures/team/880295/kits/third"/>
+          <record from="1. fc heidenheim third" to="graphics/pictures/team/880295/kit_textures/third"/>
+            <record from="1. fc köln home 2d" to="graphics/pictures/team/916/kits/home"/>
+          <record from="1. fc köln home" to="graphics/pictures/team/916/kit_textures/home"/>
+            <record from="1. fc köln away 2d" to="graphics/pictures/team/916/kits/away"/>
+          <record from="1. fc köln away" to="graphics/pictures/team/916/kit_textures/away"/>
+            <record from="1. fc köln third 2d" to="graphics/pictures/team/916/kits/third"/>
+          <record from="1. fc köln third" to="graphics/pictures/team/916/kit_textures/third"/>
+            <record from="1. fsv mainz 05 home 2d" to="graphics/pictures/team/918/kits/home"/>
+          <record from="1. fsv mainz 05 home" to="graphics/pictures/team/918/kit_textures/home"/>
+            <record from="1. fsv mainz 05 away 2d" to="graphics/pictures/team/918/kits/away"/>
+          <record from="1. fsv mainz 05 away" to="graphics/pictures/team/918/kit_textures/away"/>
+            <record from="1. fsv mainz 05 third 2d" to="graphics/pictures/team/918/kits/third"/>
+          <record from="1. fsv mainz 05 third" to="graphics/pictures/team/918/kit_textures/third"/>
+            <record from="bayer 04 leverkusen home 2d" to="graphics/pictures/team/901/kits/home"/>
+          <record from="bayer 04 leverkusen home" to="graphics/pictures/team/901/kit_textures/home"/>
+            <record from="bayer 04 leverkusen away 2d" to="graphics/pictures/team/901/kits/away"/>
+          <record from="bayer 04 leverkusen away" to="graphics/pictures/team/901/kit_textures/away"/>
+            <record from="bayer 04 leverkusen third 2d" to="graphics/pictures/team/901/kits/third"/>
+          <record from="bayer 04 leverkusen third" to="graphics/pictures/team/901/kit_textures/third"/>
+            <record from="bayern münchen home 2d" to="graphics/pictures/team/915/kits/home"/>
+          <record from="bayern münchen home" to="graphics/pictures/team/915/kit_textures/home"/>
+            <record from="bayern münchen away 2d" to="graphics/pictures/team/915/kits/away"/>
+          <record from="bayern münchen away" to="graphics/pictures/team/915/kit_textures/away"/>
+            <record from="bayern münchen third 2d" to="graphics/pictures/team/915/kits/third"/>
+          <record from="bayern münchen third" to="graphics/pictures/team/915/kit_textures/third"/>
+            <record from="borussia mönchengladbach home 2d" to="graphics/pictures/team/908/kits/home"/>
+          <record from="borussia mönchengladbach home" to="graphics/pictures/team/908/kit_textures/home"/>
+            <record from="borussia mönchengladbach away 2d" to="graphics/pictures/team/908/kits/away"/>
+          <record from="borussia mönchengladbach away" to="graphics/pictures/team/908/kit_textures/away"/>
+            <record from="borussia mönchengladbach third 2d" to="graphics/pictures/team/908/kits/third"/>
+          <record from="borussia mönchengladbach third" to="graphics/pictures/team/908/kit_textures/third"/>
+            <record from="eintracht frankfurt home 2d" to="graphics/pictures/team/912/kits/home"/>
+          <record from="eintracht frankfurt home" to="graphics/pictures/team/912/kit_textures/home"/>
+            <record from="eintracht frankfurt away 2d" to="graphics/pictures/team/912/kits/away"/>
+          <record from="eintracht frankfurt away" to="graphics/pictures/team/912/kit_textures/away"/>
+            <record from="eintracht frankfurt third 2d" to="graphics/pictures/team/912/kits/third"/>
+          <record from="eintracht frankfurt third" to="graphics/pictures/team/912/kit_textures/third"/>
+            <record from="fc augsburg home 2d" to="graphics/pictures/team/2238/kits/home"/>
+          <record from="fc augsburg home" to="graphics/pictures/team/2238/kit_textures/home"/>
+            <record from="fc augsburg away 2d" to="graphics/pictures/team/2238/kits/away"/>
+          <record from="fc augsburg away" to="graphics/pictures/team/2238/kit_textures/away"/>
+            <record from="fc augsburg third 2d" to="graphics/pictures/team/2238/kits/third"/>
+          <record from="fc augsburg third" to="graphics/pictures/team/2238/kit_textures/third"/>
+            <record from="fc st. pauli home 2d" to="graphics/pictures/team/946/kits/home"/>
+          <record from="fc st. pauli home" to="graphics/pictures/team/946/kit_textures/home"/>
+            <record from="fc st. pauli away 2d" to="graphics/pictures/team/946/kits/away"/>
+          <record from="fc st. pauli away" to="graphics/pictures/team/946/kit_textures/away"/>
+            <record from="fc st. pauli third 2d" to="graphics/pictures/team/946/kits/third"/>
+          <record from="fc st. pauli third" to="graphics/pictures/team/946/kit_textures/third"/>
+            <record from="hamburger sv home 2d" to="graphics/pictures/team/947/kits/home"/>
+          <record from="hamburger sv home" to="graphics/pictures/team/947/kit_textures/home"/>
+            <record from="hamburger sv away 2d" to="graphics/pictures/team/947/kits/away"/>
+          <record from="hamburger sv away" to="graphics/pictures/team/947/kit_textures/away"/>
+            <record from="hamburger sv third 2d" to="graphics/pictures/team/947/kits/third"/>
+          <record from="hamburger sv third" to="graphics/pictures/team/947/kit_textures/third"/>
+            <record from="rb leipzig home 2d" to="graphics/pictures/team/91013388/kits/home"/>
+          <record from="rb leipzig home" to="graphics/pictures/team/91013388/kit_textures/home"/>
+            <record from="rb leipzig away 2d" to="graphics/pictures/team/91013388/kits/away"/>
+          <record from="rb leipzig away" to="graphics/pictures/team/91013388/kit_textures/away"/>
+            <record from="rb leipzig third 2d" to="graphics/pictures/team/91013388/kits/third"/>
+          <record from="rb leipzig third" to="graphics/pictures/team/91013388/kit_textures/third"/>
+            <record from="sc freiburg home 2d" to="graphics/pictures/team/944/kits/home"/>
+          <record from="sc freiburg home" to="graphics/pictures/team/944/kit_textures/home"/>
+            <record from="sc freiburg away 2d" to="graphics/pictures/team/944/kits/away"/>
+          <record from="sc freiburg away" to="graphics/pictures/team/944/kit_textures/away"/>
+            <record from="sc freiburg third 2d" to="graphics/pictures/team/944/kits/third"/>
+          <record from="sc freiburg third" to="graphics/pictures/team/944/kit_textures/third"/>
+            <record from="tsg 1899 hoffenheim home 2d" to="graphics/pictures/team/879226/kits/home"/>
+          <record from="tsg 1899 hoffenheim home" to="graphics/pictures/team/879226/kit_textures/home"/>
+            <record from="tsg 1899 hoffenheim away 2d" to="graphics/pictures/team/879226/kits/away"/>
+          <record from="tsg 1899 hoffenheim away" to="graphics/pictures/team/879226/kit_textures/away"/>
+            <record from="tsg 1899 hoffenheim third 2d" to="graphics/pictures/team/879226/kits/third"/>
+          <record from="tsg 1899 hoffenheim third" to="graphics/pictures/team/879226/kit_textures/third"/>
+            <record from="union berlin home 2d" to="graphics/pictures/team/121182/kits/home"/>
+          <record from="union berlin home" to="graphics/pictures/team/121182/kit_textures/home"/>
+            <record from="union berlin away 2d" to="graphics/pictures/team/121182/kits/away"/>
+          <record from="union berlin away" to="graphics/pictures/team/121182/kit_textures/away"/>
+            <record from="union berlin third 2d" to="graphics/pictures/team/121182/kits/third"/>
+          <record from="union berlin third" to="graphics/pictures/team/121182/kit_textures/third"/>
+            <record from="vfb stuttgart home 2d" to="graphics/pictures/team/960/kits/home"/>
+          <record from="vfb stuttgart home" to="graphics/pictures/team/960/kit_textures/home"/>
+            <record from="vfb stuttgart away 2d" to="graphics/pictures/team/960/kits/away"/>
+          <record from="vfb stuttgart away" to="graphics/pictures/team/960/kit_textures/away"/>
+            <record from="vfb stuttgart third 2d" to="graphics/pictures/team/960/kits/third"/>
+          <record from="vfb stuttgart third" to="graphics/pictures/team/960/kit_textures/third"/>
+            <record from="vfl wolfsburg home 2d" to="graphics/pictures/team/961/kits/home"/>
+          <record from="vfl wolfsburg home" to="graphics/pictures/team/961/kit_textures/home"/>
+            <record from="vfl wolfsburg away 2d" to="graphics/pictures/team/961/kits/away"/>
+          <record from="vfl wolfsburg away" to="graphics/pictures/team/961/kit_textures/away"/>
+            <record from="vfl wolfsburg third 2d" to="graphics/pictures/team/961/kits/third"/>
+          <record from="vfl wolfsburg third" to="graphics/pictures/team/961/kit_textures/third"/>
+            <record from="werder bremen home 2d" to="graphics/pictures/team/948/kits/home"/>
+          <record from="werder bremen home" to="graphics/pictures/team/948/kit_textures/home"/>
+            <record from="werder bremen away 2d" to="graphics/pictures/team/948/kits/away"/>
+          <record from="werder bremen away" to="graphics/pictures/team/948/kit_textures/away"/>
+            <record from="werder bremen third 2d" to="graphics/pictures/team/948/kits/third"/>
+          <record from="werder bremen third" to="graphics/pictures/team/948/kit_textures/third"/>
+            
+      </list>
+
+      </record>

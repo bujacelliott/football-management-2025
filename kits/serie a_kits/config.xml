@@ -1,0 +1,138 @@
+<record>
+      <!-- resource manager options -->
+
+      <!-- dont preload anything in this folder -->
+      <boolean id="preload" value="false"/>
+
+      <!-- logo mappings -->
+      <!-- the following XML maps pictures inside this folder into other positions
+        in the resource system, which allows this folder to be dropped into any
+        place in the graphics folder and still have the game pick up the graphics
+        files from the correct places
+      -->
+
+      <list id="maps">
+      <record from="ac milan home 2d" to="graphics/pictures/team/1099/kits/home"/>
+          <record from="ac milan home" to="graphics/pictures/team/1099/kit_textures/home"/>
+            <record from="ac milan away 2d" to="graphics/pictures/team/1099/kits/away"/>
+          <record from="ac milan away" to="graphics/pictures/team/1099/kit_textures/away"/>
+            <record from="ac milan third 2d" to="graphics/pictures/team/1099/kits/third"/>
+          <record from="ac milan third" to="graphics/pictures/team/1099/kit_textures/third"/>
+            <record from="acf fiorentina home 2d" to="graphics/pictures/team/1129/kits/home"/>
+          <record from="acf fiorentina home" to="graphics/pictures/team/1129/kit_textures/home"/>
+            <record from="acf fiorentina away 2d" to="graphics/pictures/team/1129/kits/away"/>
+          <record from="acf fiorentina away" to="graphics/pictures/team/1129/kit_textures/away"/>
+            <record from="acf fiorentina third 2d" to="graphics/pictures/team/1129/kits/third"/>
+          <record from="acf fiorentina third" to="graphics/pictures/team/1129/kit_textures/third"/>
+            <record from="as roma home 2d" to="graphics/pictures/team/1100/kits/home"/>
+          <record from="as roma home" to="graphics/pictures/team/1100/kit_textures/home"/>
+            <record from="as roma away 2d" to="graphics/pictures/team/1100/kits/away"/>
+          <record from="as roma away" to="graphics/pictures/team/1100/kit_textures/away"/>
+            <record from="as roma third 2d" to="graphics/pictures/team/1100/kits/third"/>
+          <record from="as roma third" to="graphics/pictures/team/1100/kit_textures/third"/>
+            <record from="atalanta bc home 2d" to="graphics/pictures/team/1106/kits/home"/>
+          <record from="atalanta bc home" to="graphics/pictures/team/1106/kit_textures/home"/>
+            <record from="atalanta bc away 2d" to="graphics/pictures/team/1106/kits/away"/>
+          <record from="atalanta bc away" to="graphics/pictures/team/1106/kit_textures/away"/>
+            <record from="atalanta bc third 2d" to="graphics/pictures/team/1106/kits/third"/>
+          <record from="atalanta bc third" to="graphics/pictures/team/1106/kit_textures/third"/>
+            <record from="bologna fc home 2d" to="graphics/pictures/team/1111/kits/home"/>
+          <record from="bologna fc home" to="graphics/pictures/team/1111/kit_textures/home"/>
+            <record from="bologna fc away 2d" to="graphics/pictures/team/1111/kits/away"/>
+          <record from="bologna fc away" to="graphics/pictures/team/1111/kit_textures/away"/>
+            <record from="bologna fc third 2d" to="graphics/pictures/team/1111/kits/third"/>
+          <record from="bologna fc third" to="graphics/pictures/team/1111/kit_textures/third"/>
+            <record from="cagliari calcio home 2d" to="graphics/pictures/team/1114/kits/home"/>
+          <record from="cagliari calcio home" to="graphics/pictures/team/1114/kit_textures/home"/>
+            <record from="cagliari calcio away 2d" to="graphics/pictures/team/1114/kits/away"/>
+          <record from="cagliari calcio away" to="graphics/pictures/team/1114/kit_textures/away"/>
+            <record from="cagliari calcio third 2d" to="graphics/pictures/team/1114/kits/third"/>
+          <record from="cagliari calcio third" to="graphics/pictures/team/1114/kit_textures/third"/>
+            <record from="como 1907 home 2d" to="graphics/pictures/team/1123/kits/home"/>
+          <record from="como 1907 home" to="graphics/pictures/team/1123/kit_textures/home"/>
+            <record from="como 1907 away 2d" to="graphics/pictures/team/1123/kits/away"/>
+          <record from="como 1907 away" to="graphics/pictures/team/1123/kit_textures/away"/>
+            <record from="como 1907 third 2d" to="graphics/pictures/team/1123/kits/third"/>
+          <record from="como 1907 third" to="graphics/pictures/team/1123/kit_textures/third"/>
+            <record from="genoa cfc home 2d" to="graphics/pictures/team/1132/kits/home"/>
+          <record from="genoa cfc home" to="graphics/pictures/team/1132/kit_textures/home"/>
+            <record from="genoa cfc away 2d" to="graphics/pictures/team/1132/kits/away"/>
+          <record from="genoa cfc away" to="graphics/pictures/team/1132/kit_textures/away"/>
+            <record from="genoa cfc third 2d" to="graphics/pictures/team/1132/kits/third"/>
+          <record from="genoa cfc third" to="graphics/pictures/team/1132/kit_textures/third"/>
+            <record from="hellas verona home 2d" to="graphics/pictures/team/2201/kits/home"/>
+          <record from="hellas verona home" to="graphics/pictures/team/2201/kit_textures/home"/>
+            <record from="hellas verona away 2d" to="graphics/pictures/team/2201/kits/away"/>
+          <record from="hellas verona away" to="graphics/pictures/team/2201/kit_textures/away"/>
+            <record from="hellas verona third 2d" to="graphics/pictures/team/2201/kits/third"/>
+          <record from="hellas verona third" to="graphics/pictures/team/2201/kit_textures/third"/>
+            <record from="inter milan home 2d" to="graphics/pictures/team/1135/kits/home"/>
+          <record from="inter milan home" to="graphics/pictures/team/1135/kit_textures/home"/>
+            <record from="inter milan away 2d" to="graphics/pictures/team/1135/kits/away"/>
+          <record from="inter milan away" to="graphics/pictures/team/1135/kit_textures/away"/>
+            <record from="inter milan third 2d" to="graphics/pictures/team/1135/kits/third"/>
+          <record from="inter milan third" to="graphics/pictures/team/1135/kit_textures/third"/>
+            <record from="juventus fc home 2d" to="graphics/pictures/team/1139/kits/home"/>
+          <record from="juventus fc home" to="graphics/pictures/team/1139/kit_textures/home"/>
+            <record from="juventus fc away 2d" to="graphics/pictures/team/1139/kits/away"/>
+          <record from="juventus fc away" to="graphics/pictures/team/1139/kit_textures/away"/>
+            <record from="juventus fc third 2d" to="graphics/pictures/team/1139/kits/third"/>
+          <record from="juventus fc third" to="graphics/pictures/team/1139/kit_textures/third"/>
+            <record from="parma calcio home 2d" to="graphics/pictures/team/1156/kits/home"/>
+          <record from="parma calcio home" to="graphics/pictures/team/1156/kit_textures/home"/>
+            <record from="parma calcio away 2d" to="graphics/pictures/team/1156/kits/away"/>
+          <record from="parma calcio away" to="graphics/pictures/team/1156/kit_textures/away"/>
+            <record from="parma calcio third 2d" to="graphics/pictures/team/1156/kits/third"/>
+          <record from="parma calcio third" to="graphics/pictures/team/1156/kit_textures/third"/>
+            <record from="pisa home 2d" to="graphics/pictures/team/2215/kits/home"/>
+          <record from="pisa home" to="graphics/pictures/team/2215/kit_textures/home"/>
+            <record from="pisa away 2d" to="graphics/pictures/team/2215/kits/away"/>
+          <record from="pisa away" to="graphics/pictures/team/2215/kit_textures/away"/>
+            <record from="pisa third 2d" to="graphics/pictures/team/2215/kits/third"/>
+          <record from="pisa third" to="graphics/pictures/team/2215/kit_textures/third"/>
+            <record from="sassuolo home 2d" to="graphics/pictures/team/3800256/kits/home"/>
+          <record from="sassuolo home" to="graphics/pictures/team/3800256/kit_textures/home"/>
+            <record from="sassuolo away 2d" to="graphics/pictures/team/3800256/kits/away"/>
+          <record from="sassuolo away" to="graphics/pictures/team/3800256/kit_textures/away"/>
+            <record from="sassuolo third 2d" to="graphics/pictures/team/3800256/kits/third"/>
+          <record from="sassuolo third" to="graphics/pictures/team/3800256/kit_textures/third"/>
+            <record from="ss lazio home 2d" to="graphics/pictures/team/1140/kits/home"/>
+          <record from="ss lazio home" to="graphics/pictures/team/1140/kit_textures/home"/>
+            <record from="ss lazio away 2d" to="graphics/pictures/team/1140/kits/away"/>
+          <record from="ss lazio away" to="graphics/pictures/team/1140/kit_textures/away"/>
+            <record from="ss lazio third 2d" to="graphics/pictures/team/1140/kits/third"/>
+          <record from="ss lazio third" to="graphics/pictures/team/1140/kit_textures/third"/>
+            <record from="ssc napoli home 2d" to="graphics/pictures/team/1150/kits/home"/>
+          <record from="ssc napoli home" to="graphics/pictures/team/1150/kit_textures/home"/>
+            <record from="ssc napoli away 2d" to="graphics/pictures/team/1150/kits/away"/>
+          <record from="ssc napoli away" to="graphics/pictures/team/1150/kit_textures/away"/>
+            <record from="ssc napoli third 2d" to="graphics/pictures/team/1150/kits/third"/>
+          <record from="ssc napoli third" to="graphics/pictures/team/1150/kit_textures/third"/>
+            <record from="torino fc home 2d" to="graphics/pictures/team/1174/kits/home"/>
+          <record from="torino fc home" to="graphics/pictures/team/1174/kit_textures/home"/>
+            <record from="torino fc away 2d" to="graphics/pictures/team/1174/kits/away"/>
+          <record from="torino fc away" to="graphics/pictures/team/1174/kit_textures/away"/>
+            <record from="torino fc third 2d" to="graphics/pictures/team/1174/kits/third"/>
+          <record from="torino fc third" to="graphics/pictures/team/1174/kit_textures/third"/>
+            <record from="udinese calcio home 2d" to="graphics/pictures/team/1178/kits/home"/>
+          <record from="udinese calcio home" to="graphics/pictures/team/1178/kit_textures/home"/>
+            <record from="udinese calcio away 2d" to="graphics/pictures/team/1178/kits/away"/>
+          <record from="udinese calcio away" to="graphics/pictures/team/1178/kit_textures/away"/>
+            <record from="udinese calcio third 2d" to="graphics/pictures/team/1178/kits/third"/>
+          <record from="udinese calcio third" to="graphics/pictures/team/1178/kit_textures/third"/>
+            <record from="us cremonese home 2d" to="graphics/pictures/team/1125/kits/home"/>
+          <record from="us cremonese home" to="graphics/pictures/team/1125/kit_textures/home"/>
+            <record from="us cremonese away 2d" to="graphics/pictures/team/1125/kits/away"/>
+          <record from="us cremonese away" to="graphics/pictures/team/1125/kit_textures/away"/>
+            <record from="us cremonese third 2d" to="graphics/pictures/team/1125/kits/third"/>
+          <record from="us cremonese third" to="graphics/pictures/team/1125/kit_textures/third"/>
+            <record from="us lecce home 2d" to="graphics/pictures/team/1141/kits/home"/>
+          <record from="us lecce home" to="graphics/pictures/team/1141/kit_textures/home"/>
+            <record from="us lecce away 2d" to="graphics/pictures/team/1141/kits/away"/>
+          <record from="us lecce away" to="graphics/pictures/team/1141/kit_textures/away"/>
+            <record from="us lecce third 2d" to="graphics/pictures/team/1141/kits/third"/>
+          <record from="us lecce third" to="graphics/pictures/team/1141/kit_textures/third"/>
+            
+      </list>
+
+      </record>

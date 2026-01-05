@@ -56,16 +56,8 @@ package com.utterlySuperb.chumpManager.view.screens
       
       override protected function clickButtonHandler(param1:Event) : void
       {
-         var _loc2_:int = GameHelper.getPlayerLeaguePosition();
-         if(Main.currentGame.leagues[0].entrants.length - _loc2_ > 2)
-         {
-            GameEngine.processSeasonFinish(Main.currentGame);
-            GameEngine.initSeason(Main.currentGame);
-         }
-         else
-         {
-            Main.instance.showScreen(Screen.START_SCREEN);
-         }
+         GameEngine.processSeasonFinish(Main.currentGame);
+         GameEngine.initSeason(Main.currentGame);
       }
    }
 }

@@ -43,10 +43,10 @@ package com.utterlySuperb.chumpManager.view.ui
       
       public function drawFrame() : void
       {
-         graphics.beginFill(4486553);
+         graphics.beginFill(0x0d2f1b);
          graphics.lineStyle(2,16777215);
          graphics.drawRect(0,0,maxWidth + this.scrollWidth,maxHeight);
-         graphics.beginFill(0);
+         graphics.beginFill(0x0a2415);
          graphics.lineStyle(2,16777215);
          graphics.drawRect(0,maxHeight,maxWidth + this.scrollWidth,10);
          this.outLines.graphics.lineStyle(2,16777215);
@@ -63,12 +63,12 @@ package com.utterlySuperb.chumpManager.view.ui
          scroller = new IntScrollBar();
          scroller.bg = new MovieClip();
          scroller.bg.graphics.lineStyle(1,16777215);
-         scroller.bg.graphics.beginFill(10069175);
+         scroller.bg.graphics.beginFill(0x14552b);
          scroller.bg.graphics.drawRect(0,0,this.scrollWidth,maxHeight + offsetY);
          scroller.addChild(scroller.bg);
          scroller.scroller = new MovieClip();
          scroller.scroller.filters = [new BevelFilter(2,45,16777215,0.5,0,0.5,2,2)];
-         scroller.scroller.graphics.beginFill(13357274);
+         scroller.scroller.graphics.beginFill(0x1c7a3f);
          scroller.scroller.graphics.drawRect(0,0,this.scrollWidth,_loc1_);
          scroller.addChild(scroller.scroller);
          scroller.setScrollerRange(maxHeight + offsetY,holder);

@@ -1,0 +1,162 @@
+<record>
+      <!-- resource manager options -->
+
+      <!-- dont preload anything in this folder -->
+      <boolean id="preload" value="false"/>
+
+      <!-- logo mappings -->
+      <!-- the following XML maps pictures inside this folder into other positions
+        in the resource system, which allows this folder to be dropped into any
+        place in the graphics folder and still have the game pick up the graphics
+        files from the correct places
+      -->
+
+      <list id="maps">
+      <record from="birmingham city home 2d" to="graphics/pictures/team/609/kits/home"/>
+          <record from="birmingham city home" to="graphics/pictures/team/609/kit_textures/home"/>
+            <record from="birmingham city away 2d" to="graphics/pictures/team/609/kits/away"/>
+          <record from="birmingham city away" to="graphics/pictures/team/609/kit_textures/away"/>
+            <record from="birmingham city third 2d" to="graphics/pictures/team/609/kits/third"/>
+          <record from="birmingham city third" to="graphics/pictures/team/609/kit_textures/third"/>
+            <record from="blackburn rovers home 2d" to="graphics/pictures/team/612/kits/home"/>
+          <record from="blackburn rovers home" to="graphics/pictures/team/612/kit_textures/home"/>
+            <record from="blackburn rovers away 2d" to="graphics/pictures/team/612/kits/away"/>
+          <record from="blackburn rovers away" to="graphics/pictures/team/612/kit_textures/away"/>
+            <record from="blackburn rovers third 2d" to="graphics/pictures/team/612/kits/third"/>
+          <record from="blackburn rovers third" to="graphics/pictures/team/612/kit_textures/third"/>
+            <record from="bristol city home 2d" to="graphics/pictures/team/619/kits/home"/>
+          <record from="bristol city home" to="graphics/pictures/team/619/kit_textures/home"/>
+            <record from="bristol city away 2d" to="graphics/pictures/team/619/kits/away"/>
+          <record from="bristol city away" to="graphics/pictures/team/619/kit_textures/away"/>
+            <record from="bristol city third 2d" to="graphics/pictures/team/619/kits/third"/>
+          <record from="bristol city third" to="graphics/pictures/team/619/kit_textures/third"/>
+            <record from="charlton athletic home 2d" to="graphics/pictures/team/628/kits/home"/>
+          <record from="charlton athletic home" to="graphics/pictures/team/628/kit_textures/home"/>
+            <record from="charlton athletic away 2d" to="graphics/pictures/team/628/kits/away"/>
+          <record from="charlton athletic away" to="graphics/pictures/team/628/kit_textures/away"/>
+            <record from="charlton athletic third 2d" to="graphics/pictures/team/628/kits/third"/>
+          <record from="charlton athletic third" to="graphics/pictures/team/628/kit_textures/third"/>
+            <record from="coventry city home 2d" to="graphics/pictures/team/639/kits/home"/>
+          <record from="coventry city home" to="graphics/pictures/team/639/kit_textures/home"/>
+            <record from="coventry city away 2d" to="graphics/pictures/team/639/kits/away"/>
+          <record from="coventry city away" to="graphics/pictures/team/639/kit_textures/away"/>
+            <record from="coventry city third 2d" to="graphics/pictures/team/639/kits/third"/>
+          <record from="coventry city third" to="graphics/pictures/team/639/kit_textures/third"/>
+            <record from="derby county home 2d" to="graphics/pictures/team/645/kits/home"/>
+          <record from="derby county home" to="graphics/pictures/team/645/kit_textures/home"/>
+            <record from="derby county away 2d" to="graphics/pictures/team/645/kits/away"/>
+          <record from="derby county away" to="graphics/pictures/team/645/kit_textures/away"/>
+            <record from="derby county third 2d" to="graphics/pictures/team/645/kits/third"/>
+          <record from="derby county third" to="graphics/pictures/team/645/kit_textures/third"/>
+            <record from="hull city afc home 2d" to="graphics/pictures/team/665/kits/home"/>
+          <record from="hull city afc home" to="graphics/pictures/team/665/kit_textures/home"/>
+            <record from="hull city afc away 2d" to="graphics/pictures/team/665/kits/away"/>
+          <record from="hull city afc away" to="graphics/pictures/team/665/kit_textures/away"/>
+            <record from="hull city afc third 2d" to="graphics/pictures/team/665/kits/third"/>
+          <record from="hull city afc third" to="graphics/pictures/team/665/kit_textures/third"/>
+            <record from="ipswich town home 2d" to="graphics/pictures/team/667/kits/home"/>
+          <record from="ipswich town home" to="graphics/pictures/team/667/kit_textures/home"/>
+            <record from="ipswich town away 2d" to="graphics/pictures/team/667/kits/away"/>
+          <record from="ipswich town away" to="graphics/pictures/team/667/kit_textures/away"/>
+            <record from="ipswich town third 2d" to="graphics/pictures/team/667/kits/third"/>
+          <record from="ipswich town third" to="graphics/pictures/team/667/kit_textures/third"/>
+            <record from="leicester city home 2d" to="graphics/pictures/team/673/kits/home"/>
+          <record from="leicester city home" to="graphics/pictures/team/673/kit_textures/home"/>
+            <record from="leicester city away 2d" to="graphics/pictures/team/673/kits/away"/>
+          <record from="leicester city away" to="graphics/pictures/team/673/kit_textures/away"/>
+            <record from="leicester city third 2d" to="graphics/pictures/team/673/kits/third"/>
+          <record from="leicester city third" to="graphics/pictures/team/673/kit_textures/third"/>
+            <record from="middlesbrough home 2d" to="graphics/pictures/team/685/kits/home"/>
+          <record from="middlesbrough home" to="graphics/pictures/team/685/kit_textures/home"/>
+            <record from="middlesbrough away 2d" to="graphics/pictures/team/685/kits/away"/>
+          <record from="middlesbrough away" to="graphics/pictures/team/685/kit_textures/away"/>
+            <record from="middlesbrough third 2d" to="graphics/pictures/team/685/kits/third"/>
+          <record from="middlesbrough third" to="graphics/pictures/team/685/kit_textures/third"/>
+            <record from="millwall fc home 2d" to="graphics/pictures/team/686/kits/home"/>
+          <record from="millwall fc home" to="graphics/pictures/team/686/kit_textures/home"/>
+            <record from="millwall fc away 2d" to="graphics/pictures/team/686/kits/away"/>
+          <record from="millwall fc away" to="graphics/pictures/team/686/kit_textures/away"/>
+            <record from="millwall fc third 2d" to="graphics/pictures/team/686/kits/third"/>
+          <record from="millwall fc third" to="graphics/pictures/team/686/kit_textures/third"/>
+            <record from="norwich city home 2d" to="graphics/pictures/team/691/kits/home"/>
+          <record from="norwich city home" to="graphics/pictures/team/691/kit_textures/home"/>
+            <record from="norwich city away 2d" to="graphics/pictures/team/691/kits/away"/>
+          <record from="norwich city away" to="graphics/pictures/team/691/kit_textures/away"/>
+            <record from="norwich city third 2d" to="graphics/pictures/team/691/kits/third"/>
+          <record from="norwich city third" to="graphics/pictures/team/691/kit_textures/third"/>
+            <record from="oxford united home 2d" to="graphics/pictures/team/695/kits/home"/>
+          <record from="oxford united home" to="graphics/pictures/team/695/kit_textures/home"/>
+            <record from="oxford united away 2d" to="graphics/pictures/team/695/kits/away"/>
+          <record from="oxford united away" to="graphics/pictures/team/695/kit_textures/away"/>
+            <record from="oxford united third 2d" to="graphics/pictures/team/695/kits/third"/>
+          <record from="oxford united third" to="graphics/pictures/team/695/kit_textures/third"/>
+            <record from="portsmouth fc home 2d" to="graphics/pictures/team/699/kits/home"/>
+          <record from="portsmouth fc home" to="graphics/pictures/team/699/kit_textures/home"/>
+            <record from="portsmouth fc away 2d" to="graphics/pictures/team/699/kits/away"/>
+          <record from="portsmouth fc away" to="graphics/pictures/team/699/kit_textures/away"/>
+            <record from="portsmouth fc third 2d" to="graphics/pictures/team/699/kits/third"/>
+          <record from="portsmouth fc third" to="graphics/pictures/team/699/kit_textures/third"/>
+            <record from="preston north end home 2d" to="graphics/pictures/team/700/kits/home"/>
+          <record from="preston north end home" to="graphics/pictures/team/700/kit_textures/home"/>
+            <record from="preston north end away 2d" to="graphics/pictures/team/700/kits/away"/>
+          <record from="preston north end away" to="graphics/pictures/team/700/kit_textures/away"/>
+            <record from="preston north end third 2d" to="graphics/pictures/team/700/kits/third"/>
+          <record from="preston north end third" to="graphics/pictures/team/700/kit_textures/third"/>
+            <record from="queens park rangers home 2d" to="graphics/pictures/team/701/kits/home"/>
+          <record from="queens park rangers home" to="graphics/pictures/team/701/kit_textures/home"/>
+            <record from="queens park rangers away 2d" to="graphics/pictures/team/701/kits/away"/>
+          <record from="queens park rangers away" to="graphics/pictures/team/701/kit_textures/away"/>
+            <record from="queens park rangers third 2d" to="graphics/pictures/team/701/kits/third"/>
+          <record from="queens park rangers third" to="graphics/pictures/team/701/kit_textures/third"/>
+            <record from="sheffield united home 2d" to="graphics/pictures/team/708/kits/home"/>
+          <record from="sheffield united home" to="graphics/pictures/team/708/kit_textures/home"/>
+            <record from="sheffield united away 2d" to="graphics/pictures/team/708/kits/away"/>
+          <record from="sheffield united away" to="graphics/pictures/team/708/kit_textures/away"/>
+            <record from="sheffield united third 2d" to="graphics/pictures/team/708/kits/third"/>
+          <record from="sheffield united third" to="graphics/pictures/team/708/kit_textures/third"/>
+            <record from="sheffield wednesday home 2d" to="graphics/pictures/team/709/kits/home"/>
+          <record from="sheffield wednesday home" to="graphics/pictures/team/709/kit_textures/home"/>
+            <record from="sheffield wednesday away 2d" to="graphics/pictures/team/709/kits/away"/>
+          <record from="sheffield wednesday away" to="graphics/pictures/team/709/kit_textures/away"/>
+            <record from="sheffield wednesday third 2d" to="graphics/pictures/team/709/kits/third"/>
+          <record from="sheffield wednesday third" to="graphics/pictures/team/709/kit_textures/third"/>
+            <record from="southampton fc home 2d" to="graphics/pictures/team/713/kits/home"/>
+          <record from="southampton fc home" to="graphics/pictures/team/713/kit_textures/home"/>
+            <record from="southampton fc away 2d" to="graphics/pictures/team/713/kits/away"/>
+          <record from="southampton fc away" to="graphics/pictures/team/713/kit_textures/away"/>
+            <record from="southampton fc third 2d" to="graphics/pictures/team/713/kits/third"/>
+          <record from="southampton fc third" to="graphics/pictures/team/713/kit_textures/third"/>
+            <record from="stoke city home 2d" to="graphics/pictures/team/721/kits/home"/>
+          <record from="stoke city home" to="graphics/pictures/team/721/kit_textures/home"/>
+            <record from="stoke city away 2d" to="graphics/pictures/team/721/kits/away"/>
+          <record from="stoke city away" to="graphics/pictures/team/721/kit_textures/away"/>
+            <record from="stoke city third 2d" to="graphics/pictures/team/721/kits/third"/>
+          <record from="stoke city third" to="graphics/pictures/team/721/kit_textures/third"/>
+            <record from="swansea city home 2d" to="graphics/pictures/team/724/kits/home"/>
+          <record from="swansea city home" to="graphics/pictures/team/724/kit_textures/home"/>
+            <record from="swansea city away 2d" to="graphics/pictures/team/724/kits/away"/>
+          <record from="swansea city away" to="graphics/pictures/team/724/kit_textures/away"/>
+            <record from="swansea city third 2d" to="graphics/pictures/team/724/kits/third"/>
+          <record from="swansea city third" to="graphics/pictures/team/724/kit_textures/third"/>
+            <record from="watford fc home 2d" to="graphics/pictures/team/732/kits/home"/>
+          <record from="watford fc home" to="graphics/pictures/team/732/kit_textures/home"/>
+            <record from="watford fc away 2d" to="graphics/pictures/team/732/kits/away"/>
+          <record from="watford fc away" to="graphics/pictures/team/732/kit_textures/away"/>
+            <record from="watford fc third 2d" to="graphics/pictures/team/732/kits/third"/>
+          <record from="watford fc third" to="graphics/pictures/team/732/kit_textures/third"/>
+            <record from="west bromwich albion home 2d" to="graphics/pictures/team/734/kits/home"/>
+          <record from="west bromwich albion home" to="graphics/pictures/team/734/kit_textures/home"/>
+            <record from="west bromwich albion away 2d" to="graphics/pictures/team/734/kits/away"/>
+          <record from="west bromwich albion away" to="graphics/pictures/team/734/kit_textures/away"/>
+            <record from="west bromwich albion third 2d" to="graphics/pictures/team/734/kits/third"/>
+          <record from="west bromwich albion third" to="graphics/pictures/team/734/kit_textures/third"/>
+            <record from="wrexham home 2d" to="graphics/pictures/team/741/kits/home"/>
+          <record from="wrexham home" to="graphics/pictures/team/741/kit_textures/home"/>
+            <record from="wrexham away 2d" to="graphics/pictures/team/741/kits/away"/>
+          <record from="wrexham away" to="graphics/pictures/team/741/kit_textures/away"/>
+            <record from="wrexham third 2d" to="graphics/pictures/team/741/kits/third"/>
+          <record from="wrexham third" to="graphics/pictures/team/741/kit_textures/third"/>
+            
+      </list>
+
+      </record>

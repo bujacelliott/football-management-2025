@@ -7,7 +7,8 @@ package com.utterlySuperb.chumpManager.engine
    import com.utterlySuperb.chumpManager.model.dataObjects.Player;
    import com.utterlySuperb.chumpManager.model.dataObjects.PlayerOffers;
    import com.utterlySuperb.chumpManager.model.dataObjects.StaticInfo;
-   import com.utterlySuperb.text.TextHelper;
+import com.utterlySuperb.text.TextHelper;
+import flash.utils.ByteArray;
    
    public class TransfersEngine
    {
@@ -18,7 +19,12 @@ package com.utterlySuperb.chumpManager.engine
       
       private static const NEEDED_NUMBERS:Array = [4,1,2,2,2,4,4,4,1,3];
       
-      public static const TRANSFER_SLOTS:Array = [0,1000000,5000000,10000000,15000000,20000000,35000000,50000000,75000000,100000000,250000000];
+   public static const TRANSFER_SLOTS:Array = [0,1000000,5000000,10000000,15000000,20000000,35000000,50000000,75000000,100000000,250000000];
+
+      [Embed(source="../../../../../data/value_mapping_rescaled.csv", mimeType="application/octet-stream")]
+      private static const ValueMapData:Class;
+
+      private static var valueMap:Object;
       
       public function TransfersEngine()
       {
@@ -314,13 +320,115 @@ package com.utterlySuperb.chumpManager.engine
          return _loc2_;
       }
       
-      public static function getExpectedTransferFee(param1:Player) : int
+   public static function getExpectedTransferFee(param1:Player) : int
+   {
+         var _loc2_:int = getMappedValue(param1);
+         if(_loc2_ > 0)
+         {
+            return _loc2_;
+         }
+         var _loc3_:Number = param1.playerRating > 0 ? param1.playerRating / 110 : PlayerHelper.getPlayerScore(param1) / 110;
+         var _loc4_:int = PlayerHelper.getMaxAge(param1.basePostition);
+         var _loc5_:int = _loc4_ - Player.MIN_AGE;
+         _loc3_ = _loc3_ * 0.9 + _loc3_ * 0.1 * (_loc5_ - (param1.age - Player.MIN_AGE)) / _loc5_;
+         return Math.pow(21350,1 + _loc3_);
+   }
+
+      private static function getMappedValue(param1:Player) : int
       {
-         var _loc2_:Number = param1.playerRating > 0 ? param1.playerRating / 110 : PlayerHelper.getPlayerScore(param1) / 110;
-         var _loc3_:int = PlayerHelper.getMaxAge(param1.basePostition);
-         var _loc4_:int = _loc3_ - Player.MIN_AGE;
-         _loc2_ = _loc2_ * 0.9 + _loc2_ * 0.1 * (_loc4_ - (param1.age - Player.MIN_AGE)) / _loc4_;
-         return Math.pow(21350,1 + _loc2_);
+         if(!param1)
+         {
+            return 0;
+         }
+         if(!valueMap)
+         {
+            buildValueMap();
+         }
+         if(!valueMap)
+         {
+            return 0;
+         }
+         var _loc1_:int = Math.round(param1.playerRating > 0 ? param1.playerRating : PlayerHelper.getPlayerScore(param1));
+         var _loc2_:Number = PlayerHelper.getPlayerScoreFromStats(param1,PlayerHelper.getPlayerMaxStats(param1));
+         var _loc3_:int = Math.round(_loc2_);
+         var _loc4_:int = int(param1.age);
+         var _loc5_:String = getMappedPrimaryPos(param1);
+         var _loc6_:String = _loc5_ + "|" + _loc1_ + "|" + _loc3_ + "|" + _loc4_;
+         if(valueMap.hasOwnProperty(_loc6_))
+         {
+            return int(valueMap[_loc6_]);
+         }
+         return 0;
+      }
+
+      private static function getMappedPrimaryPos(param1:Player) : String
+      {
+         var _loc1_:String = param1.positions ? param1.positions.split("-")[0] : "";
+         switch(_loc1_)
+         {
+            case "gk":
+               return "GK";
+            case "cb":
+               return "CB";
+            case "fb":
+            case "wb":
+               return "RB";
+            case "dm":
+               return "CDM";
+            case "cm":
+               return "CM";
+            case "sm":
+               return "RM";
+            case "am":
+               return "CAM";
+            case "cf":
+               return "ST";
+            case "wf":
+               return "RW";
+         }
+         return "CM";
+      }
+
+      private static function buildValueMap() : void
+      {
+         var _loc1_:ByteArray = new ValueMapData() as ByteArray;
+         if(!_loc1_)
+         {
+            return;
+         }
+         var _loc2_:String = _loc1_.readUTFBytes(_loc1_.length);
+         var _loc3_:Array = _loc2_.split(/\r?\n/);
+         if(_loc3_.length <= 1)
+         {
+            return;
+         }
+         valueMap = {};
+         var _loc4_:Array = String(_loc3_[0]).split(",");
+         var _loc5_:Object = {};
+         var _loc6_:int = 0;
+         while(_loc6_ < _loc4_.length)
+         {
+            _loc5_[_loc4_[_loc6_]] = _loc6_;
+            _loc6_++;
+         }
+         var _loc7_:int = 1;
+         while(_loc7_ < _loc3_.length)
+         {
+            if(String(_loc3_[_loc7_]).length == 0)
+            {
+               _loc7_++;
+               continue;
+            }
+            var _loc8_:Array = String(_loc3_[_loc7_]).split(",");
+            var _loc9_:String = _loc8_[_loc5_["primary_pos"]];
+            var _loc10_:String = _loc8_[_loc5_["game_overall_bin"]];
+            var _loc11_:String = _loc8_[_loc5_["game_potential_bin"]];
+            var _loc12_:String = _loc8_[_loc5_["age_bin"]];
+            var _loc13_:String = _loc8_[_loc5_["value_eur"]];
+            var _loc14_:String = _loc9_ + "|" + _loc10_ + "|" + _loc11_ + "|" + _loc12_;
+            valueMap[_loc14_] = int(Number(_loc13_));
+            _loc7_++;
+         }
       }
       
       public static function getExpectedSalary(param1:Player) : int

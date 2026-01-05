@@ -129,11 +129,11 @@ package com.utterlySuperb.ui
       public function quickSetup(param1:int = 20, param2:int = 100) : void
       {
          this.bg = new MovieClip();
-         this.bg.graphics.beginFill(0,0.4);
+         this.bg.graphics.beginFill(0x0d2f1b,0.7);
          this.bg.graphics.drawRect(0,0,param1,param2);
          addChild(this.bg);
          this.scroller = new MovieClip();
-         this.scroller.graphics.beginFill(16711680,1);
+         this.scroller.graphics.beginFill(0x1c7a3f,1);
          this.scroller.graphics.drawRect(0,0,param1,param1);
          addChild(this.scroller);
       }

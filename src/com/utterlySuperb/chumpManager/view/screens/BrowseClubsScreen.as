@@ -1,14 +1,15 @@
 package com.utterlySuperb.chumpManager.view.screens
 {
-   import com.utterlySuperb.chumpManager.engine.GameHelper;
    import com.utterlySuperb.chumpManager.events.PlayerEvent;
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.view.panels.managerPanels.BrowseClubPlayerList;
    import com.utterlySuperb.chumpManager.view.panels.managerPanels.BrowseClubsList;
+   import com.utterlySuperb.chumpManager.view.panels.managerPanels.BrowseLeaguesList;
    import com.utterlySuperb.chumpManager.view.screens.transfers.TransferSearchScreen;
    import com.utterlySuperb.events.IntEvent;
    import com.utterlySuperb.text.TextHelper;
    import com.utterlySuperb.ui.ListBox;
+   import flash.events.Event;
    import flash.text.TextField;
    
    public class BrowseClubsScreen extends TransferSearchScreen
@@ -18,7 +19,11 @@ package com.utterlySuperb.chumpManager.view.screens
       
       private var clubsList:BrowseClubsList;
       
+      private var leaguesList:BrowseLeaguesList;
+      
       private var tf0:TextField;
+
+      private var clubIndex:int = 0;
       
       public function BrowseClubsScreen()
       {
@@ -33,9 +38,15 @@ package com.utterlySuperb.chumpManager.view.screens
          this.tf0.y = Globals.belowStatus + 10;
          this.tf0.htmlText = CopyManager.getCopy("showClubPlayers");
          addChild(this.tf0);
+         this.leaguesList = new BrowseLeaguesList();
+         this.leaguesList.x = Globals.MARGIN_X;
+         this.leaguesList.y = this.tf0.y + 40;
+         addChildAt(this.leaguesList,0);
+         this.leaguesList.addEventListener(ListBox.CLICK_ITEM,this.changeLeagueHandler);
+         this.leaguesList.setCurrentBtn(Main.currentGame.mainLeagueNum);
          this.clubsList = new BrowseClubsList();
-         this.clubsList.x = Globals.MARGIN_X;
-         this.clubsList.y = this.tf0.y + 40;
+         this.clubsList.x = this.leaguesList.x;
+         this.clubsList.y = this.leaguesList.y;
          addChildAt(this.clubsList,0);
          this.clubsList.addEventListener(ListBox.CLICK_ITEM,this.changeClubHandler);
          this.playersList = new BrowseClubPlayerList();
@@ -45,20 +56,39 @@ package com.utterlySuperb.chumpManager.view.screens
          this.playersList.addEventListener(PlayerEvent.OVER_PLAYER,overPlayerHandler);
          this.playersList.addEventListener(PlayerEvent.CLICK_PLAYER,clickPlayerHandler);
          addPlayerInfo(this.playersList.x + 260,this.playersList.y);
-         this.playersList.setClub(Main.currentGame.leagues[0].entrants[0].club,false);
-         this.tf0.htmlText = CopyManager.getCopy("showClubPlayers") + " " + Main.currentGame.leagues[0].entrants[0].club.name;
+         this.leaguesList.currentBtn = Main.currentGame.mainLeagueNum;
+         this.clubsList.changeLeague(this.leaguesList.currentBtn);
+         this.changeClubHandler(new IntEvent(ListBox.CLICK_ITEM,0));
          enabled = true;
+      }
+      
+      private function changeLeagueHandler(param1:IntEvent) : void
+      {
+         this.clubsList.changeLeague(param1.num);
+         if(this.clubIndex >= 0)
+         {
+            this.clubIndex = Math.min(this.clubIndex,Main.currentGame.leagues[this.leaguesList.currentBtn].entrants.length - 1);
+            this.changeClubHandler(new IntEvent(ListBox.CLICK_ITEM,this.clubIndex));
+         }
       }
       
       private function changeClubHandler(param1:IntEvent) : void
       {
-         this.playersList.setClub(GameHelper.getCoreClubs()[param1.num].club);
-         this.tf0.htmlText = CopyManager.getCopy("showClubPlayers") + " " + Main.currentGame.leagues[0].entrants[param1.num].club.name;
+         this.clubIndex = param1.num;
+         if(!Main.currentGame.leagues[this.leaguesList.currentBtn] || !Main.currentGame.leagues[this.leaguesList.currentBtn].entrants || Main.currentGame.leagues[this.leaguesList.currentBtn].entrants.length == 0)
+         {
+            return;
+         }
+         this.clubIndex = Math.max(0,Math.min(this.clubIndex,Main.currentGame.leagues[this.leaguesList.currentBtn].entrants.length - 1));
+         var _loc2_:* = Main.currentGame.leagues[this.leaguesList.currentBtn].entrants[this.clubIndex].club;
+         this.playersList.setClub(_loc2_);
+         this.tf0.htmlText = CopyManager.getCopy("showClubPlayers") + " " + _loc2_.name;
       }
       
       override public function cleanUp() : void
       {
          super.cleanUp();
+         this.leaguesList.removeEventListener(ListBox.CLICK_ITEM,this.changeLeagueHandler);
          this.clubsList.removeEventListener(ListBox.CLICK_ITEM,this.changeClubHandler);
          this.playersList.removeEventListener(PlayerEvent.OVER_PLAYER,overPlayerHandler);
          this.playersList.removeEventListener(PlayerEvent.CLICK_PLAYER,clickPlayerHandler);

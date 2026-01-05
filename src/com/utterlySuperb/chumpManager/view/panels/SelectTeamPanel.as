@@ -4,51 +4,70 @@ package com.utterlySuperb.chumpManager.view.panels
    import com.utterlySuperb.chumpManager.engine.TeamHelper;
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.model.dataObjects.Club;
-   import com.utterlySuperb.chumpManager.model.dataObjects.Formation;
    import com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
-   import com.utterlySuperb.chumpManager.view.modals.PleaseWaitModal;
-   import com.utterlySuperb.chumpManager.view.ui.buttons.LeagueButton;
    import com.utterlySuperb.chumpManager.view.ui.buttons.TeamButton;
    import com.utterlySuperb.text.TextHelper;
-   import com.utterlySuperb.ui.ModalDialogue;
    import com.utterlySuperb.ui.buttons.GenericButton;
    import flash.display.Sprite;
    import flash.events.Event;
+   import flash.events.MouseEvent;
    import flash.text.TextField;
    import flash.text.TextFormatAlign;
    
    public class SelectTeamPanel extends Panel
    {
       
-      private var leaguesSelectButtons:Vector.<LeagueButton>;
+      private var forwardScores:Array;
       
-      private var teamButtons:Vector.<TeamButton>;
-      
-      private var teamsHolder:Sprite;
-      
-      private var leaguesHolder:Sprite;
-      
-      private var attackScores:Array;
+      private var midfieldScores:Array;
       
       private var defenceScores:Array;
       
       private var league:League;
       
-      private var pleaseWait:ModalDialogue;
-      
-      private var minX:int;
-      
-      private var maxX:int;
-      
-      private var vx:Number;
-      
-      private var buffer:int = 60;
-      
       private var infoTextField:TextField;
       
-      private var currentTeamBeingMade:int;
+      private var countryGroups:Array;
       
-      private var doBuild:Boolean;
+      private var countryIndex:int = 0;
+      
+      private var leagueIndex:int = 0;
+      
+      private var countryTextField:TextField;
+      
+      private var leagueTextField:TextField;
+      
+      private var countryPrevArrow:Sprite;
+      
+      private var countryNextArrow:Sprite;
+      
+      private var leaguePrevArrow:Sprite;
+      
+      private var leagueNextArrow:Sprite;
+      
+      private var currentIndex:int = 0;
+      
+      private var mainTeam:TeamButton;
+      
+      private var nextTeam:TeamButton;
+      
+      private var prevTeam:TeamButton;
+      
+      private var sortedClubs:Array;
+      
+      private const MAIN_X:int = 0;
+      
+      private const MAIN_Y:int = 120;
+      
+      private const SIDE_SCALE:Number = 0.75;
+      
+      private const SIDE_OFFSET_X:int = 200;
+      
+      private const SIDE_OFFSET_Y:int = 140;
+      
+      private var nextArrow:Sprite;
+      
+      private var prevArrow:Sprite;
       
       public function SelectTeamPanel()
       {
@@ -57,11 +76,6 @@ package com.utterlySuperb.chumpManager.view.panels
       
       override protected function init() : void
       {
-         this.leaguesHolder = new Sprite();
-         addChild(this.leaguesHolder);
-         this.leaguesSelectButtons = new Vector.<LeagueButton>();
-         this.addLeagueButton(Main.currentGame.leagues[0]);
-         this.showTeamButtons(Main.currentGame.leagues[0]);
          makeBox(400,200,-200,250);
          this.infoTextField = new TextField();
          TextHelper.doTextField2(this.infoTextField,Styles.MAIN_FONT,18,16777215,{
@@ -72,119 +86,346 @@ package com.utterlySuperb.chumpManager.view.panels
          this.infoTextField.y = 270;
          this.infoTextField.width = 360;
          addChild(this.infoTextField);
+         this.buildCountryGroups();
+         this.buildCountryLeagueSelector();
+         this.countryIndex = 0;
+         this.leagueIndex = 0;
+         this.showSelectedLeague();
       }
-      
-      private function addLeagueButton(param1:League) : void
+
+      private function buildCountryGroups() : void
       {
-         var _loc2_:LeagueButton = new LeagueButton();
-         _loc2_.setText(CopyManager.getCopy(param1.name));
-         _loc2_.league = param1;
-         _loc2_.addEventListener(GenericButton.BUTTON_CLICK,this.selectLeagueHandler);
-         this.leaguesSelectButtons.push(_loc2_);
-         this.leaguesHolder.addChild(_loc2_);
-         if(this.leaguesSelectButtons.length > 1)
+         var _loc1_:Object = {};
+         var _loc2_:int = 0;
+         while(_loc2_ < Main.currentGame.leagues.length)
          {
-            _loc2_.x = this.leaguesSelectButtons[this.leaguesSelectButtons.length - 2].x + this.leaguesSelectButtons[this.leaguesSelectButtons.length - 2].width + 20;
+            if(Main.currentGame.leagues[_loc2_])
+            {
+               var _loc3_:String = this.getCountryForLeague(Main.currentGame.leagues[_loc2_]);
+               if(_loc3_)
+               {
+                  if(!_loc1_[_loc3_])
+                  {
+                     _loc1_[_loc3_] = [];
+                  }
+                  _loc1_[_loc3_].push(Main.currentGame.leagues[_loc2_]);
+               }
+            }
+            _loc2_++;
          }
-         else
+         this.countryGroups = [];
+         var _loc4_:Array = ["England","Italy","Spain","Germany","France"];
+         _loc2_ = 0;
+         while(_loc2_ < _loc4_.length)
          {
-            _loc2_.x = _loc2_.width / 2;
+            if(_loc1_[_loc4_[_loc2_]])
+            {
+               this.countryGroups.push({
+                  "name":_loc4_[_loc2_],
+                  "leagues":_loc1_[_loc4_[_loc2_]]
+               });
+            }
+            _loc2_++;
          }
-         this.leaguesHolder.x = -this.leaguesHolder.width / 2;
+         for(var _loc5_:* in _loc1_)
+         {
+            if(_loc4_.indexOf(_loc5_) == -1)
+            {
+               this.countryGroups.push({
+                  "name":_loc5_,
+                  "leagues":_loc1_[_loc5_]
+               });
+            }
+         }
+         var _loc6_:Array = ["premierLeague","championship","leagueOne","leagueTwo","serieA","laLigue","bundesleague","ligue1"];
+         _loc2_ = 0;
+         while(_loc2_ < this.countryGroups.length)
+         {
+            this.countryGroups[_loc2_].leagues.sort(function(a:League, b:League) : Number
+            {
+               return _loc6_.indexOf(a.name) - _loc6_.indexOf(b.name);
+            });
+            _loc2_++;
+         }
       }
-      
-      private function selectLeagueHandler(param1:Event) : void
+
+      private function getCountryForLeague(param1:League) : String
       {
-         this.showTeamButtons(LeagueButton(param1.target).league);
+         switch(param1.name)
+         {
+            case "premierLeague":
+            case "championship":
+            case "leagueOne":
+            case "leagueTwo":
+               return "England";
+            case "serieA":
+               return "Italy";
+            case "laLigue":
+               return "Spain";
+            case "bundesleague":
+               return "Germany";
+            case "ligue1":
+               return "France";
+         }
+         return "";
+      }
+
+      private function buildCountryLeagueSelector() : void
+      {
+         this.countryTextField = new TextField();
+         TextHelper.doTextField2(this.countryTextField,Styles.MAIN_FONT,18,16777215,{"align":TextFormatAlign.CENTER});
+         this.countryTextField.y = 15;
+         addChild(this.countryTextField);
+         this.leagueTextField = new TextField();
+         TextHelper.doTextField2(this.leagueTextField,Styles.MAIN_FONT,18,16777215,{"align":TextFormatAlign.CENTER});
+         this.leagueTextField.y = 45;
+         addChild(this.leagueTextField);
+         this.countryPrevArrow = this.makeArrow(true);
+         this.countryNextArrow = this.makeArrow(false);
+         this.leaguePrevArrow = this.makeArrow(true);
+         this.leagueNextArrow = this.makeArrow(false);
+         this.countryPrevArrow.addEventListener(MouseEvent.CLICK,this.prevCountry);
+         this.countryNextArrow.addEventListener(MouseEvent.CLICK,this.nextCountry);
+         this.leaguePrevArrow.addEventListener(MouseEvent.CLICK,this.prevLeague);
+         this.leagueNextArrow.addEventListener(MouseEvent.CLICK,this.nextLeague);
+         addChild(this.countryPrevArrow);
+         addChild(this.countryNextArrow);
+         addChild(this.leaguePrevArrow);
+         addChild(this.leagueNextArrow);
+         this.updateCountryLeagueUI();
+      }
+
+      private function updateCountryLeagueUI() : void
+      {
+         if(!this.countryGroups || this.countryGroups.length == 0)
+         {
+            return;
+         }
+         var _loc1_:Object = this.countryGroups[this.countryIndex];
+         this.countryTextField.text = _loc1_.name;
+         this.countryTextField.width = this.countryTextField.textWidth + 10;
+         this.countryTextField.x = -this.countryTextField.width / 2;
+         var _loc2_:League = _loc1_.leagues[this.leagueIndex];
+         this.leagueTextField.text = CopyManager.getCopy(_loc2_.name);
+         this.leagueTextField.width = this.leagueTextField.textWidth + 10;
+         this.leagueTextField.x = -this.leagueTextField.width / 2;
+         this.countryPrevArrow.x = this.countryTextField.x - 40;
+         this.countryPrevArrow.y = this.countryTextField.y + 2;
+         this.countryNextArrow.x = this.countryTextField.x + this.countryTextField.width + 20;
+         this.countryNextArrow.y = this.countryTextField.y + 2;
+         this.leaguePrevArrow.x = this.leagueTextField.x - 40;
+         this.leaguePrevArrow.y = this.leagueTextField.y + 2;
+         this.leagueNextArrow.x = this.leagueTextField.x + this.leagueTextField.width + 20;
+         this.leagueNextArrow.y = this.leagueTextField.y + 2;
+         var _loc3_:Boolean = _loc1_.leagues.length > 1;
+         this.setArrowEnabled(this.leaguePrevArrow,_loc3_);
+         this.setArrowEnabled(this.leagueNextArrow,_loc3_);
+      }
+
+      private function setArrowEnabled(param1:Sprite, param2:Boolean) : void
+      {
+         param1.mouseEnabled = param2;
+         param1.alpha = param2 ? 1 : 0.3;
+      }
+
+      private function prevCountry(param1:Event) : void
+      {
+         if(!this.countryGroups || this.countryGroups.length == 0)
+         {
+            return;
+         }
+         this.countryIndex = (this.countryIndex - 1 + this.countryGroups.length) % this.countryGroups.length;
+         this.leagueIndex = 0;
+         this.updateCountryLeagueUI();
+         this.showSelectedLeague();
+      }
+
+      private function nextCountry(param1:Event) : void
+      {
+         if(!this.countryGroups || this.countryGroups.length == 0)
+         {
+            return;
+         }
+         this.countryIndex = (this.countryIndex + 1) % this.countryGroups.length;
+         this.leagueIndex = 0;
+         this.updateCountryLeagueUI();
+         this.showSelectedLeague();
+      }
+
+      private function prevLeague(param1:Event) : void
+      {
+         var _loc1_:Array = this.countryGroups[this.countryIndex].leagues;
+         if(_loc1_.length <= 1)
+         {
+            return;
+         }
+         this.leagueIndex = (this.leagueIndex - 1 + _loc1_.length) % _loc1_.length;
+         this.updateCountryLeagueUI();
+         this.showSelectedLeague();
+      }
+
+      private function nextLeague(param1:Event) : void
+      {
+         var _loc1_:Array = this.countryGroups[this.countryIndex].leagues;
+         if(_loc1_.length <= 1)
+         {
+            return;
+         }
+         this.leagueIndex = (this.leagueIndex + 1) % _loc1_.length;
+         this.updateCountryLeagueUI();
+         this.showSelectedLeague();
+      }
+
+      private function showSelectedLeague() : void
+      {
+         var _loc1_:League = this.countryGroups[this.countryIndex].leagues[this.leagueIndex];
+         this.showTeamButtons(_loc1_);
       }
       
       private function showTeamButtons(param1:League) : void
       {
-         var _loc2_:int = 0;
-         while(_loc2_ < this.leaguesSelectButtons.length)
-         {
-            if(this.leaguesSelectButtons[_loc2_].league == param1)
-            {
-               this.leaguesSelectButtons[_loc2_].deactivate(true);
-            }
-            else
-            {
-               this.leaguesSelectButtons[_loc2_].activate();
-            }
-            _loc2_++;
-         }
          this.cleanUpTeams();
-         this.teamsHolder = new Sprite();
-         addChild(this.teamsHolder);
-         this.teamsHolder.y = 100;
-         this.teamButtons = new Vector.<TeamButton>();
-         this.attackScores = new Array();
-         this.defenceScores = new Array();
+         this.forwardScores = [];
+         this.midfieldScores = [];
+         this.defenceScores = [];
          this.league = param1;
-         this.pleaseWait = new PleaseWaitModal(CopyManager.getCopy("pleaseWait"),CopyManager.getCopy("buildingGame"),[]);
-         Main.instance.addModal(this.pleaseWait);
-         this.currentTeamBeingMade = 0;
-         addEventListener(Event.ENTER_FRAME,this.makeTeam);
+         this.sortedClubs = [];
+         var _loc3_:int = 0;
+         while(_loc3_ < this.league.entrants.length)
+         {
+            this.sortedClubs.push(this.league.entrants[_loc3_].club);
+            _loc3_++;
+         }
+         this.sortedClubs.sort(function(a:Club, b:Club) : Number
+         {
+            var _loc1_:String = a.name.toLowerCase();
+            var _loc2_:String = b.name.toLowerCase();
+            if(_loc1_ < _loc2_)
+            {
+               return -1;
+            }
+            if(_loc1_ > _loc2_)
+            {
+               return 1;
+            }
+            return 0;
+         });
+         _loc3_ = 0;
+         while(_loc3_ < this.sortedClubs.length)
+         {
+            var _loc4_:Object = TeamHelper.getUnitStarBreakdown(this.sortedClubs[_loc3_]);
+            this.forwardScores[_loc3_] = _loc4_.forwards;
+            this.midfieldScores[_loc3_] = _loc4_.midfield;
+            this.defenceScores[_loc3_] = _loc4_.defence;
+            _loc3_++;
+         }
+         this.buildCarousel();
+         this.currentIndex = 0;
+         this.refreshCarousel();
       }
       
-      private function makeTeam(param1:Event) : void
+      private function buildCarousel() : void
       {
-         var _loc3_:TeamButton = null;
-         var _loc4_:Formation = null;
-         var _loc5_:Array = null;
-         if(!this.doBuild)
+         this.mainTeam = new TeamButton();
+         this.prevTeam = new TeamButton();
+         this.nextTeam = new TeamButton();
+         this.addChild(this.prevTeam);
+         this.addChild(this.nextTeam);
+         this.addChild(this.mainTeam);
+         this.mainTeam.x = this.MAIN_X;
+         this.mainTeam.y = this.MAIN_Y;
+         this.prevTeam.scaleX = this.prevTeam.scaleY = this.SIDE_SCALE;
+         this.nextTeam.scaleX = this.nextTeam.scaleY = this.SIDE_SCALE;
+         this.prevTeam.x = -this.SIDE_OFFSET_X;
+         this.prevTeam.y = this.SIDE_OFFSET_Y;
+         this.nextTeam.x = this.SIDE_OFFSET_X;
+         this.nextTeam.y = this.SIDE_OFFSET_Y;
+         this.prevTeam.addEventListener(GenericButton.BUTTON_CLICK,this.selectTeamHandler);
+         this.nextTeam.addEventListener(GenericButton.BUTTON_CLICK,this.selectTeamHandler);
+         this.mainTeam.addEventListener(GenericButton.BUTTON_CLICK,this.selectTeamHandler);
+         this.prevTeam.activate();
+         this.nextTeam.activate();
+         this.mainTeam.activate();
+         this.prevArrow = this.makeArrow(true);
+         this.nextArrow = this.makeArrow(false);
+         this.prevArrow.x = this.prevTeam.x - 40;
+         this.prevArrow.y = this.prevTeam.y + 40;
+         this.nextArrow.x = this.nextTeam.x + 40;
+         this.nextArrow.y = this.nextTeam.y + 40;
+         this.prevArrow.addEventListener(MouseEvent.CLICK,this.prevClub);
+         this.nextArrow.addEventListener(MouseEvent.CLICK,this.nextClub);
+         addChild(this.prevArrow);
+         addChild(this.nextArrow);
+      }
+      
+      private function makeArrow(param1:Boolean) : Sprite
+      {
+         var _loc2_:Sprite = new Sprite();
+         _loc2_.graphics.beginFill(16777215);
+         if(param1)
          {
-            this.doBuild = true;
-            return;
-         }
-         this.doBuild = false;
-         var _loc2_:int = this.currentTeamBeingMade;
-         if(this.currentTeamBeingMade++ < this.league.entrants.length)
-         {
-            _loc3_ = new TeamButton();
-            _loc3_.setTeam(this.league.entrants[_loc2_].club);
-            this.teamsHolder.addChild(_loc3_);
-            _loc3_.x = _loc2_ > 0 ? Math.max(this.teamButtons[_loc2_ - 1].x + this.teamButtons[_loc2_ - 1].width + 10,110) : 0;
-            this.teamButtons.push(_loc3_);
-            _loc3_.addEventListener(GenericButton.BUTTON_CLICK,this.selectTeamHandler);
-            _loc3_.addEventListener(GenericButton.BUTTON_OVER,this.overTeamHandler);
-            _loc3_.activate();
-            _loc4_ = this.league.entrants[_loc2_].club.getFormation(0);
-            _loc5_ = TeamHelper.getBestPlayers(_loc4_,this.league.entrants[_loc2_].club.getPlayersList(),false);
-            this.attackScores[_loc2_] = this.league.entrants[_loc2_].club.attackScore;
-            this.defenceScores[_loc2_] = this.league.entrants[_loc2_].club.defendScore;
-            if(this.teamsHolder.width >= Globals.GAME_WIDTH - this.buffer * 2)
-            {
-               this.maxX = -(Globals.GAME_WIDTH / 2 - this.buffer);
-               this.minX = -this.teamsHolder.width + (Globals.GAME_WIDTH / 2 - this.buffer);
-               addEventListener(Event.ENTER_FRAME,this.moveTeamsHandler);
-               this.vx = 0;
-            }
-            this.teamsHolder.x = -this.teamsHolder.width / 2;
+            _loc2_.graphics.moveTo(20,0);
+            _loc2_.graphics.lineTo(0,20);
+            _loc2_.graphics.lineTo(20,40);
          }
          else
          {
-            this.finishMakingTeams();
+            _loc2_.graphics.moveTo(0,0);
+            _loc2_.graphics.lineTo(20,20);
+            _loc2_.graphics.lineTo(0,40);
          }
+         _loc2_.graphics.endFill();
+         _loc2_.buttonMode = true;
+         _loc2_.mouseChildren = false;
+         return _loc2_;
       }
       
-      private function finishMakingTeams() : void
+      private function prevClub(param1:Event) : void
       {
-         Main.instance.removeModal(this.pleaseWait);
-         this.pleaseWait = null;
-         removeEventListener(Event.ENTER_FRAME,this.makeTeam);
+         this.currentIndex = (this.currentIndex - 1 + this.sortedClubs.length) % this.sortedClubs.length;
+         this.refreshCarousel();
       }
       
-      private function overTeamHandler(param1:Event) : void
+      private function nextClub(param1:Event) : void
       {
-         var _loc2_:int = int(this.teamButtons.indexOf(param1.target));
-         var _loc3_:Club = TeamButton(param1.target).club;
-         var _loc4_:* = this.makeTextBig(_loc3_.name,22) + "<br>";
-         _loc4_ = _loc4_ + (CopyManager.getCopy("clubProfile") + this.makeTextBig(_loc3_.profile.toString()) + "<br>");
-         _loc4_ = _loc4_ + (CopyManager.getCopy("attack:") + this.makeTextBig(this.attackScores[_loc2_]) + "<br>");
-         _loc4_ = _loc4_ + (CopyManager.getCopy("defense:") + this.makeTextBig(this.defenceScores[_loc2_]) + "<br>");
-         _loc4_ = _loc4_ + (CopyManager.getCopy("scoreMult:") + this.makeTextBig(_loc3_.scoreMultiplier.toString()));
-         this.infoTextField.htmlText = _loc4_;
+         this.currentIndex = (this.currentIndex + 1) % this.sortedClubs.length;
+         this.refreshCarousel();
+      }
+      
+      private function refreshCarousel() : void
+      {
+         if(!this.sortedClubs || this.sortedClubs.length == 0)
+         {
+            return;
+         }
+         var _loc1_:int = this.currentIndex;
+         var _loc2_:int = (this.currentIndex - 1 + this.sortedClubs.length) % this.sortedClubs.length;
+         var _loc3_:int = (this.currentIndex + 1) % this.sortedClubs.length;
+         this.mainTeam.x = this.MAIN_X;
+         this.mainTeam.y = this.MAIN_Y;
+         this.mainTeam.scaleX = this.mainTeam.scaleY = 1;
+         this.prevTeam.x = -this.SIDE_OFFSET_X;
+         this.prevTeam.y = this.SIDE_OFFSET_Y;
+         this.prevTeam.scaleX = this.prevTeam.scaleY = this.SIDE_SCALE;
+         this.nextTeam.x = this.SIDE_OFFSET_X;
+         this.nextTeam.y = this.SIDE_OFFSET_Y;
+         this.nextTeam.scaleX = this.nextTeam.scaleY = this.SIDE_SCALE;
+         this.mainTeam.setTeam(this.sortedClubs[_loc1_],true);
+         this.prevTeam.setTeam(this.sortedClubs[_loc2_],true);
+         this.nextTeam.setTeam(this.sortedClubs[_loc3_],true);
+         this.updateInfo(_loc1_);
+      }
+      
+      private function updateInfo(param1:int) : void
+      {
+         var _loc2_:Club = this.sortedClubs[param1];
+         var _loc3_:* = this.makeTextBig(_loc2_.name,22) + "<br>";
+         _loc3_ = _loc3_ + (CopyManager.getCopy("clubProfile") + this.makeTextBig(_loc2_.profile.toString()) + "<br>");
+         _loc3_ = _loc3_ + ("Forwards: " + this.makeTextBig(this.forwardScores[param1].toString()) + "★<br>");
+         _loc3_ = _loc3_ + ("Midfield: " + this.makeTextBig(this.midfieldScores[param1].toString()) + "★<br>");
+         _loc3_ = _loc3_ + ("Defence: " + this.makeTextBig(this.defenceScores[param1].toString()) + "★<br>");
+         _loc3_ = _loc3_ + (CopyManager.getCopy("scoreMult:") + this.makeTextBig(_loc2_.scoreMultiplier.toString()));
+         this.infoTextField.htmlText = _loc3_;
       }
       
       private function makeTextBig(param1:String, param2:int = 18) : String
@@ -192,53 +433,61 @@ package com.utterlySuperb.chumpManager.view.panels
          return "<font face=\'Arial Black\' size=\'" + param2 + "\'>" + param1 + "</font>";
       }
       
-      private function moveTeamsHandler(param1:Event) : void
-      {
-         this.vx *= 0.9;
-         if(mouseX < -200)
-         {
-            this.vx -= (mouseX + 200) / 50;
-         }
-         else if(mouseX > 200)
-         {
-            this.vx -= (mouseX - 200) / 50;
-         }
-         this.teamsHolder.x += this.vx;
-         if(this.teamsHolder.x > this.maxX)
-         {
-            this.teamsHolder.x = this.maxX;
-            this.vx *= -0.5;
-         }
-         else if(this.teamsHolder.x < this.minX)
-         {
-            this.teamsHolder.x = this.minX;
-            this.vx *= -0.5;
-         }
-      }
-      
       private function selectTeamHandler(param1:Event) : void
       {
-         var _loc2_:Club = TeamButton(param1.target).club;
+         var _loc2_:Club = null;
+         if(param1.currentTarget == this.mainTeam || param1.currentTarget == this.nextTeam || param1.currentTarget == this.prevTeam)
+         {
+            _loc2_ = TeamButton(param1.currentTarget).club;
+         }
+         else
+         {
+            _loc2_ = TeamButton(param1.target).club;
+         }
          Main.currentGame.setPlayerclub(_loc2_);
+         var _loc3_:int = Main.currentGame.leagues.indexOf(this.league);
+         if(_loc3_ < 0 && this.league)
+         {
+            _loc3_ = 0;
+            while(_loc3_ < Main.currentGame.leagues.length)
+            {
+               if(Main.currentGame.leagues[_loc3_] && Main.currentGame.leagues[_loc3_].name == this.league.name)
+               {
+                  break;
+               }
+               _loc3_++;
+            }
+         }
+         Main.currentGame.mainLeagueNum = _loc3_;
          GameEngine.initSeason(Main.currentGame);
       }
       
       private function cleanUpTeams() : void
       {
-         var _loc1_:int = 0;
-         if(this.teamButtons)
+         if(this.mainTeam)
          {
-            _loc1_ = 0;
-            while(_loc1_ < this.teamButtons.length)
+            this.mainTeam.deactivate();
+            this.nextTeam.deactivate();
+            this.prevTeam.deactivate();
+            if(contains(this.mainTeam))
             {
-               this.teamButtons[_loc1_].deactivate();
-               this.teamButtons[_loc1_].removeEventListener(GenericButton.BUTTON_CLICK,this.selectTeamHandler);
-               _loc1_++;
+               removeChild(this.mainTeam);
             }
-            removeChild(this.teamsHolder);
-            if(hasEventListener(Event.ENTER_FRAME))
+            if(contains(this.nextTeam))
             {
-               removeEventListener(Event.ENTER_FRAME,this.moveTeamsHandler);
+               removeChild(this.nextTeam);
+            }
+            if(contains(this.prevTeam))
+            {
+               removeChild(this.prevTeam);
+            }
+            if(this.prevArrow && contains(this.prevArrow))
+            {
+               removeChild(this.prevArrow);
+            }
+            if(this.nextArrow && contains(this.nextArrow))
+            {
+               removeChild(this.nextArrow);
             }
          }
       }
@@ -246,12 +495,21 @@ package com.utterlySuperb.chumpManager.view.panels
       override protected function cleanUp() : void
       {
          this.cleanUpTeams();
-         var _loc1_:int = 0;
-         while(_loc1_ < this.leaguesSelectButtons.length)
+         if(this.countryPrevArrow)
          {
-            this.leaguesSelectButtons[_loc1_].deactivate();
-            this.leaguesSelectButtons[_loc1_].removeEventListener(GenericButton.BUTTON_CLICK,this.selectLeagueHandler);
-            _loc1_++;
+            this.countryPrevArrow.removeEventListener(MouseEvent.CLICK,this.prevCountry);
+         }
+         if(this.countryNextArrow)
+         {
+            this.countryNextArrow.removeEventListener(MouseEvent.CLICK,this.nextCountry);
+         }
+         if(this.leaguePrevArrow)
+         {
+            this.leaguePrevArrow.removeEventListener(MouseEvent.CLICK,this.prevLeague);
+         }
+         if(this.leagueNextArrow)
+         {
+            this.leagueNextArrow.removeEventListener(MouseEvent.CLICK,this.nextLeague);
          }
       }
    }

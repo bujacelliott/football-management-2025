@@ -47,7 +47,7 @@ A modernised remake of the classic Ultimate Football Management series, updated 
 Converted player data (e.g. `data/Liverpool_converted.csv`) is produced by `tools/attribute_converter_bucket.py`:
 - **Stat weights:** Each game stat is a weighted average of FIFA attributes (see script).
 - **Buckets → stars:** FIFA overall is mapped to a target in-game rating via buckets (90–94 → 80–84.5, 85–89 → 76–79.5, 80–84 → 71–74.5, 75–79 → 66–69.5, 70–74 → 61–64.5, 65–69 → 56–59.5, 60–64 → 51–54.5, 55–59 → 46–49.5, ≤54 → 40–44.5). Stars are computed with the game formula on the scaled rating.
-- **Multi-position scaling:** Ratings are averaged across all listed positions (with the game’s multi-pos bonus), then all stats are scaled proportionally to hit the bucket target.
+- **Multi-position handling:** Ratings are averaged across all listed positions (no bonus), then all stats are scaled proportionally to hit the bucket target.
 - **Age improvement:** Generated XML sets `ageImprovement="0"` so players load at the provided stats (no hidden drop).
 - **CSV fields:** `name, pos, positions_full, fifa_overall, game_rating, stars, stat_*` (scaled stats).
 

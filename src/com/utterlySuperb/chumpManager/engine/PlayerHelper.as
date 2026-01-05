@@ -44,13 +44,10 @@ package com.utterlySuperb.chumpManager.engine
          {
             _loc2_.progressType = param1.@progressType;
          }
-         var _loc4_:int = 20;
-         if(!isNaN(param1.@ageImprovement) && int(param1.@ageImprovement) > 0)
-         {
-            _loc4_ = int(param1.@ageImprovement);
-         }
+         // ageImprovement removed: use supplied current (CA) and potential (PA) stats directly.
          var _loc5_:Array = new Array();
          var _loc6_:Array = new Array();
+         var _loc7_:int = 0;
          if(_loc2_.isKeeper())
          {
             _loc5_[0] = int(param1.stats.@catching);
@@ -58,6 +55,11 @@ package com.utterlySuperb.chumpManager.engine
             _loc5_[2] = int(param1.stats.@distribution);
             _loc5_[3] = int(param1.stats.@fitness);
             _loc5_[4] = int(param1.stats.@stamina);
+            _loc6_[0] = param1.stats.attribute("paCatching").length() > 0 ? int(param1.stats.@paCatching) : _loc5_[0];
+            _loc6_[1] = param1.stats.attribute("paShotStopping").length() > 0 ? int(param1.stats.@paShotStopping) : _loc5_[1];
+            _loc6_[2] = param1.stats.attribute("paDistribution").length() > 0 ? int(param1.stats.@paDistribution) : _loc5_[2];
+            _loc6_[3] = param1.stats.attribute("paFitness").length() > 0 ? int(param1.stats.@paFitness) : _loc5_[3];
+            _loc6_[4] = param1.stats.attribute("paStamina").length() > 0 ? int(param1.stats.@paStamina) : _loc5_[4];
          }
          else
          {
@@ -73,18 +75,26 @@ package com.utterlySuperb.chumpManager.engine
             _loc5_[9] = int(param1.stats.@strength);
             _loc5_[10] = int(param1.stats.@fitness);
             _loc5_[11] = int(param1.stats.@creativity);
+            _loc6_[0] = param1.stats.attribute("paPassing").length() > 0 ? int(param1.stats.@paPassing) : _loc5_[0];
+            _loc6_[1] = param1.stats.attribute("paTackling").length() > 0 ? int(param1.stats.@paTackling) : _loc5_[1];
+            _loc6_[2] = param1.stats.attribute("paHeading").length() > 0 ? int(param1.stats.@paHeading) : _loc5_[2];
+            _loc6_[3] = param1.stats.attribute("paShooting").length() > 0 ? int(param1.stats.@paShooting) : _loc5_[3];
+            _loc6_[4] = param1.stats.attribute("paCrossing").length() > 0 ? int(param1.stats.@paCrossing) : _loc5_[4];
+            _loc6_[5] = param1.stats.attribute("paDribbling").length() > 0 ? int(param1.stats.@paDribbling) : _loc5_[5];
+            _loc6_[6] = param1.stats.attribute("paSpeed").length() > 0 ? int(param1.stats.@paSpeed) : _loc5_[6];
+            _loc6_[7] = param1.stats.attribute("paStamina").length() > 0 ? int(param1.stats.@paStamina) : _loc5_[7];
+            _loc6_[8] = param1.stats.attribute("paAggression").length() > 0 ? int(param1.stats.@paAggression) : _loc5_[8];
+            _loc6_[9] = param1.stats.attribute("paStrength").length() > 0 ? int(param1.stats.@paStrength) : _loc5_[9];
+            _loc6_[10] = param1.stats.attribute("paFitness").length() > 0 ? int(param1.stats.@paFitness) : _loc5_[10];
+            _loc6_[11] = param1.stats.attribute("paCreativity").length() > 0 ? int(param1.stats.@paCreativity) : _loc5_[11];
          }
-         var _loc7_:int = 0;
          while(_loc7_ < _loc5_.length)
          {
-            _loc9_ = getValues(_loc2_.progressType,_loc5_[_loc7_],_loc2_.exactAge,_loc4_,getMaxAge(_loc2_.basePostition));
-            _loc2_.minStats[_loc7_] = _loc9_[0];
-            _loc6_[_loc7_] = _loc9_[1];
-            _loc2_.statAdditions[_loc7_] = 0;
+            _loc2_.minStats[_loc7_] = _loc5_[_loc7_];
             _loc7_++;
          }
-         _loc2_.active = true;
          _loc2_.maxStats = _loc6_;
+         _loc2_.active = true;
          if(Main.currentGame.seasonNum > 0)
          {
             _loc2_.setAgeOffset();
@@ -127,13 +137,10 @@ package com.utterlySuperb.chumpManager.engine
          {
             _loc2_.progressType = param1.@progressType;
          }
-         var _loc4_:int = 0;
-         if(!isNaN(param1.@ageImprovement) && String(param1.@ageImprovement).length > 0)
-         {
-            _loc4_ = int(param1.@ageImprovement);
-         }
+         // ageImprovement removed: use supplied current (CA) and potential (PA) stats directly.
          var _loc5_:Array = new Array();
          var _loc6_:Array = new Array();
+         var _loc7_:int = 0;
          if(_loc2_.isKeeper())
          {
             _loc5_[0] = int(param1.stats.@catching);
@@ -141,6 +148,11 @@ package com.utterlySuperb.chumpManager.engine
             _loc5_[2] = int(param1.stats.@distribution);
             _loc5_[3] = int(param1.stats.@fitness);
             _loc5_[4] = int(param1.stats.@stamina);
+            _loc6_[0] = param1.stats.attribute("paCatching").length() > 0 ? int(param1.stats.@paCatching) : _loc5_[0];
+            _loc6_[1] = param1.stats.attribute("paShotStopping").length() > 0 ? int(param1.stats.@paShotStopping) : _loc5_[1];
+            _loc6_[2] = param1.stats.attribute("paDistribution").length() > 0 ? int(param1.stats.@paDistribution) : _loc5_[2];
+            _loc6_[3] = param1.stats.attribute("paFitness").length() > 0 ? int(param1.stats.@paFitness) : _loc5_[3];
+            _loc6_[4] = param1.stats.attribute("paStamina").length() > 0 ? int(param1.stats.@paStamina) : _loc5_[4];
          }
          else
          {
@@ -156,17 +168,26 @@ package com.utterlySuperb.chumpManager.engine
             _loc5_[9] = int(param1.stats.@strength);
             _loc5_[10] = int(param1.stats.@fitness);
             _loc5_[11] = int(param1.stats.@creativity);
+            _loc6_[0] = param1.stats.attribute("paPassing").length() > 0 ? int(param1.stats.@paPassing) : _loc5_[0];
+            _loc6_[1] = param1.stats.attribute("paTackling").length() > 0 ? int(param1.stats.@paTackling) : _loc5_[1];
+            _loc6_[2] = param1.stats.attribute("paHeading").length() > 0 ? int(param1.stats.@paHeading) : _loc5_[2];
+            _loc6_[3] = param1.stats.attribute("paShooting").length() > 0 ? int(param1.stats.@paShooting) : _loc5_[3];
+            _loc6_[4] = param1.stats.attribute("paCrossing").length() > 0 ? int(param1.stats.@paCrossing) : _loc5_[4];
+            _loc6_[5] = param1.stats.attribute("paDribbling").length() > 0 ? int(param1.stats.@paDribbling) : _loc5_[5];
+            _loc6_[6] = param1.stats.attribute("paSpeed").length() > 0 ? int(param1.stats.@paSpeed) : _loc5_[6];
+            _loc6_[7] = param1.stats.attribute("paStamina").length() > 0 ? int(param1.stats.@paStamina) : _loc5_[7];
+            _loc6_[8] = param1.stats.attribute("paAggression").length() > 0 ? int(param1.stats.@paAggression) : _loc5_[8];
+            _loc6_[9] = param1.stats.attribute("paStrength").length() > 0 ? int(param1.stats.@paStrength) : _loc5_[9];
+            _loc6_[10] = param1.stats.attribute("paFitness").length() > 0 ? int(param1.stats.@paFitness) : _loc5_[10];
+            _loc6_[11] = param1.stats.attribute("paCreativity").length() > 0 ? int(param1.stats.@paCreativity) : _loc5_[11];
          }
-         var _loc7_:int = 0;
          while(_loc7_ < _loc5_.length)
          {
-            _loc2_.minStats[_loc7_] = _loc5_[_loc7_] - _loc4_;
-            _loc6_[_loc7_] = _loc5_[_loc7_];
-            _loc2_.statAdditions[_loc7_] = 0;
+            _loc2_.minStats[_loc7_] = _loc5_[_loc7_];
             _loc7_++;
          }
-         _loc2_.active = true;
          _loc2_.maxStats = _loc6_;
+         _loc2_.active = true;
          if(Main.currentGame.seasonNum > 0)
          {
             _loc2_.setAgeOffset();
@@ -343,7 +364,8 @@ package com.utterlySuperb.chumpManager.engine
       {
          var _loc2_:Game = Main.currentGame;
          param1.setAge();
-         var _loc3_:Number = getFactor(param1.progressType,param1.exactAge - Player.MIN_AGE,getMaxAge(param1.basePostition));
+         // On a fresh save (season 0), start at current ability (minStats). After that, follow the age curve.
+         var _loc3_:Number = _loc2_.seasonNum == 0 ? 0 : getFactor(param1.progressType,param1.exactAge - Player.MIN_AGE,getMaxAge(param1.basePostition));
          var _loc4_:int = 0;
          while(_loc4_ < param1.minStats.length)
          {
@@ -389,25 +411,27 @@ package com.utterlySuperb.chumpManager.engine
       {
          var _loc4_:Number = 0;
          var _loc5_:Number = Math.max(0,Math.min(param2 / (param3 - Player.MIN_AGE),1));
+         // Delay peak later in career: ease f toward 1 with exponent >1
+         var _loc6_:Number = Math.pow(_loc5_,1.5);
          switch(param1)
          {
             case SIN_0:
-               _loc4_ = Math.sin(Math.PI * 0.95 * _loc5_);
+               _loc4_ = Math.sin(Math.PI * 0.95 * _loc6_);
                break;
             case SIN_1:
-               _loc4_ = _loc5_ < 0.15 ? Math.sin(Math.PI * 2 * (_loc5_ + 0)) : Math.sin(Math.PI * 0.5 * (_loc5_ + 0.75));
+               _loc4_ = _loc6_ < 0.15 ? Math.sin(Math.PI * 2 * (_loc6_ + 0)) : Math.sin(Math.PI * 0.5 * (_loc6_ + 0.75));
                break;
             case SIN_2:
-               _loc4_ = Math.sin(Math.PI * 1 * _loc5_);
+               _loc4_ = Math.sin(Math.PI * 1 * _loc6_);
                break;
             case SIN_3:
-               _loc4_ = _loc5_ < 0.25 ? Math.sin(Math.PI * 2 * (_loc5_ + 0)) : Math.sin(Math.PI / 3 * (_loc5_ + 1.35));
+               _loc4_ = _loc6_ < 0.25 ? Math.sin(Math.PI * 2 * (_loc6_ + 0)) : Math.sin(Math.PI / 3 * (_loc6_ + 1.35));
                break;
             case SIN_4:
-               _loc4_ = _loc5_ < 0.15 ? Math.sin(Math.PI * 2 * (_loc5_ + 0)) : Math.sin(Math.PI / 4 * (_loc5_ + 1.85));
+               _loc4_ = _loc6_ < 0.15 ? Math.sin(Math.PI * 2 * (_loc6_ + 0)) : Math.sin(Math.PI / 4 * (_loc6_ + 1.85));
                break;
             case SIN_SLOW_DECAY_0:
-               _loc4_ = _loc5_ < 0.25 ? Math.sin(Math.PI * 2 * _loc5_) : Math.sin(Math.PI * 0.5 * (_loc5_ + 0.75));
+               _loc4_ = _loc6_ < 0.25 ? Math.sin(Math.PI * 2 * _loc6_) : Math.sin(Math.PI * 0.5 * (_loc6_ + 0.75));
          }
          return _loc4_;
       }
@@ -445,65 +469,30 @@ package com.utterlySuperb.chumpManager.engine
       
       public static function getMainPos(param1:Player) : String
       {
-         var _loc2_:String = "";
-         var _loc3_:Array = param1.positions.split("-");
-         var _loc4_:Array = new Array(4);
-         _loc4_[0] = _loc4_[1] = _loc4_[2] = _loc4_[3] = 0;
-         var _loc5_:int = 0;
-         while(_loc5_ < _loc3_.length)
+         if(!param1 || !param1.positions || param1.positions.length == 0)
          {
-            switch(_loc3_[_loc5_])
-            {
-               case "gk":
-                  _loc4_[0] += 20;
-                  break;
-               case "cf":
-                  _loc4_[3] += 4;
-                  break;
-               case "wf":
-                  _loc4_[3] += 3;
-                  _loc4_[2] += 1;
-                  break;
-               case "am":
-                  _loc4_[3] += 1;
-                  _loc4_[2] += 3;
-                  break;
-               case "cm":
-                  _loc4_[2] += 4;
-                  break;
-               case "dm":
-                  _loc4_[2] += 3;
-                  _loc4_[1] += 1;
-                  break;
-               case "sm":
-                  _loc4_[2] += 3;
-                  _loc4_[3] += 1;
-                  break;
-               case "fb":
-                  _loc4_[1] += 3;
-                  _loc4_[2] += 1;
-                  break;
-               case "cb":
-                  _loc4_[1] += 4;
-                  break;
-               case "wb":
-                  _loc4_[2] += 2;
-                  _loc4_[1] += 2;
-            }
-            _loc5_++;
+            return Player.BASE_POSITIONS[2];
          }
-         var _loc6_:int = -1;
-         _loc5_ = 0;
-         while(_loc5_ < _loc4_.length)
+         var _loc2_:Array = param1.positions.split("-");
+         var _loc3_:String = _loc2_.length > 0 ? _loc2_[0] : "";
+         switch(_loc3_)
          {
-            if(_loc4_[_loc5_] > _loc6_)
-            {
-               _loc6_ = int(_loc4_[_loc5_]);
-               _loc2_ = Player.BASE_POSITIONS[_loc5_];
-            }
-            _loc5_++;
+            case "gk":
+               return Player.BASE_POSITIONS[0];
+            case "cb":
+            case "fb":
+            case "wb":
+               return Player.BASE_POSITIONS[1];
+            case "dm":
+            case "cm":
+            case "sm":
+            case "am":
+               return Player.BASE_POSITIONS[2];
+            case "cf":
+            case "wf":
+               return Player.BASE_POSITIONS[3];
          }
-         return _loc2_;
+         return Player.BASE_POSITIONS[2];
       }
       
       public static function isAvailable(param1:Player) : Boolean
@@ -526,7 +515,36 @@ package com.utterlySuperb.chumpManager.engine
             _loc3_ += getSpecificPositionScore(param1,_loc2_[_loc4_]);
             _loc4_++;
          }
-         return _loc3_ / _loc2_.length * (0.95 + _loc2_.length / 20);
+         return _loc3_ / _loc2_.length;
+      }
+
+      public static function getPlayerScoreFromStats(param1:Player, param2:Array) : Number
+      {
+         if(!param1 || !param2 || param2.length == 0)
+         {
+            return 0;
+         }
+         var _loc1_:Array = param1.currentStats;
+         param1.currentStats = param2;
+         var _loc2_:Number = getPlayerScore(param1);
+         param1.currentStats = _loc1_;
+         return _loc2_;
+      }
+
+      public static function getPlayerMaxStats(param1:Player) : Array
+      {
+         var _loc2_:Array = [];
+         if(!param1 || !param1.minStats || !param1.statClimb)
+         {
+            return _loc2_;
+         }
+         var _loc1_:int = 0;
+         while(_loc1_ < param1.minStats.length)
+         {
+            _loc2_[_loc1_] = param1.minStats[_loc1_] + param1.statClimb[_loc1_];
+            _loc1_++;
+         }
+         return _loc2_;
       }
       
       public static function getBasePlayerScore(param1:Player, param2:String) : Number

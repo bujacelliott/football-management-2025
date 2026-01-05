@@ -78,13 +78,13 @@ package com.utterlySuperb.ui.dropDown
       public function easyMake(param1:int = 20) : void
       {
          this.settings.scrollbarBG = new Sprite();
-         this.settings.scrollbarBG.graphics.beginFill(13421772);
+         this.settings.scrollbarBG.graphics.beginFill(0x14552b);
          this.settings.scrollbarBG.graphics.drawRect(0,0,param1,param1);
          this.settings.scroller = new Sprite();
-         this.settings.scroller.graphics.beginFill(6710886);
+         this.settings.scroller.graphics.beginFill(0x1c7a3f);
          this.settings.scroller.graphics.drawRect(0,0,param1,param1);
          this.settings.btn = new MovieClip();
-         this.settings.btn.graphics.beginFill(10120795);
+         this.settings.btn.graphics.beginFill(0x0d2f1b);
          this.settings.btn.graphics.drawRect(0,0,20,20);
          this.mainBtn.addChild(this.settings.btn);
          this.settings.btn.x = this.settings.width - this.settings.btn.width;
@@ -392,10 +392,7 @@ package com.utterlySuperb.ui.dropDown
       
       private function showDefault(param1:MouseEvent) : void
       {
-         if(this.settings.btn)
-         {
-            this.settings.btn.gotoAndStop("_up");
-         }
+         this.gotoBtnState("_up",1);
          this.mainBtn.graphics.clear();
          this.mainBtn.graphics.lineStyle(this.settings.defLineThickness,this.settings.defLineColor,this.settings.defLineAlpha);
          this.mainBtn.graphics.beginFill(this.settings.defBgColor,this.settings.defBgAlpha);
@@ -405,15 +402,53 @@ package com.utterlySuperb.ui.dropDown
       
       private function showOver(param1:MouseEvent) : void
       {
-         if(this.settings.btn)
-         {
-            this.settings.btn.gotoAndStop("_over");
-         }
+         this.gotoBtnState("_over",1);
          this.mainBtn.graphics.clear();
          this.mainBtn.graphics.lineStyle(this.settings.overLineThickness,this.settings.overLineColor,this.settings.overLineAlpha);
          this.mainBtn.graphics.beginFill(this.settings.overBgColor,this.settings.overBgAlpha);
          this.mainBtn.graphics.drawRect(0,0,this.settings.width,this.settings.height);
          this.tf.textColor = this.settings.overFontColor;
+      }
+
+      private function gotoBtnState(param1:String, param2:int) : void
+      {
+         if(!this.settings.btn)
+         {
+            return;
+         }
+         try
+         {
+            if(this.hasLabel(this.settings.btn,param1))
+            {
+               this.settings.btn.gotoAndStop(param1);
+            }
+            else
+            {
+               this.settings.btn.gotoAndStop(param2);
+            }
+         }
+         catch(e:Error)
+         {
+         }
+      }
+
+      private function hasLabel(param1:MovieClip, param2:String) : Boolean
+      {
+         var _loc3_:int = 0;
+         if(!param1)
+         {
+            return false;
+         }
+         _loc3_ = 0;
+         while(_loc3_ < param1.currentLabels.length)
+         {
+            if(param1.currentLabels[_loc3_].name == param2)
+            {
+               return true;
+            }
+            _loc3_++;
+         }
+         return false;
       }
       
       private function click(param1:MouseEvent) : void

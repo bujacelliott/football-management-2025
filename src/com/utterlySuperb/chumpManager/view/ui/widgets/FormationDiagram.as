@@ -103,6 +103,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
          while(_loc2_ < 11)
          {
             this.playerButtons[_loc2_].setPlayer(param1[_loc2_]);
+            this.playerButtons[_loc2_].setTeam(true);
             _loc2_++;
          }
       }

@@ -5,6 +5,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.model.dataObjects.matches.Match;
    import com.utterlySuperb.chumpManager.model.dataObjects.matches.MatchDetails;
+   import com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
    
    public class Game
    {
@@ -16,6 +17,22 @@ package com.utterlySuperb.chumpManager.model.dataObjects
       public static const CASH_PER_DRAW:int = 500000;
       
       public static const CASH_PER_LOSS:int = 200000;
+
+      public static const LEAGUE_ENG_PREMIER:int = 0;
+      
+      public static const LEAGUE_ENG_CHAMPIONSHIP:int = 1;
+      
+      public static const LEAGUE_ENG_LEAGUE_ONE:int = 2;
+      
+      public static const LEAGUE_ENG_LEAGUE_TWO:int = 3;
+      
+      public static const LEAGUE_ITA_SERIE_A:int = 4;
+      
+      public static const LEAGUE_SPA_LA_LIGA:int = 5;
+      
+      public static const LEAGUE_GER_BUNDESLIGA:int = 6;
+      
+      public static const LEAGUE_FRA_LIGUE_1:int = 7;
       
       public var version:String;
       
@@ -64,6 +81,8 @@ package com.utterlySuperb.chumpManager.model.dataObjects
       public var matchDetails:MatchDetails;
       
       public var userMessages:Array;
+
+      public var mainLeagueNum:int = 0;
       
       public var slotNumber:int;
       
@@ -79,6 +98,33 @@ package com.utterlySuperb.chumpManager.model.dataObjects
          this.userMessages = new Array();
          this.goalsList = {};
          this.seasonNum = 0;
+      }
+
+      public function getMainLeague() : League
+      {
+         if(this.mainLeagueNum < 0 || this.mainLeagueNum >= this.leagues.length || !this.leagues[this.mainLeagueNum])
+         {
+            return this.leagues.length > 0 ? this.leagues[0] : null;
+         }
+         return this.leagues[this.mainLeagueNum];
+      }
+      
+      public function getDomesticLeagues() : Array
+      {
+         if(this.mainLeagueNum < 0 || this.mainLeagueNum >= this.leagues.length || !this.leagues[this.mainLeagueNum])
+         {
+            return [this.leagues[0]];
+         }
+         if(this.mainLeagueNum <= LEAGUE_ENG_LEAGUE_TWO)
+         {
+            return [this.leagues[LEAGUE_ENG_PREMIER],this.leagues[LEAGUE_ENG_CHAMPIONSHIP],this.leagues[LEAGUE_ENG_LEAGUE_ONE],this.leagues[LEAGUE_ENG_LEAGUE_TWO]];
+         }
+         return [this.getMainLeague()];
+      }
+      
+      public function isEnglishGame() : Boolean
+      {
+         return this.mainLeagueNum <= LEAGUE_ENG_LEAGUE_TWO;
       }
       
       public function nextWeek() : void

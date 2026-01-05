@@ -342,7 +342,173 @@ package com.utterlySuperb.chumpManager.engine
             _loc2_.addPlayer(_loc5_.id);
             _loc3_++;
          }
+         // Derive reputation from the current squad instead of the XML seed: average of the best XI,
+         // plus optional silverware weighting (starts at 0 for a new game).
+         var _loc6_:Number = calculateClubProfile(_loc2_,0,0);
+         if(!isNaN(_loc6_))
+         {
+            _loc2_.profile = _loc6_;
+         }
+         // Replace legacy letter grades with live star numbers based on current squad.
+         var _loc7_:Object = getUnitStarBreakdown(_loc2_);
+         _loc2_.attackScore = _loc7_.forwards.toString();
+         _loc2_.defendScore = _loc7_.defence.toString();
          return _loc2_;
+      }
+
+      public static function getUnitStarBreakdown(param1:Club) : Object
+      {
+         var _loc5_:Player = null;
+         var _loc9_:Array = null;
+         var _loc2_:Array = [];
+         var _loc3_:Array = [];
+         var _loc4_:Array = [];
+         var _loc6_:Array = param1.players ? param1.players.concat() : [];
+         var _loc7_:int = 0;
+         while(_loc7_ < _loc6_.length)
+         {
+            _loc5_ = StaticInfo.getPlayer(_loc6_[_loc7_]);
+            if(_loc5_)
+            {
+               _loc9_ = _loc5_.positions.split("-");
+               if(_loc5_.positions.indexOf("gk") >= 0)
+               {
+                  _loc4_.push(_loc5_);
+               }
+               else
+               {
+                  if(_loc5_.positions.indexOf("cb") >= 0)
+                  {
+                     _loc4_.push(_loc5_);
+                  }
+                  if(_loc5_.positions.indexOf("fb") >= 0 || _loc5_.positions.indexOf("wb") >= 0)
+                  {
+                     _loc4_.push(_loc5_);
+                  }
+                  if(_loc5_.positions.indexOf("cm") >= 0 || _loc5_.positions.indexOf("dm") >= 0 || _loc5_.positions.indexOf("sm") >= 0)
+                  {
+                     _loc3_.push(_loc5_);
+                  }
+                  if(_loc5_.positions.indexOf("cf") >= 0 || _loc5_.positions.indexOf("wf") >= 0 || _loc5_.positions.indexOf("am") >= 0)
+                  {
+                     _loc2_.push(_loc5_);
+                  }
+               }
+            }
+            _loc7_++;
+         }
+         var _loc8_:Object = {};
+         _loc8_.forwards = getAverageStars(_loc2_,3);
+         _loc8_.midfield = getAverageStars(_loc3_,3);
+         _loc8_.defence = getAverageStarsDefence(_loc4_);
+         return _loc8_;
+      }
+
+      private static function getAverageStars(param1:Array, param2:int) : Number
+      {
+         param1.sortOn("playerStars",Array.NUMERIC | Array.DESCENDING);
+         var _loc3_:int = Math.min(param2,param1.length);
+         if(_loc3_ == 0)
+         {
+            return 0;
+         }
+         var _loc4_:Number = 0;
+         var _loc5_:int = 0;
+         while(_loc5_ < _loc3_)
+         {
+            _loc4_ += param1[_loc5_].playerStars;
+            _loc5_++;
+         }
+         return Math.round(_loc4_ / _loc3_ * 10) / 10;
+      }
+
+      private static function getAverageStarsDefence(param1:Array) : Number
+      {
+         var _loc2_:Array = [];
+         var _loc3_:Array = [];
+         var _loc4_:Array = [];
+         var _loc5_:int = 0;
+         while(_loc5_ < param1.length)
+         {
+            if(param1[_loc5_].positions.indexOf("gk") >= 0)
+            {
+               _loc2_.push(param1[_loc5_]);
+            }
+            else if(param1[_loc5_].positions.indexOf("cb") >= 0)
+            {
+               _loc3_.push(param1[_loc5_]);
+            }
+            else if(param1[_loc5_].positions.indexOf("fb") >= 0 || param1[_loc5_].positions.indexOf("wb") >= 0)
+            {
+               _loc4_.push(param1[_loc5_]);
+            }
+            _loc5_++;
+         }
+         var _loc6_:Number = 0;
+         var _loc7_:int = 0;
+         var _loc8_:int = 0;
+         _loc2_.sortOn("playerStars",Array.NUMERIC | Array.DESCENDING);
+         _loc3_.sortOn("playerStars",Array.NUMERIC | Array.DESCENDING);
+         _loc4_.sortOn("playerStars",Array.NUMERIC | Array.DESCENDING);
+         var _loc9_:Array = [];
+         if(_loc2_.length > 0)
+         {
+            _loc9_.push(_loc2_[0]);
+         }
+         while(_loc7_ < Math.min(2,_loc3_.length))
+         {
+            _loc9_.push(_loc3_[_loc7_]);
+            _loc7_++;
+         }
+         while(_loc8_ < Math.min(2,_loc4_.length))
+         {
+            _loc9_.push(_loc4_[_loc8_]);
+            _loc8_++;
+         }
+         if(_loc9_.length == 0)
+         {
+            return 0;
+         }
+         _loc6_ = 0;
+         _loc7_ = 0;
+         while(_loc7_ < _loc9_.length)
+         {
+            _loc6_ += _loc9_[_loc7_].playerStars;
+            _loc7_++;
+         }
+         return Math.round(_loc6_ / _loc9_.length * 10) / 10;
+      }
+
+      public static function calculateClubProfile(param1:Club, param2:int = 0, param3:int = 0) : Number
+      {
+         var _loc7_:Player = null;
+         var _loc4_:Array = [];
+         var _loc5_:int = 0;
+         while(_loc5_ < param1.players.length)
+         {
+            _loc7_ = StaticInfo.getPlayer(param1.players[_loc5_]);
+            if(_loc7_)
+            {
+               _loc4_.push(_loc7_);
+            }
+            _loc5_++;
+         }
+         if(_loc4_.length == 0)
+         {
+            return NaN;
+         }
+         _loc4_.sortOn("playerRating",Array.NUMERIC | Array.DESCENDING);
+         var _loc6_:int = Math.min(11,_loc4_.length);
+         var _loc8_:Number = 0;
+         _loc5_ = 0;
+         while(_loc5_ < _loc6_)
+         {
+            _loc8_ += _loc4_[_loc5_].playerRating;
+            _loc5_++;
+         }
+         var _loc9_:Number = _loc8_ / _loc6_;
+         var _loc10_:Number = _loc9_ + param3 * 3 + param2 * 2;
+         return Math.max(1,Math.min(100,Math.round(_loc10_)));
       }
       
       public static function getBestPlayerInPosition(param1:Array, param2:String, param3:Boolean) : Player
@@ -714,6 +880,10 @@ package com.utterlySuperb.chumpManager.engine
          var _loc3_:int = 49 - int(Math.pow(Math.random() * Math.pow(50,4),0.25));
          param1.form = Math.random() > 0.5 ? 50 + _loc3_ : 50 - _loc3_;
          param1.playerRating = PlayerHelper.getPlayerScore(param1);
+         if(param1.isKeeper())
+         {
+            param1.playerRating = Math.max(1,param1.playerRating - 5);
+         }
          param1.playerStars = Math.ceil(Math.min(Math.max(1,param1.playerRating - 40),60) / 50 * 10);
          param1.transferValue = TransfersEngine.getExpectedTransferFee(param1);
          if(!param1.club || param1.club != Main.currentGame.playerClub)

@@ -1,0 +1,126 @@
+<record>
+      <!-- resource manager options -->
+
+      <!-- dont preload anything in this folder -->
+      <boolean id="preload" value="false"/>
+
+      <!-- logo mappings -->
+      <!-- the following XML maps pictures inside this folder into other positions
+        in the resource system, which allows this folder to be dropped into any
+        place in the graphics folder and still have the game pick up the graphics
+        files from the correct places
+      -->
+
+      <list id="maps">
+      <record from="aj auxerre home 2d" to="graphics/pictures/team/824/kits/home"/>
+          <record from="aj auxerre home" to="graphics/pictures/team/824/kit_textures/home"/>
+            <record from="aj auxerre away 2d" to="graphics/pictures/team/824/kits/away"/>
+          <record from="aj auxerre away" to="graphics/pictures/team/824/kit_textures/away"/>
+            <record from="aj auxerre third 2d" to="graphics/pictures/team/824/kits/third"/>
+          <record from="aj auxerre third" to="graphics/pictures/team/824/kit_textures/third"/>
+            <record from="angers sco home 2d" to="graphics/pictures/team/875/kits/home"/>
+          <record from="angers sco home" to="graphics/pictures/team/875/kit_textures/home"/>
+            <record from="angers sco away 2d" to="graphics/pictures/team/875/kits/away"/>
+          <record from="angers sco away" to="graphics/pictures/team/875/kit_textures/away"/>
+            <record from="angers sco third 2d" to="graphics/pictures/team/875/kits/third"/>
+          <record from="angers sco third" to="graphics/pictures/team/875/kit_textures/third"/>
+            <record from="as monaco home 2d" to="graphics/pictures/team/826/kits/home"/>
+          <record from="as monaco home" to="graphics/pictures/team/826/kit_textures/home"/>
+            <record from="as monaco away 2d" to="graphics/pictures/team/826/kits/away"/>
+          <record from="as monaco away" to="graphics/pictures/team/826/kit_textures/away"/>
+            <record from="as monaco third 2d" to="graphics/pictures/team/826/kits/third"/>
+          <record from="as monaco third" to="graphics/pictures/team/826/kit_textures/third"/>
+            <record from="fc metz home 2d" to="graphics/pictures/team/844/kits/home"/>
+          <record from="fc metz home" to="graphics/pictures/team/844/kit_textures/home"/>
+            <record from="fc metz away 2d" to="graphics/pictures/team/844/kits/away"/>
+          <record from="fc metz away" to="graphics/pictures/team/844/kit_textures/away"/>
+            <record from="fc metz third 2d" to="graphics/pictures/team/844/kits/third"/>
+          <record from="fc metz third" to="graphics/pictures/team/844/kit_textures/third"/>
+            <record from="fc nantes home 2d" to="graphics/pictures/team/846/kits/home"/>
+          <record from="fc nantes home" to="graphics/pictures/team/846/kit_textures/home"/>
+            <record from="fc nantes away 2d" to="graphics/pictures/team/846/kits/away"/>
+          <record from="fc nantes away" to="graphics/pictures/team/846/kit_textures/away"/>
+            <record from="fc nantes third 2d" to="graphics/pictures/team/846/kits/third"/>
+          <record from="fc nantes third" to="graphics/pictures/team/846/kit_textures/third"/>
+            <record from="le havre home 2d" to="graphics/pictures/team/856/kits/home"/>
+          <record from="le havre home" to="graphics/pictures/team/856/kit_textures/home"/>
+            <record from="le havre away 2d" to="graphics/pictures/team/856/kits/away"/>
+          <record from="le havre away" to="graphics/pictures/team/856/kit_textures/away"/>
+            <record from="le havre third 2d" to="graphics/pictures/team/856/kits/third"/>
+          <record from="le havre third" to="graphics/pictures/team/856/kit_textures/third"/>
+            <record from="lille losc home 2d" to="graphics/pictures/team/858/kits/home"/>
+          <record from="lille losc home" to="graphics/pictures/team/858/kit_textures/home"/>
+            <record from="lille losc away 2d" to="graphics/pictures/team/858/kits/away"/>
+          <record from="lille losc away" to="graphics/pictures/team/858/kit_textures/away"/>
+            <record from="lille losc third 2d" to="graphics/pictures/team/858/kits/third"/>
+          <record from="lille losc third" to="graphics/pictures/team/858/kit_textures/third"/>
+            <record from="lorient home 2d" to="graphics/pictures/team/2005/kits/home"/>
+          <record from="lorient home" to="graphics/pictures/team/2005/kit_textures/home"/>
+            <record from="lorient away 2d" to="graphics/pictures/team/2005/kits/away"/>
+          <record from="lorient away" to="graphics/pictures/team/2005/kit_textures/away"/>
+            <record from="lorient third 2d" to="graphics/pictures/team/2005/kits/third"/>
+          <record from="lorient third" to="graphics/pictures/team/2005/kit_textures/third"/>
+            <record from="nice home 2d" to="graphics/pictures/team/862/kits/home"/>
+          <record from="nice home" to="graphics/pictures/team/862/kit_textures/home"/>
+            <record from="nice away 2d" to="graphics/pictures/team/862/kits/away"/>
+          <record from="nice away" to="graphics/pictures/team/862/kit_textures/away"/>
+            <record from="nice third 2d" to="graphics/pictures/team/862/kits/third"/>
+          <record from="nice third" to="graphics/pictures/team/862/kit_textures/third"/>
+            <record from="olympique lyonnais home 2d" to="graphics/pictures/team/865/kits/home"/>
+          <record from="olympique lyonnais home" to="graphics/pictures/team/865/kit_textures/home"/>
+            <record from="olympique lyonnais away 2d" to="graphics/pictures/team/865/kits/away"/>
+          <record from="olympique lyonnais away" to="graphics/pictures/team/865/kit_textures/away"/>
+            <record from="olympique lyonnais third 2d" to="graphics/pictures/team/865/kits/third"/>
+          <record from="olympique lyonnais third" to="graphics/pictures/team/865/kit_textures/third"/>
+            <record from="olympique marseille home 2d" to="graphics/pictures/team/866/kits/home"/>
+          <record from="olympique marseille home" to="graphics/pictures/team/866/kit_textures/home"/>
+            <record from="olympique marseille away 2d" to="graphics/pictures/team/866/kits/away"/>
+          <record from="olympique marseille away" to="graphics/pictures/team/866/kit_textures/away"/>
+            <record from="olympique marseille third 2d" to="graphics/pictures/team/866/kits/third"/>
+          <record from="olympique marseille third" to="graphics/pictures/team/866/kit_textures/third"/>
+            <record from="paris fc home 2d" to="graphics/pictures/team/867/kits/home"/>
+          <record from="paris fc home" to="graphics/pictures/team/867/kit_textures/home"/>
+            <record from="paris fc away 2d" to="graphics/pictures/team/867/kits/away"/>
+          <record from="paris fc away" to="graphics/pictures/team/867/kit_textures/away"/>
+            <record from="paris fc third 2d" to="graphics/pictures/team/867/kits/third"/>
+          <record from="paris fc third" to="graphics/pictures/team/867/kit_textures/third"/>
+            <record from="paris saint-germain home 2d" to="graphics/pictures/team/868/kits/home"/>
+          <record from="paris saint-germain home" to="graphics/pictures/team/868/kit_textures/home"/>
+            <record from="paris saint-germain away 2d" to="graphics/pictures/team/868/kits/away"/>
+          <record from="paris saint-germain away" to="graphics/pictures/team/868/kit_textures/away"/>
+            <record from="paris saint-germain third 2d" to="graphics/pictures/team/868/kits/third"/>
+          <record from="paris saint-germain third" to="graphics/pictures/team/868/kit_textures/third"/>
+            <record from="rc lens home 2d" to="graphics/pictures/team/871/kits/home"/>
+          <record from="rc lens home" to="graphics/pictures/team/871/kit_textures/home"/>
+            <record from="rc lens away 2d" to="graphics/pictures/team/871/kits/away"/>
+          <record from="rc lens away" to="graphics/pictures/team/871/kit_textures/away"/>
+            <record from="rc lens third 2d" to="graphics/pictures/team/871/kits/third"/>
+          <record from="rc lens third" to="graphics/pictures/team/871/kit_textures/third"/>
+            <record from="stade brestois home 2d" to="graphics/pictures/team/2061/kits/home"/>
+          <record from="stade brestois home" to="graphics/pictures/team/2061/kit_textures/home"/>
+            <record from="stade brestois away 2d" to="graphics/pictures/team/2061/kits/away"/>
+          <record from="stade brestois away" to="graphics/pictures/team/2061/kit_textures/away"/>
+            <record from="stade brestois third 2d" to="graphics/pictures/team/2061/kits/third"/>
+          <record from="stade brestois third" to="graphics/pictures/team/2061/kit_textures/third"/>
+            <record from="stade rennais home 2d" to="graphics/pictures/team/884/kits/home"/>
+          <record from="stade rennais home" to="graphics/pictures/team/884/kit_textures/home"/>
+            <record from="stade rennais away 2d" to="graphics/pictures/team/884/kits/away"/>
+          <record from="stade rennais away" to="graphics/pictures/team/884/kit_textures/away"/>
+            <record from="stade rennais third 2d" to="graphics/pictures/team/884/kits/third"/>
+          <record from="stade rennais third" to="graphics/pictures/team/884/kit_textures/third"/>
+            <record from="strasbourg home 2d" to="graphics/pictures/team/872/kits/home"/>
+          <record from="strasbourg home" to="graphics/pictures/team/872/kit_textures/home"/>
+            <record from="strasbourg away 2d" to="graphics/pictures/team/872/kits/away"/>
+          <record from="strasbourg away" to="graphics/pictures/team/872/kit_textures/away"/>
+            <record from="strasbourg third 2d" to="graphics/pictures/team/872/kits/third"/>
+          <record from="strasbourg third" to="graphics/pictures/team/872/kit_textures/third"/>
+            <record from="toulouse fc home 2d" to="graphics/pictures/team/886/kits/home"/>
+          <record from="toulouse fc home" to="graphics/pictures/team/886/kit_textures/home"/>
+            <record from="toulouse fc away 2d" to="graphics/pictures/team/886/kits/away"/>
+          <record from="toulouse fc away" to="graphics/pictures/team/886/kit_textures/away"/>
+            <record from="toulouse fc third 2d" to="graphics/pictures/team/886/kits/third"/>
+          <record from="toulouse fc third" to="graphics/pictures/team/886/kit_textures/third"/>
+            
+      </list>
+
+      </record>

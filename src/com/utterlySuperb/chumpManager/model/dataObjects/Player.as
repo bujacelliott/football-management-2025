@@ -116,7 +116,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects
       
       public var transferValue:int = 0;
       
-      public var playerRating:int = 0;
+      public var playerRating:Number = 0;
       
       public var playerStars:int = 0;
       

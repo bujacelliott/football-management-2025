@@ -143,6 +143,12 @@ package com.utterlySuperb.chumpManager.model
 	<!-- league names -->
 	<phrase id="premierLeague"><![CDATA[Premier league]]></phrase>
 	<phrase id="championship"><![CDATA[Championship]]></phrase>
+	<phrase id="leagueOne"><![CDATA[League One]]></phrase>
+	<phrase id="leagueTwo"><![CDATA[League Two]]></phrase>
+	<phrase id="serieA"><![CDATA[Serie A]]></phrase>
+	<phrase id="laLigue"><![CDATA[La Liga]]></phrase>
+	<phrase id="bundesleague"><![CDATA[Bundesliga]]></phrase>
+	<phrase id="ligue1"><![CDATA[Ligue 1]]></phrase>
 	<!-- league names -->
 	<phrase id="faCup"><![CDATA[The FA Cup]]></phrase>
 	<phrase id="leagueCup"><![CDATA[The League Cup]]></phrase>
@@ -188,6 +194,9 @@ package com.utterlySuperb.chumpManager.model
 	<phrase id="backInfo"><![CDATA[(Click here to go back to the Matchday Menu)]]></phrase>
 	<phrase id="playerSearch"><![CDATA[Search for a Player]]></phrase>
 	<phrase id="playerSearchInfo"><![CDATA[(Click here to search players by attributes)]]></phrase>
+	<phrase id="league"><![CDATA[League]]></phrase>
+	<phrase id="prevLeague"><![CDATA[Prev League]]></phrase>
+	<phrase id="nextLeague"><![CDATA[Next League]]></phrase>
 	<phrase id="browseClubs"><![CDATA[Browse a Club's players]]></phrase>
 	<phrase id="browseClubsInfo"><![CDATA[(Click here to sort by clubs)]]></phrase>
 	<phrase id="sellPlayer"><![CDATA[Sell a player]]></phrase>
@@ -1002,6 +1011,16 @@ package com.utterlySuperb.chumpManager.model
       public static function getCurrency() : String
       {
          return copy["currency"];
+      }
+      
+      public static function getClubStars(param1:Object) : String
+      {
+         if(!param1 || !("profile" in param1))
+         {
+            return "";
+         }
+         var _loc2_:int = int(Math.max(1,Math.min(10,Math.round(param1.profile / 10))));
+         return " (" + _loc2_ + "★)";
       }
       
       public static function getNumCopy(param1:int, param2:String) : String

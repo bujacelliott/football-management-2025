@@ -13,7 +13,7 @@ package com.utterlySuperb.chumpManager.engine
       public static function getMatchesLeft() : int
       {
          var _loc1_:Game = Main.currentGame;
-         return _loc1_.leagues[0].entrants.length * 2 - 2 - _loc1_.leagues[0].getCompetitionInfo(_loc1_.playerClub).gamesPlayed;
+         return _loc1_.getMainLeague().entrants.length * 2 - 2 - _loc1_.getMainLeague().getCompetitionInfo(_loc1_.playerClub).gamesPlayed;
       }
       
       public static function getExpectedIncome() : int
@@ -25,20 +25,20 @@ package com.utterlySuperb.chumpManager.engine
       public static function getMeritPayment() : int
       {
          var _loc1_:Game = Main.currentGame;
-         _loc1_.leagues[0].getStandings();
-         return 2500000 + (_loc1_.leagues[0].entrants.length - _loc1_.leagues[0].getCompetitionInfo(_loc1_.playerClub).currentPosition) * 1000000;
+         _loc1_.getMainLeague().getStandings();
+         return 2500000 + (_loc1_.getMainLeague().entrants.length - _loc1_.getMainLeague().getCompetitionInfo(_loc1_.playerClub).currentPosition) * 1000000;
       }
       
       public static function getPlayerLeaguePosition() : int
       {
          var _loc1_:Game = Main.currentGame;
-         _loc1_.leagues[0].getStandings();
+         _loc1_.getMainLeague().getStandings();
          var _loc2_:int = 0;
-         while(_loc2_ < _loc1_.leagues[0].entrants.length)
+         while(_loc2_ < _loc1_.getMainLeague().entrants.length)
          {
-            if(_loc1_.leagues[0].entrants[_loc2_].club == _loc1_.playerClub)
+            if(_loc1_.getMainLeague().entrants[_loc2_].club == _loc1_.playerClub)
             {
-               return _loc1_.leagues[0].entrants[_loc2_].currentPosition;
+               return _loc1_.getMainLeague().entrants[_loc2_].currentPosition;
             }
             _loc2_++;
          }

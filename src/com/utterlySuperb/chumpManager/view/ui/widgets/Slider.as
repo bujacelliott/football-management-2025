@@ -71,7 +71,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
          var _loc1_:Number = NaN;
          this.usedBit.graphics.clear();
          this.usedBit.graphics.lineStyle(1,2236962);
-         this.usedBit.graphics.beginFill(3381759);
+         this.usedBit.graphics.beginFill(0x0d2f1b);
          this.usedBit.graphics.drawRoundRect(-5,0 + this.yOffset,this.handle.x + 10,this.barHeight,10,10);
          if(this.amountsCopy)
          {
@@ -95,7 +95,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
          this.filterSize = param2 - param1;
          this.drawFactor = param3 / this.filterSize;
          graphics.lineStyle(1,2236962);
-         graphics.beginFill(6710886);
+         graphics.beginFill(0x1c7a3f);
          graphics.drawRoundRect(-5,0 + this.yOffset,param3 + 10,this.barHeight,10,10);
       }
       

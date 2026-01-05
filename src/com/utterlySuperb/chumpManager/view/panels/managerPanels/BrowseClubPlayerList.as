@@ -41,7 +41,9 @@ package com.utterlySuperb.chumpManager.view.panels.managerPanels
       
       override protected function init() : void
       {
-         this.playerList = new ChumpListBox(this.listWidth,Globals.GAME_HEIGHT - y - 60);
+         // Start near top (y=30) and stretch so bottom aligns with club list bottom (Globals.GAME_HEIGHT - 30)
+         var playerListHeight:int = Globals.GAME_HEIGHT - this.y - 60;
+         this.playerList = new ChumpListBox(this.listWidth,playerListHeight);
          addChild(this.playerList);
          this.playerList.y = 30;
          this.playerList.addEventListener(ListBox.CLICK_ITEM,this.clickListItemHandler);
@@ -90,7 +92,7 @@ package com.utterlySuperb.chumpManager.view.panels.managerPanels
       public function setClub(param1:Club, param2:Boolean = true) : void
       {
          this.currentClub = param1;
-         if(param2)
+         if(param2 && this.playerList)
          {
             this.update();
          }
@@ -128,7 +130,7 @@ package com.utterlySuperb.chumpManager.view.panels.managerPanels
             _loc3_ = 0;
             while(_loc3_ < _loc2_.length)
             {
-               if(_loc2_[_loc3_].active && this.filteredPlayers.indexOf(_loc2_[_loc3_]) < 0 && (!_loc2_[_loc3_].club || _loc1_.leagues[0].hasClub(_loc2_[_loc3_].club)))
+               if(_loc2_[_loc3_].active && this.filteredPlayers.indexOf(_loc2_[_loc3_]) < 0 && (!_loc2_[_loc3_].club || _loc1_.getMainLeague().hasClub(_loc2_[_loc3_].club)))
                {
                   this.filteredPlayers.push(_loc2_[_loc3_]);
                }
@@ -140,6 +142,14 @@ package com.utterlySuperb.chumpManager.view.panels.managerPanels
       private function populateList() : void
       {
          var _loc2_:TransferListButton = null;
+         if(!this.playerList)
+         {
+            return;
+         }
+         if(!this.filteredPlayers)
+         {
+            this.filteredPlayers = [];
+         }
          this.playerList.depopulate();
          var _loc1_:int = 0;
          while(_loc1_ < Math.min(this.filteredPlayers.length,this.maxItems))
