@@ -36,7 +36,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
             if(param1.club)
             {
                _loc3_ = param1.transferValue;
-               _loc2_ += "<br>" + CopyManager.getCopy("estimatedValue") + ":" + "&#60;" + CopyManager.getCurrency() + TextHelper.prettifyNumber(TransfersEngine.getEstimateTransfer(_loc3_));
+               _loc2_ += "<br>" + CopyManager.getCopy("estimatedValue") + ":" + CopyManager.getCurrency() + TextHelper.prettifyNumber(_loc3_);
             }
             else
             {

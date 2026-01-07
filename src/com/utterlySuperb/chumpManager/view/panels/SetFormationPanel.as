@@ -517,7 +517,7 @@ package com.utterlySuperb.chumpManager.view.panels
                   {
                      _loc2_ = false;
                   }
-                  if(this.numSubs >= 3)
+                  if(this.numSubs >= 5)
                   {
                      _loc2_ = false;
                   }

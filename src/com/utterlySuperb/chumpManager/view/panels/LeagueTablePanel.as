@@ -1,10 +1,11 @@
 package com.utterlySuperb.chumpManager.view.panels
 {
    import com.utterlySuperb.chumpManager.model.CopyManager;
-   import com.utterlySuperb.chumpManager.view.ui.ChumpListBox;
-   import com.utterlySuperb.chumpManager.view.ui.buttons.listButtons.LeagueRowListButton;
-   import com.utterlySuperb.text.TextHelper;
-   import flash.text.TextField;
+import com.utterlySuperb.chumpManager.view.ui.ChumpListBox;
+import com.utterlySuperb.chumpManager.view.ui.buttons.listButtons.LeagueRowListButton;
+import com.utterlySuperb.text.TextHelper;
+import flash.text.TextField;
+import com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
    
    public class LeagueTablePanel extends Panel
    {
@@ -12,6 +13,8 @@ package com.utterlySuperb.chumpManager.view.panels
       public static const BOX_WIDTH:int = 400;
       
       private var leagueList:ChumpListBox;
+      
+      private var league:League;
       
       public var aHeight:int = 300;
       
@@ -42,7 +45,7 @@ package com.utterlySuperb.chumpManager.view.panels
       {
          var _loc2_:String = null;
          var _loc4_:LeagueRowListButton = null;
-         var _loc3_:Array = Main.currentGame.getMainLeague().getStandings();
+         var _loc3_:Array = (this.league ? this.league : Main.currentGame.getMainLeague()).getStandings();
          _loc4_ = new LeagueRowListButton();
          _loc4_.bWidth = 345;
          _loc4_.bHeight = 30;
@@ -66,6 +69,15 @@ package com.utterlySuperb.chumpManager.view.panels
             _loc5_++;
          }
          this.leagueList.enable();
+      }
+      
+      public function setLeague(param1:League) : void
+      {
+         this.league = param1;
+         if(this.leagueList)
+         {
+            this.update();
+         }
       }
       
       override protected function cleanUp() : void

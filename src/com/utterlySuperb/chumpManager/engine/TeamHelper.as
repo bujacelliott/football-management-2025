@@ -8,6 +8,7 @@ package com.utterlySuperb.chumpManager.engine
    import com.utterlySuperb.chumpManager.model.dataObjects.Player;
    import com.utterlySuperb.chumpManager.model.dataObjects.StaticInfo;
    import com.utterlySuperb.events.BudgetEventProxy;
+   import com.utterlySuperb.chumpManager.engine.TransfersEngine;
    
    public class TeamHelper
    {

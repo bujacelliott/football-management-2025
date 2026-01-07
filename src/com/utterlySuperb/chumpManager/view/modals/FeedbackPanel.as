@@ -56,6 +56,7 @@ package com.utterlySuperb.chumpManager.view.modals
             {
                Main.currentGame.clubCash += this.message.offer.cashOff;
                TransfersEngine.transferPlayer(StaticInfo.getPlayer(this.message.offer.player),this.message.offer.toClub,Main.currentGame.playerClub);
+               TransfersEngine.recordTransfer(StaticInfo.getPlayer(this.message.offer.player),Main.currentGame.playerClub,this.message.offer.toClub,this.message.offer.cashOff);
             }
          }
          GameEngine.checkMessages();

@@ -1,154 +1,93 @@
 package com.utterlySuperb.chumpManager.view.screens
 {
    import com.utterlySuperb.chumpManager.engine.GameEngine;
-   import com.utterlySuperb.chumpManager.model.CopyManager;
-   import com.utterlySuperb.chumpManager.view.panels.LeagueTablePanel;
-   import com.utterlySuperb.chumpManager.view.panels.NextRoundMatchesPanel;
-   import com.utterlySuperb.chumpManager.view.panels.WeekNumPanel;
+   import com.utterlySuperb.chumpManager.view.panels.ClubFixturesPanel;
+   import com.utterlySuperb.chumpManager.view.panels.StandingsPanel;
+   import com.utterlySuperb.chumpManager.view.panels.TopTabsBar;
+   import com.utterlySuperb.chumpManager.view.panels.TransfersSummaryPanel;
    import com.utterlySuperb.chumpManager.view.panels.universalPanels.StatusPanel;
    import com.utterlySuperb.chumpManager.view.ui.buttons.BigButton;
-   import com.utterlySuperb.chumpManager.view.ui.buttons.ChumpButton;
-   import com.utterlySuperb.chumpManager.view.ui.buttons.MediumButton;
-   import com.utterlySuperb.chumpManager.view.ui.menus.MainMenu;
    import com.utterlySuperb.events.IntEvent;
-   import com.utterlySuperb.ui.ModalDialogue;
    import flash.events.Event;
    
    public class MainScreen extends Screen
    {
       
-      private var showTableButton:ChumpButton;
-      
-      private var nextButton:ChumpButton;
-      
-      private var leaguePanel:LeagueTablePanel;
-      
-      private var nextPanel:NextRoundMatchesPanel;
-      
-      private var weekNumPanel:WeekNumPanel;
-      
-      private var clubButton:BigButton;
-      
-      private var managerButton:BigButton;
+      private var tabs:TopTabsBar;
       
       private var continueButton:BigButton;
       
-      private var optionButton:MediumButton;
+      private var transfersPanel:TransfersSummaryPanel;
       
-      private var nextSeasonButton:MediumButton;
+      private var fixturesPanel:ClubFixturesPanel;
+      
+      private var standingsPanel:StandingsPanel;
       
       public function MainScreen()
       {
          super();
          var _loc1_:StatusPanel = new StatusPanel();
+         _loc1_.y = Globals.MARGIN_Y;
          addChild(_loc1_);
-         this.clubButton = new BigButton(CopyManager.getCopy("club"),CopyManager.getCopy("clubButtonInfo"));
-         this.clubButton.x = Globals.MARGIN_X;
-         this.clubButton.y = Globals.HEADER_OFFSET + StatusPanel.HEIGHT + 50;
-         addMadeButton(this.clubButton);
-         this.managerButton = new BigButton(CopyManager.getCopy("managersOffice"),CopyManager.getCopy("managersOfficeInfo"));
-         this.managerButton.x = Globals.MARGIN_X;
-         this.managerButton.y = this.clubButton.y + 110;
-         addMadeButton(this.managerButton);
-         this.continueButton = new BigButton(CopyManager.getCopy("continue"),CopyManager.getCopy("continueInfo"));
-         this.continueButton.x = Globals.MARGIN_X;
-         this.continueButton.y = this.managerButton.y + 110;
+         this.tabs = new TopTabsBar(TopTabsBar.TAB_CONTROL);
+         this.tabs.addEventListener(TopTabsBar.TAB_CLICK,this.tabClickHandler);
+         this.tabs.y = _loc1_.y + StatusPanel.HEIGHT + 6;
+         addChild(this.tabs);
+         var _loc2_:int = Globals.MARGIN_X;
+         var _loc3_:int = this.tabs.y + 40;
+         var _loc4_:int = 240;
+         var _loc5_:int = 20;
+         var _loc6_:int = _loc2_ + _loc4_ + _loc5_;
+         var _loc7_:int = _loc6_ + _loc4_ + _loc5_;
+         this.continueButton = new BigButton("Continue","",_loc4_,70);
+         this.continueButton.x = _loc2_;
+         this.continueButton.y = _loc3_;
          addMadeButton(this.continueButton);
-         this.optionButton = new MediumButton(CopyManager.getCopy("options"));
-         this.optionButton.x = 540;
-         this.optionButton.y = Globals.GAME_HEIGHT - 70;
-         addMadeButton(this.optionButton);
-         this.nextPanel = new NextRoundMatchesPanel();
-         this.nextPanel.x = Globals.GAME_WIDTH / 2 + Globals.MARGIN_X / 2;
-         this.nextPanel.y = 120;
-         addChild(this.nextPanel);
+         this.transfersPanel = new TransfersSummaryPanel(_loc4_,220);
+         this.transfersPanel.x = _loc2_;
+         this.transfersPanel.y = this.continueButton.y + this.continueButton.height + 20;
+         addChild(this.transfersPanel);
+         this.fixturesPanel = new ClubFixturesPanel(_loc4_,320);
+         this.fixturesPanel.x = _loc6_;
+         this.fixturesPanel.y = _loc3_;
+         addChild(this.fixturesPanel);
+         this.standingsPanel = new StandingsPanel(_loc4_,320,"Standings");
+         this.standingsPanel.x = _loc7_;
+         this.standingsPanel.y = _loc3_;
+         this.standingsPanel.setLeague(Main.currentGame.getMainLeague());
+         addChild(this.standingsPanel);
          Main.currentGame.matchDetails = null;
          enabled = true;
       }
       
-      override protected function menuClick(param1:IntEvent) : void
+      private function tabClickHandler(param1:IntEvent) : void
       {
-         var _loc2_:Array = null;
-         var _loc3_:ModalDialogue = null;
-         var _loc4_:Array = null;
-         if(param1.num == MainMenu.NEXT_ROUND)
-         {
-            GameEngine.nextRound(Main.currentGame);
-         }
-         else if(param1.num == MainMenu.OPTIONS)
-         {
-            _loc2_ = [CopyManager.getCopy("resumeGame"),CopyManager.getCopy("quitGame")];
-            _loc3_ = new ModalDialogue(CopyManager.getCopy("options"),"",_loc2_);
-            Main.instance.addModal(_loc3_);
-            _loc3_.addEventListener(ModalDialogue.MAKE_CHOICE,this.madeOptionsChoiceHandler);
-         }
-         else
-         {
-            _loc4_ = [];
-            _loc4_[MainMenu.TEAM] = Screen.TEAM_SCREEN;
-            _loc4_[MainMenu.FORMATION] = Screen.FORMATION_SCREEN;
-            _loc4_[MainMenu.TRANSFERS] = Screen.TRANSFERS_SCREEN;
-            _loc4_[MainMenu.TRAINING] = Screen.TRAINING_SCREEN;
-            _loc4_[MainMenu.STATS] = Screen.STATS_SCREEN;
-            Main.instance.showScreen(_loc4_[param1.num]);
-         }
-      }
-      
-      private function madeOptionsChoiceHandler(param1:IntEvent) : void
-      {
-         var _loc2_:ModalDialogue = ModalDialogue(param1.target);
-         Main.instance.removeModal(_loc2_);
          switch(param1.num)
          {
-            case 1:
-               Main.instance.showScreen(Screen.START_SCREEN);
+            case TopTabsBar.TAB_CONTROL:
+               Main.instance.showScreen(Screen.MAIN_SCREEN);
+               break;
+            case TopTabsBar.TAB_SQUAD:
+               Main.instance.showScreen(Screen.CLUB_SCREEN);
+               break;
+            case TopTabsBar.TAB_TRANSFERS:
+               Main.instance.showScreen(Screen.TRANSFERS_SCREEN);
+               break;
+            case TopTabsBar.TAB_ACADEMY:
+               Main.instance.showScreen(Screen.ACADEMY_SCREEN);
+               break;
+            case TopTabsBar.TAB_OFFICE:
+               Main.instance.showScreen(Screen.OFFICE_SCREEN);
          }
       }
       
       override protected function clickButtonHandler(param1:Event) : void
       {
-         var _loc2_:Array = null;
-         var _loc3_:ModalDialogue = null;
          switch(param1.target)
          {
-            case this.optionButton:
-               _loc2_ = [CopyManager.getCopy("resumeGame"),CopyManager.getCopy("quitGame")];
-               _loc3_ = new ModalDialogue(CopyManager.getCopy("options"),"",_loc2_);
-               Main.instance.addModal(_loc3_);
-               _loc3_.addEventListener(ModalDialogue.MAKE_CHOICE,this.madeOptionsChoiceHandler);
-               break;
-            case this.clubButton:
-               Main.instance.showScreen(Screen.CLUB_SCREEN);
-               break;
-            case this.managerButton:
-               Main.instance.showScreen(Screen.MANAGERS_SCREEN);
-               break;
             case this.continueButton:
                GameEngine.nextRound(Main.currentGame);
-               break;
-            case this.nextSeasonButton:
-               Main.instance.showScreen(Screen.END_SEASON);
-         }
-         if(param1.target == this.showTableButton)
-         {
-            if(this.leaguePanel.visible)
-            {
-               this.leaguePanel.visible = false;
-               this.nextPanel.visible = true;
-               this.showTableButton.setText(CopyManager.getCopy("leagueTable"));
-            }
-            else
-            {
-               this.leaguePanel.visible = true;
-               this.nextPanel.visible = false;
-               this.showTableButton.setText(CopyManager.getCopy("upcomingMatches"));
-            }
-         }
-         else if(param1.target == this.nextButton)
-         {
-            GameEngine.nextRound(Main.currentGame);
          }
       }
    }
 }
-

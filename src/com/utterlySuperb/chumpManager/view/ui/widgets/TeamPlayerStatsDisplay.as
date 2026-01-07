@@ -102,7 +102,7 @@ package com.utterlySuperb.chumpManager.view.ui.widgets
             tf.htmlText = param1.squadNumber + "<br>" + param1.name + "<br>" + CopyManager.getPlayerPostionString(param1.positions) + "<br>";
             makeBars(param1);
             this.tf1.htmlText = CopyManager.getCopy("age") + ":" + param1.age;
-            this.tf1.htmlText += CopyManager.getCopy("estimatedValue") + ":&#60;" + CopyManager.getCurrency() + TextHelper.prettifyNumber(TransfersEngine.getEstimateTransfer(param1.transferValue));
+            this.tf1.htmlText += CopyManager.getCopy("estimatedValue") + ":" + CopyManager.getCurrency() + TextHelper.prettifyNumber(param1.transferValue);
             this.tf1.htmlText += "<br>" + CopyManager.getCopy("seasonStats");
             this.tf1.htmlText += CopyManager.getCopy("appearances") + param1.seasonStats[param1.seasonStats.length - 1].appearances;
             this.tf1.htmlText += CopyManager.getCopy("subAppearances") + param1.seasonStats[param1.seasonStats.length - 1].subsAppearances;

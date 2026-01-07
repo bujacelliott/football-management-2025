@@ -203,6 +203,24 @@ package com.utterlySuperb.ui
             this.scroller.setScrollerRange(this.maxHeight,this.holder);
          }
       }
+
+      public function setScrollPercent(param1:Number) : void
+      {
+         if(this.scroller)
+         {
+            this.scroller.setValue(param1);
+         }
+      }
+
+      public function isScrollable() : Boolean
+      {
+         return this.scroller != null;
+      }
+
+      public function getItems() : Array
+      {
+         return this.items;
+      }
       
       protected function addScroller() : void
       {

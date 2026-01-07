@@ -1,6 +1,7 @@
 package com.utterlySuperb.chumpManager.view.panels
 {
-   import com.utterlySuperb.chumpManager.engine.GameEngine;
+import com.utterlySuperb.chumpManager.engine.GameEngine;
+import com.utterlySuperb.chumpManager.engine.TransferBudgetHelper;
    import com.utterlySuperb.chumpManager.engine.TeamHelper;
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.model.dataObjects.Club;
@@ -57,13 +58,35 @@ package com.utterlySuperb.chumpManager.view.panels
       
       private const MAIN_X:int = 0;
       
-      private const MAIN_Y:int = 120;
+      private const MAIN_Y:int = 150;
       
       private const SIDE_SCALE:Number = 0.75;
       
-      private const SIDE_OFFSET_X:int = 200;
+      private const SIDE_OFFSET_X:int = 220;
       
-      private const SIDE_OFFSET_Y:int = 140;
+      private const SIDE_OFFSET_Y:int = 150;
+      
+      private const TEAM_BOX_W:int = 180;
+      
+      private const TEAM_BOX_H:int = 200;
+      
+      private const STATS_BOX_W:int = 360;
+      
+      private const STATS_BOX_H:int = 140;
+      
+      private var leftBox:BGPanel;
+      
+      private var centerBox:BGPanel;
+      
+      private var rightBox:BGPanel;
+      
+      private var statsBox:BGPanel;
+      
+      private var leftLabel:TextField;
+      
+      private var centerLabel:TextField;
+      
+      private var rightLabel:TextField;
       
       private var nextArrow:Sprite;
       
@@ -76,21 +99,54 @@ package com.utterlySuperb.chumpManager.view.panels
       
       override protected function init() : void
       {
-         makeBox(400,200,-200,250);
+         this.buildTeamBoxes();
+         this.statsBox = makeBox(this.STATS_BOX_W,this.STATS_BOX_H,-this.STATS_BOX_W / 2,380);
          this.infoTextField = new TextField();
          TextHelper.doTextField2(this.infoTextField,Styles.MAIN_FONT,18,16777215,{
             "multiline":true,
             "align":TextFormatAlign.CENTER
          });
-         this.infoTextField.x = -180;
-         this.infoTextField.y = 270;
-         this.infoTextField.width = 360;
+         this.infoTextField.x = -this.STATS_BOX_W / 2 + 10;
+         this.infoTextField.y = this.statsBox.y + 15;
+         this.infoTextField.width = this.STATS_BOX_W - 20;
          addChild(this.infoTextField);
          this.buildCountryGroups();
          this.buildCountryLeagueSelector();
          this.countryIndex = 0;
          this.leagueIndex = 0;
          this.showSelectedLeague();
+      }
+
+      private function buildTeamBoxes() : void
+      {
+         var _loc1_:int = this.MAIN_Y - 10;
+         this.centerBox = new BGPanel(this.TEAM_BOX_W,this.TEAM_BOX_H,16777215,0x0F3B2E,0.6,10);
+         this.centerBox.x = -this.TEAM_BOX_W / 2;
+         this.centerBox.y = _loc1_;
+         addChild(this.centerBox);
+         this.leftBox = new BGPanel(this.TEAM_BOX_W,this.TEAM_BOX_H,16777215,0x0F3B2E,0.6,10);
+         this.leftBox.x = -this.SIDE_OFFSET_X - this.TEAM_BOX_W / 2;
+         this.leftBox.y = _loc1_;
+         addChild(this.leftBox);
+         this.rightBox = new BGPanel(this.TEAM_BOX_W,this.TEAM_BOX_H,16777215,0x0F3B2E,0.6,10);
+         this.rightBox.x = this.SIDE_OFFSET_X - this.TEAM_BOX_W / 2;
+         this.rightBox.y = _loc1_;
+         addChild(this.rightBox);
+         this.centerLabel = this.makeBoxLabel("Chosen Team",this.centerBox.x,this.centerBox.y);
+         this.leftLabel = this.makeBoxLabel("Left Team",this.leftBox.x,this.leftBox.y);
+         this.rightLabel = this.makeBoxLabel("Right Team",this.rightBox.x,this.rightBox.y);
+      }
+
+      private function makeBoxLabel(param1:String, param2:int, param3:int) : TextField
+      {
+         var _loc4_:TextField = new TextField();
+         TextHelper.doTextField2(_loc4_,Styles.MAIN_FONT,14,16777215,{"align":TextFormatAlign.CENTER});
+         _loc4_.text = param1;
+         _loc4_.width = this.TEAM_BOX_W;
+         _loc4_.x = param2;
+         _loc4_.y = param3 + 6;
+         addChild(_loc4_);
+         return _loc4_;
       }
 
       private function buildCountryGroups() : void
@@ -202,11 +258,11 @@ package com.utterlySuperb.chumpManager.view.panels
             return;
          }
          var _loc1_:Object = this.countryGroups[this.countryIndex];
-         this.countryTextField.text = _loc1_.name;
+         this.countryTextField.text = "League: " + _loc1_.name;
          this.countryTextField.width = this.countryTextField.textWidth + 10;
          this.countryTextField.x = -this.countryTextField.width / 2;
          var _loc2_:League = _loc1_.leagues[this.leagueIndex];
-         this.leagueTextField.text = CopyManager.getCopy(_loc2_.name);
+         this.leagueTextField.text = "Division: " + CopyManager.getCopy(_loc2_.name);
          this.leagueTextField.width = this.leagueTextField.textWidth + 10;
          this.leagueTextField.x = -this.leagueTextField.width / 2;
          this.countryPrevArrow.x = this.countryTextField.x - 40;
@@ -346,33 +402,33 @@ package com.utterlySuperb.chumpManager.view.panels
          this.prevTeam.activate();
          this.nextTeam.activate();
          this.mainTeam.activate();
-         this.prevArrow = this.makeArrow(true);
-         this.nextArrow = this.makeArrow(false);
-         this.prevArrow.x = this.prevTeam.x - 40;
-         this.prevArrow.y = this.prevTeam.y + 40;
-         this.nextArrow.x = this.nextTeam.x + 40;
-         this.nextArrow.y = this.nextTeam.y + 40;
+         this.prevArrow = this.makeArrow(true,40);
+         this.nextArrow = this.makeArrow(false,40);
+         this.prevArrow.x = -Globals.GAME_WIDTH / 2 + 35;
+         this.prevArrow.y = this.MAIN_Y + 40;
+         this.nextArrow.x = Globals.GAME_WIDTH / 2 - 35;
+         this.nextArrow.y = this.MAIN_Y + 40;
          this.prevArrow.addEventListener(MouseEvent.CLICK,this.prevClub);
          this.nextArrow.addEventListener(MouseEvent.CLICK,this.nextClub);
          addChild(this.prevArrow);
          addChild(this.nextArrow);
       }
       
-      private function makeArrow(param1:Boolean) : Sprite
+      private function makeArrow(param1:Boolean, param2:int = 20) : Sprite
       {
          var _loc2_:Sprite = new Sprite();
          _loc2_.graphics.beginFill(16777215);
          if(param1)
          {
-            _loc2_.graphics.moveTo(20,0);
-            _loc2_.graphics.lineTo(0,20);
-            _loc2_.graphics.lineTo(20,40);
+            _loc2_.graphics.moveTo(param2,0);
+            _loc2_.graphics.lineTo(0,param2);
+            _loc2_.graphics.lineTo(param2,param2 * 2);
          }
          else
          {
             _loc2_.graphics.moveTo(0,0);
-            _loc2_.graphics.lineTo(20,20);
-            _loc2_.graphics.lineTo(0,40);
+            _loc2_.graphics.lineTo(param2,param2);
+            _loc2_.graphics.lineTo(0,param2 * 2);
          }
          _loc2_.graphics.endFill();
          _loc2_.buttonMode = true;
@@ -436,6 +492,8 @@ package com.utterlySuperb.chumpManager.view.panels
       private function selectTeamHandler(param1:Event) : void
       {
          var _loc2_:Club = null;
+         var _loc3_:int = 0;
+         var _loc4_:int = 0;
          if(param1.currentTarget == this.mainTeam || param1.currentTarget == this.nextTeam || param1.currentTarget == this.prevTeam)
          {
             _loc2_ = TeamButton(param1.currentTarget).club;
@@ -445,7 +503,7 @@ package com.utterlySuperb.chumpManager.view.panels
             _loc2_ = TeamButton(param1.target).club;
          }
          Main.currentGame.setPlayerclub(_loc2_);
-         var _loc3_:int = Main.currentGame.leagues.indexOf(this.league);
+         _loc3_ = Main.currentGame.leagues.indexOf(this.league);
          if(_loc3_ < 0 && this.league)
          {
             _loc3_ = 0;
@@ -459,6 +517,47 @@ package com.utterlySuperb.chumpManager.view.panels
             }
          }
          Main.currentGame.mainLeagueNum = _loc3_;
+         _loc4_ = TransferBudgetHelper.getBudget(this.league ? this.league.name : "",_loc2_.name);
+         if(_loc4_ <= 0)
+         {
+            _loc4_ = TransferBudgetHelper.getBudget(this.league ? this.league.name : "",_loc2_.shortName);
+         }
+         if(_loc4_ <= 0)
+         {
+            _loc4_ = TransferBudgetHelper.getBudget("Premier League",_loc2_.name);
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("Championship",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("League One",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("League Two",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("Bundesliga",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("La Liga",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("Serie A",_loc2_.name);
+            }
+            if(_loc4_ <= 0)
+            {
+               _loc4_ = TransferBudgetHelper.getBudget("Ligue 1",_loc2_.name);
+            }
+         }
+         if(_loc4_ > 0)
+         {
+            Main.currentGame.clubCash = _loc4_;
+         }
          GameEngine.initSeason(Main.currentGame);
       }
       

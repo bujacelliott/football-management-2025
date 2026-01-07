@@ -70,6 +70,8 @@ package com.utterlySuperb.chumpManager.engine
             _loc3_++;
          }
          _loc2_.goalsList = param1.goalsList;
+         _loc2_.assistsList = param1.assistsList;
+         _loc2_.transferHistory = param1.transferHistory;
          _loc2_.offSeasonNum = param1.offSeasonNum;
          _loc2_.clubCash = param1.clubCash;
          _loc2_.seasonNum = param1.seasonNum;
@@ -413,6 +415,8 @@ package com.utterlySuperb.chumpManager.engine
             _loc6_++;
          }
          _loc5_.goalsList = param1.goalsList;
+         _loc5_.assistsList = param1.assistsList ? param1.assistsList : {};
+         _loc5_.transferHistory = param1.transferHistory ? param1.transferHistory : [];
          _loc5_.offSeasonNum = param1.offSeasonNum;
          _loc5_.clubCash = param1.clubCash;
          _loc5_.seasonNum = param1.seasonNum;

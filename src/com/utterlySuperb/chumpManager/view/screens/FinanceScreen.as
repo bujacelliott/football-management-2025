@@ -18,7 +18,7 @@ package com.utterlySuperb.chumpManager.view.screens
          super();
          makeBackButton();
          makeHomeButton();
-         Main.instance.backOverride = Screen.MANAGERS_SCREEN;
+         Main.instance.backOverride = Screen.OFFICE_SCREEN;
          addStatus();
          var _loc1_:StatDisplayPanel = new StatDisplayPanel();
          _loc1_.x = Globals.MARGIN_X;
@@ -38,7 +38,7 @@ package com.utterlySuperb.chumpManager.view.screens
       
       override protected function clickButtonHandler(param1:Event) : void
       {
-         Main.instance.showScreen(Screen.MANAGERS_SCREEN);
+         Main.instance.showScreen(Screen.OFFICE_SCREEN);
       }
    }
 }

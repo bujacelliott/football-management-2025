@@ -1,63 +1,91 @@
 package com.utterlySuperb.chumpManager.view.screens.transfers
 {
-   import com.utterlySuperb.chumpManager.engine.GameEngine;
-   import com.utterlySuperb.chumpManager.model.CopyManager;
+   import com.utterlySuperb.chumpManager.view.panels.BGPanel;
+   import com.utterlySuperb.chumpManager.view.panels.TopTabsBar;
    import com.utterlySuperb.chumpManager.view.panels.universalPanels.StatusPanel;
    import com.utterlySuperb.chumpManager.view.screens.Screen;
    import com.utterlySuperb.chumpManager.view.ui.buttons.BigButton;
+   import com.utterlySuperb.events.IntEvent;
    import com.utterlySuperb.text.TextHelper;
    import flash.events.Event;
-   import flash.filters.DropShadowFilter;
-   import flash.filters.GlowFilter;
    import flash.text.TextField;
    
    public class TransfersScreen extends Screen
    {
       
+      private var tabs:TopTabsBar;
+      
       private var playerSearchBtn:BigButton;
       
       private var browseClubBtn:BigButton;
       
-      private var sellPlayerBtn:BigButton;
+      private var transferHub:BGPanel;
       
-      private var backBtn2:BigButton;
+      private var transferHistoryBtn:BigButton;
+      
+      private var topTransfersBtn:BigButton;
       
       public function TransfersScreen()
       {
          super();
-         makeBackButton();
-         makeHomeButton();
-         Main.instance.backOverride = Screen.MANAGERS_SCREEN;
-         var _loc1_:TextField = new TextField();
-         TextHelper.doTextField2(_loc1_,Styles.HEADER_FONT,20,16777215);
-         _loc1_.htmlText = GameEngine.canTransfer(Main.currentGame) ? CopyManager.getCopy("transferOpen") : CopyManager.getCopy("transferClosed");
-         _loc1_.x = (Globals.GAME_WIDTH - _loc1_.textWidth) / 2;
-         _loc1_.y = Globals.belowStatus;
+         var _loc1_:StatusPanel = new StatusPanel();
+         _loc1_.y = Globals.MARGIN_Y;
          addChild(_loc1_);
-         this.playerSearchBtn = new BigButton(CopyManager.getCopy("playerSearch"),CopyManager.getCopy("playerSearchInfo"));
-         this.playerSearchBtn.x = Globals.MARGIN_X;
-         this.playerSearchBtn.y = _loc1_.y + 50;
+         this.tabs = new TopTabsBar(TopTabsBar.TAB_TRANSFERS);
+         this.tabs.addEventListener(TopTabsBar.TAB_CLICK,this.tabClickHandler);
+         this.tabs.y = _loc1_.y + StatusPanel.HEIGHT + 6;
+         addChild(this.tabs);
+         var _loc2_:int = this.tabs.y + 40;
+         var _loc3_:int = Globals.MARGIN_X;
+         this.playerSearchBtn = new BigButton("Search for a player","",240,70);
+         this.playerSearchBtn.x = _loc3_;
+         this.playerSearchBtn.y = _loc2_;
          addMadeButton(this.playerSearchBtn);
-         this.browseClubBtn = new BigButton(CopyManager.getCopy("browseClubs"),CopyManager.getCopy("browseClubsInfo"));
-         this.browseClubBtn.x = Globals.MARGIN_X;
-         this.browseClubBtn.y = this.playerSearchBtn.y + 100;
+         this.browseClubBtn = new BigButton("Browse a club's player","",240,70);
+         this.browseClubBtn.x = _loc3_;
+         this.browseClubBtn.y = this.playerSearchBtn.y + 85;
          addMadeButton(this.browseClubBtn);
-         this.sellPlayerBtn = new BigButton(CopyManager.getCopy("sellPlayer"),CopyManager.getCopy("sellPlayerInfo"));
-         this.sellPlayerBtn.x = Globals.MARGIN_X;
-         this.sellPlayerBtn.y = this.browseClubBtn.y + 100;
-         addMadeButton(this.sellPlayerBtn);
-         this.backBtn2 = new BigButton(CopyManager.getCopy("back"),CopyManager.getCopy("backToManagerInfo"));
-         this.backBtn2.x = Globals.MARGIN_X;
-         this.backBtn2.y = this.sellPlayerBtn.y + 100;
-         addMadeButton(this.backBtn2);
-         var _loc2_:TransferImage = new TransferImage();
-         _loc2_.x = 410;
-         _loc2_.y = this.playerSearchBtn.y;
-         addChild(_loc2_);
-         _loc2_.filters = [new GlowFilter(16777215,1,2,2,5,3),new DropShadowFilter(4,45,0,0.5)];
+         this.transferHub = new BGPanel(260,260,16777215,0x0F3B2E,0.9,10);
+         this.transferHub.x = _loc3_ + 260;
+         this.transferHub.y = _loc2_;
+         addChild(this.transferHub);
+         var _loc4_:TextField = new TextField();
+         TextHelper.doTextField2(_loc4_,Styles.HEADER_FONT,18,16777215);
+         _loc4_.text = "Transfer hub";
+         _loc4_.x = this.transferHub.x + (this.transferHub.width - _loc4_.textWidth) / 2;
+         _loc4_.y = this.transferHub.y + 10;
+         addChild(_loc4_);
+         var _loc5_:int = this.transferHub.x + this.transferHub.width + 20;
+         this.transferHistoryBtn = new BigButton("Transfer History","",220,70);
+         this.transferHistoryBtn.x = _loc5_;
+         this.transferHistoryBtn.y = _loc2_;
+         addMadeButton(this.transferHistoryBtn);
+         this.topTransfersBtn = new BigButton("Top Transfers","",220,70);
+         this.topTransfersBtn.x = _loc5_;
+         this.topTransfersBtn.y = this.transferHistoryBtn.y + 85;
+         addMadeButton(this.topTransfersBtn);
          enabled = true;
-         var _loc3_:StatusPanel = new StatusPanel();
-         addChild(_loc3_);
+      }
+      
+      private function tabClickHandler(param1:IntEvent) : void
+      {
+         switch(param1.num)
+         {
+            case TopTabsBar.TAB_CONTROL:
+               Main.instance.showScreen(Screen.MAIN_SCREEN);
+               break;
+            case TopTabsBar.TAB_SQUAD:
+               Main.instance.showScreen(Screen.CLUB_SCREEN);
+               break;
+            case TopTabsBar.TAB_TRANSFERS:
+               Main.instance.showScreen(Screen.TRANSFERS_SCREEN);
+               break;
+            case TopTabsBar.TAB_ACADEMY:
+               Main.instance.showScreen(Screen.ACADEMY_SCREEN);
+               break;
+            case TopTabsBar.TAB_OFFICE:
+               Main.instance.showScreen(Screen.OFFICE_SCREEN);
+         }
       }
       
       override protected function clickButtonHandler(param1:Event) : void
@@ -69,14 +97,7 @@ package com.utterlySuperb.chumpManager.view.screens.transfers
                break;
             case this.browseClubBtn:
                Main.instance.showScreen(Screen.BROWSE_CLUBS_SCREEN);
-               break;
-            case this.sellPlayerBtn:
-               Main.instance.showScreen(Screen.SELL_PLAYERS_SCREEN);
-               break;
-            case this.backBtn2:
-               Main.instance.showScreen(Screen.MANAGERS_SCREEN);
          }
       }
    }
 }
-

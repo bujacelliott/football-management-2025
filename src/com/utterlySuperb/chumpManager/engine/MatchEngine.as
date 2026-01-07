@@ -1231,7 +1231,7 @@ package com.utterlySuperb.chumpManager.engine
       public static function doAISubstitutions(param1:MatchDetails) : void
       {
          var _loc2_:MatchTeamDetails = param1.team0.club == Main.currentGame.playerClub ? param1.team1 : param1.team0;
-         if(_loc2_.subs.length == 3)
+         if(_loc2_.subs.length == 5)
          {
             return;
          }
@@ -1254,7 +1254,7 @@ package com.utterlySuperb.chumpManager.engine
          _loc6_ = 0;
          while(_loc6_ < _loc3_.length)
          {
-            if(_loc2_.subs.length == 3)
+            if(_loc2_.subs.length == 5)
             {
                break;
             }
@@ -1265,7 +1265,7 @@ package com.utterlySuperb.chumpManager.engine
          _loc6_ = 0;
          while(_loc6_ < _loc4_.length)
          {
-            if(_loc2_.subs.length == 3)
+            if(_loc2_.subs.length == 5)
             {
                break;
             }
@@ -1335,10 +1335,14 @@ package com.utterlySuperb.chumpManager.engine
          MatchHelper.getTeamKeeper(param1.teamWithoutBall).addToRating(-10);
          _loc2_.addToRating(90);
          _loc2_.addToRating(90);
-         if(param1.lastPasser)
+         if(param1.lastPasser && param1.lastPasser != _loc2_)
          {
             ++param1.lastPasser.assists;
-            _loc2_.addToRating(50);
+            param1.lastPasser.addToRating(50);
+            if(isLeagueMatch(param1))
+            {
+               Main.currentGame.addPlayerAssist(param1.lastPasser.player.id);
+            }
          }
          if(param1.playerIsInTeam0(_loc2_))
          {
@@ -1358,7 +1362,10 @@ package com.utterlySuperb.chumpManager.engine
             _loc3_.team = param1.hasBall.team.num;
             param1.messages.push(_loc3_);
          }
-         Main.currentGame.addPlayerGoal(_loc2_.player.id);
+         if(isLeagueMatch(param1))
+         {
+            Main.currentGame.addPlayerGoal(_loc2_.player.id);
+         }
          param1.teamToRestart = param1.playerIsInTeam0(_loc2_) ? param1.team1 : param1.team0;
          param1.gameBreak = GOAL;
          BudgetEventProxy.dispatchEvent(MATCH_EVENT,{"event":GOAL});
@@ -1476,8 +1483,9 @@ package com.utterlySuperb.chumpManager.engine
                param1.club1Score = Math.ceil(param1.club1Score * Math.random());
             }
          }
-         param1.club0Scorers = makeScorers(param1.club0Score,_loc4_);
-         param1.club1Scorers = makeScorers(param1.club1Score,_loc5_);
+         var _loc20_:Boolean = param1.competition is com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
+         param1.club0Scorers = makeScorers(param1.club0Score,_loc4_,false,_loc20_);
+         param1.club1Scorers = makeScorers(param1.club1Score,_loc5_,false,_loc20_);
          param1.workOut();
          if(param1.isDraw())
          {
@@ -1493,14 +1501,14 @@ package com.utterlySuperb.chumpManager.engine
                   param1.workOutPenalties();
                }
                _loc12_ = param1.club0Score > 0 ? ", " : "";
-               param1.club0Scorers = param1.club0Scorers + _loc12_ + makeScorers(param1.club0ETScore,_loc4_,true);
+               param1.club0Scorers = param1.club0Scorers + _loc12_ + makeScorers(param1.club0ETScore,_loc4_,true,_loc20_);
                _loc12_ = param1.club1Score > 0 ? ", " : "";
-               param1.club1Scorers = param1.club1Scorers + _loc12_ + makeScorers(param1.club1ETScore,_loc5_,true);
+               param1.club1Scorers = param1.club1Scorers + _loc12_ + makeScorers(param1.club1ETScore,_loc5_,true,_loc20_);
             }
          }
       }
       
-      private static function makeScorers(param1:int, param2:Array, param3:Boolean = false) : String
+      private static function makeScorers(param1:int, param2:Array, param3:Boolean = false, param4:Boolean = false) : String
       {
          var _loc12_:int = 0;
          var _loc13_:Player = null;
@@ -1525,7 +1533,15 @@ package com.utterlySuperb.chumpManager.engine
          while(_loc11_ < _loc10_.length)
          {
             _loc13_ = MatchHelper.getLikelyScorer(param2);
-            Main.currentGame.addPlayerGoal(_loc13_.id);
+            if(param4)
+            {
+               Main.currentGame.addPlayerGoal(_loc13_.id);
+               var _loc16_:Player = MatchHelper.getLikelyAssist(param2,_loc13_);
+               if(_loc16_)
+               {
+                  Main.currentGame.addPlayerAssist(_loc16_.id);
+               }
+            }
             _loc14_ = -1;
             _loc15_ = 0;
             while(_loc15_ < _loc5_.length)
@@ -1552,7 +1568,12 @@ package com.utterlySuperb.chumpManager.engine
             _loc4_ += _loc11_ > 0 ? ", " + _loc5_[_loc11_] : _loc5_[_loc11_];
             _loc11_++;
          }
-         return _loc4_;
+        return _loc4_;
+     }
+
+      private static function isLeagueMatch(param1:MatchDetails) : Boolean
+      {
+         return param1 && param1.match && param1.match.competition is com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
       }
       
       public static function doPenalties(param1:Match) : void

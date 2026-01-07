@@ -53,10 +53,14 @@ package com.utterlySuperb.chumpManager.model.dataObjects
       public var otherLeagues:Array;
       
       public var goalsList:Object;
+
+      public var assistsList:Object;
       
       public var fixtureList:FixturesList;
       
       public var offSeasonNum:int;
+
+      public var transferHistory:Array;
       
       public var clubCash:int;
       
@@ -97,6 +101,8 @@ package com.utterlySuperb.chumpManager.model.dataObjects
          this.otherLeagues = new Array();
          this.userMessages = new Array();
          this.goalsList = {};
+         this.assistsList = {};
+         this.transferHistory = [];
          this.seasonNum = 0;
       }
 
@@ -261,6 +267,18 @@ package com.utterlySuperb.chumpManager.model.dataObjects
          else
          {
             this.goalsList[param1] = 1;
+         }
+      }
+
+      public function addPlayerAssist(param1:String) : void
+      {
+         if(this.assistsList[param1])
+         {
+            ++this.assistsList[param1];
+         }
+         else
+         {
+            this.assistsList[param1] = 1;
          }
       }
    }

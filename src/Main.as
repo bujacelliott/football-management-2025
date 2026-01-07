@@ -6,6 +6,7 @@ package
    import com.greensock.plugins.ColorTransformPlugin;
    import com.greensock.plugins.TintPlugin;
    import com.greensock.plugins.TweenPlugin;
+   import com.utterlySuperb.chumpManager.engine.TransfersEngine;
    import com.utterlySuperb.chumpManager.engine.SavesManager;
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.model.dataObjects.Game;
@@ -29,6 +30,8 @@ package
    {
       
       private static var _instance:Main;
+      
+      private static var _forceTransfersEngine:Class = TransfersEngine;
       
       public static var currentGame:Game;
       

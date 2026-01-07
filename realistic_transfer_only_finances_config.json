@@ -1,0 +1,232 @@
+{
+  "meta": {
+    "name": "RealisticTransferOnlyFinances",
+    "version": "1.0.0",
+    "created_utc": "2026-01-05T19:41:42Z",
+    "currency": "GBP",
+    "assumptions": [
+      "All income earned is added to transfer budget (no wages system).",
+      "Match income is modeled as guaranteed league revenue + small result bonuses.",
+      "Bigger clubs earn more per match via a market-size multiplier derived from club budget vs league median."
+    ]
+  },
+  "engine": {
+    "match_income_model": {
+      "type": "guaranteed_plus_result_bonus",
+      "formula": "match_income = guaranteed_fee * market_multiplier + result_bonus",
+      "result_bonus": {
+        "win": "win_bonus",
+        "draw": "draw_bonus",
+        "loss": 0
+      },
+      "market_multiplier": {
+        "type": "sqrt_budget_over_league_median",
+        "input_budget_field": "transfer_budget",
+        "league_median_source": "median_of_all_club_transfer_budgets_in_league_at_season_start",
+        "clamp_min": 0.75,
+        "clamp_max": 1.6,
+        "formula": "market_multiplier = clamp(min, max, sqrt(club_budget / league_median_budget))"
+      }
+    },
+    "season_budget_update": {
+      "type": "carryover_of_earnings_to_next_season_budget",
+      "carryover_rate": 1.0,
+      "formula": "next_season_transfer_budget = base_budget_next_season + carryover_rate * season_earnings",
+      "notes": "Set carryover_rate < 1.0 if you want to slow inflation (e.g., 0.8)."
+    }
+  },
+  "leagues": {
+    "Premier League": {
+      "teams": 20,
+      "league_matches_per_team": 38,
+      "per_match": {
+        "guaranteed_fee": 1600000,
+        "win_bonus": 450000,
+        "draw_bonus": 180000
+      },
+      "end_of_season_prize": {
+        "min": 18000000,
+        "max": 120000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 1
+    },
+    "Championship": {
+      "teams": 24,
+      "league_matches_per_team": 46,
+      "per_match": {
+        "guaranteed_fee": 280000,
+        "win_bonus": 80000,
+        "draw_bonus": 30000
+      },
+      "end_of_season_prize": {
+        "min": 4000000,
+        "max": 28000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 2
+    },
+    "League One": {
+      "teams": 24,
+      "league_matches_per_team": 46,
+      "per_match": {
+        "guaranteed_fee": 85000,
+        "win_bonus": 25000,
+        "draw_bonus": 10000
+      },
+      "end_of_season_prize": {
+        "min": 1200000,
+        "max": 8000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 3
+    },
+    "League Two": {
+      "teams": 24,
+      "league_matches_per_team": 46,
+      "per_match": {
+        "guaranteed_fee": 55000,
+        "win_bonus": 16000,
+        "draw_bonus": 6000
+      },
+      "end_of_season_prize": {
+        "min": 900000,
+        "max": 6000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 4
+    },
+    "La Liga": {
+      "teams": 20,
+      "league_matches_per_team": 38,
+      "per_match": {
+        "guaranteed_fee": 1050000,
+        "win_bonus": 300000,
+        "draw_bonus": 120000
+      },
+      "end_of_season_prize": {
+        "min": 14000000,
+        "max": 90000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 5
+    },
+    "Ligue 1": {
+      "teams": 18,
+      "league_matches_per_team": 34,
+      "per_match": {
+        "guaranteed_fee": 800000,
+        "win_bonus": 230000,
+        "draw_bonus": 100000
+      },
+      "end_of_season_prize": {
+        "min": 10000000,
+        "max": 65000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 6
+    },
+    "Serie A": {
+      "teams": 20,
+      "league_matches_per_team": 38,
+      "per_match": {
+        "guaranteed_fee": 950000,
+        "win_bonus": 270000,
+        "draw_bonus": 110000
+      },
+      "end_of_season_prize": {
+        "min": 12000000,
+        "max": 80000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 7
+    },
+    "Bundesliga": {
+      "teams": 18,
+      "league_matches_per_team": 34,
+      "per_match": {
+        "guaranteed_fee": 1100000,
+        "win_bonus": 300000,
+        "draw_bonus": 120000
+      },
+      "end_of_season_prize": {
+        "min": 16000000,
+        "max": 95000000,
+        "distribution": "linear_by_position"
+      },
+      "order": 8
+    }
+  },
+  "competitions": {
+    "FA Cup": {
+      "type": "knockout",
+      "notes": "Upset-friendly: lower leagues can earn meaningful money from progression.",
+      "base_round_payout_by_league": {
+        "Premier League": 250000,
+        "Championship": 100000,
+        "League One": 40000,
+        "League Two": 30000,
+        "La Liga": 250000,
+        "Ligue 1": 250000,
+        "Serie A": 250000,
+        "Bundesliga": 250000
+      },
+      "round_multiplier_each_win": 1.5,
+      "winner_bonus_by_league": {
+        "Premier League": 8000000,
+        "Championship": 4000000,
+        "League One": 2500000,
+        "League Two": 2000000,
+        "La Liga": 7000000,
+        "Ligue 1": 6500000,
+        "Serie A": 7000000,
+        "Bundesliga": 7000000
+      }
+    },
+    "EFL Cup": {
+      "type": "knockout",
+      "base_round_payout_by_league": {
+        "Premier League": 120000,
+        "Championship": 50000,
+        "League One": 20000,
+        "League Two": 20000
+      },
+      "round_multiplier_each_win": 1.4,
+      "winner_bonus_by_league": {
+        "Premier League": 4000000,
+        "Championship": 2000000,
+        "League One": 1200000,
+        "League Two": 1000000
+      }
+    },
+    "UEFA Champions League": {
+      "type": "group_plus_knockout",
+      "group_stage": {
+        "participation_bonus": 18000000,
+        "per_match": {
+          "guaranteed_fee": 3000000,
+          "win_bonus": 1600000,
+          "draw_bonus": 600000
+        }
+      },
+      "knockout_bonuses": {
+        "round_of_16": 10000000,
+        "quarter_final": 12000000,
+        "semi_final": 15000000,
+        "runner_up": 18000000,
+        "winner": 22000000
+      },
+      "notes": "Apply market multiplier only if you want extra realism; otherwise keep UCL payouts fixed."
+    }
+  },
+  "implementation_notes_for_codex": [
+    "Load this JSON.",
+    "On season start, compute league median transfer budget per league from club budgets.",
+    "Per match: for each club, market_multiplier = clamp(0.75,1.60,sqrt(club_budget/league_median)).",
+    "Per match income: guaranteed_fee*market_multiplier + (win_bonus/draw_bonus/0).",
+    "Season end prize: linear between min and max based on finishing position.",
+    "Cup payouts: on each win/advance, pay base_round_payout * (round_multiplier_each_win^(round_index_from_start)). Then add winner_bonus at the end.",
+    "UCL: add participation bonus at group start, then per-match income, then knockout bonuses.",
+    "Next season budget: add carryover_rate * season_earnings (carryover_rate defaults to 1.0)."
+  ]
+}

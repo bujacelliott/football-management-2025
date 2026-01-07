@@ -32,6 +32,10 @@ package com.utterlySuperb.chumpManager.engine
       
       private static var POS_SCORES:Array = [1,0.8,0.7,0.5,0.4,0.6,0.1,0.3,0.4,0.05];
       
+      private static var ASSIST_POS_SCORES:Array = [0.7,1.1,1.2,1.0,0.9,1.1,0.7,0.6,0.8,0.2];
+      
+      private static const MIN_PROB_ASSIST:Number = 0.3;
+      
       public function MatchHelper()
       {
          super();
@@ -778,6 +782,51 @@ package com.utterlySuperb.chumpManager.engine
          }
          return param1[10];
       }
+
+      public static function getLikelyAssist(param1:Array, param2:Player = null) : Player
+      {
+         var _loc5_:Number = NaN;
+         var _loc2_:Number = 0;
+         var _loc3_:Array = new Array();
+         if(Math.random() < MIN_PROB_ASSIST)
+         {
+            return null;
+         }
+         var _loc4_:int = 1;
+         while(_loc4_ < param1.length)
+         {
+            if(param1[_loc4_].isKeeper() || param2 && param1[_loc4_] == param2)
+            {
+               _loc3_.push(_loc2_);
+               _loc4_++;
+               continue;
+            }
+            _loc5_ = param1[_loc4_].passing + param1[_loc4_].crossing * 0.8 + param1[_loc4_].creativity * 0.5 + param1[_loc4_].heading * 0.3 + param1[_loc4_].dribbling * 0.3 + param1[_loc4_].speed * 0.1;
+            if(_loc4_ > 10)
+            {
+               _loc5_ *= 0.3;
+            }
+            _loc5_ = Math.pow(_loc5_,0.8) * getPositionAssistFact(param1[_loc4_].positions);
+            _loc2_ += _loc5_;
+            _loc3_.push(_loc2_);
+            _loc4_++;
+         }
+         if(_loc2_ == 0)
+         {
+            return null;
+         }
+         _loc5_ = Math.random() * _loc2_;
+         _loc4_ = 0;
+         while(_loc4_ < _loc3_.length)
+         {
+            if(_loc5_ < _loc3_[_loc4_])
+            {
+               return param1[_loc4_ + 1];
+            }
+            _loc4_++;
+         }
+         return null;
+      }
       
       private static function getPositionScoreFact(param1:String) : Number
       {
@@ -788,6 +837,21 @@ package com.utterlySuperb.chumpManager.engine
          while(_loc5_ < _loc3_.length)
          {
             _loc2_ += POS_SCORES[Player.POSITIONS.indexOf(_loc3_[_loc5_])];
+            _loc5_++;
+         }
+         return _loc2_ / _loc3_.length;
+      }
+      
+      private static function getPositionAssistFact(param1:String) : Number
+      {
+         var _loc2_:Number = 0;
+         var _loc3_:Array = param1.split("-");
+         var _loc4_:int = 0;
+         var _loc5_:int = 0;
+         while(_loc5_ < _loc3_.length)
+         {
+            _loc4_ = Player.POSITIONS.indexOf(_loc3_[_loc5_]);
+            _loc2_ += _loc4_ >= 0 ? ASSIST_POS_SCORES[_loc4_] : 0.6;
             _loc5_++;
          }
          return _loc2_ / _loc3_.length;

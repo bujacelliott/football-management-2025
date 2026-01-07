@@ -28,7 +28,7 @@ package com.utterlySuperb.chumpManager.engine
          var _loc2_:SharedObject = null;
          games = new Array();
          var _loc1_:int = 0;
-         while(_loc1_ < 3)
+         while(_loc1_ < 6)
          {
             _loc2_ = SharedObject.getLocal("chumpManager" + _loc1_);
             if(_loc2_.data.game)
@@ -43,7 +43,7 @@ package com.utterlySuperb.chumpManager.engine
       {
          var _loc2_:SharedObject = null;
          var _loc1_:int = 0;
-         while(_loc1_ < 3)
+         while(_loc1_ < 6)
          {
             _loc2_ = SharedObject.getLocal("chumpManager" + _loc1_);
             _loc2_.clear();

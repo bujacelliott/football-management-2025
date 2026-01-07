@@ -468,7 +468,7 @@ package com.utterlySuperb.chumpManager.model
 	<phrase id="all"><![CDATA[All]]></phrase>
 	<phrase id="noClub"><![CDATA[No club]]></phrase>
 	<phrase id="squadLimitHeader"><![CDATA[Squad limit reached]]></phrase>
-	<phrase id="squadLimitCopy"><![CDATA[You have reached the squad limit of 30 players. If you want to sign this player you will need to release or sell and existing player.]]></phrase>
+	<phrase id="squadLimitCopy"><![CDATA[You have reached the squad limit of 52 players. If you want to sign this player you will need to release or sell and existing player.]]></phrase>
 	<phrase id="showClubPlayers"><![CDATA[Show players from:]]></phrase>
 	<phrase id="releaseInfo"><![CDATA[(Removes a player from your squad to free up squad spaces)]]></phrase>
 	<phrase id="sellInfo"><![CDATA[(Cashing in will sell for less than a bid out of nowhere)]]></phrase>

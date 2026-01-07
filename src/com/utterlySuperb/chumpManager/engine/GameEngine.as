@@ -12,6 +12,7 @@ package com.utterlySuperb.chumpManager.engine
    import com.utterlySuperb.chumpManager.model.dataObjects.competitions.League;
    import com.utterlySuperb.chumpManager.model.dataObjects.matches.Match;
    import com.utterlySuperb.chumpManager.model.dataObjects.matches.MatchPlayerDetails;
+   import com.utterlySuperb.chumpManager.engine.FinanceConfigHelper;
    import com.utterlySuperb.chumpManager.view.modals.FeedbackPanel;
    import com.utterlySuperb.chumpManager.view.modals.PleaseWaitModal;
    import com.utterlySuperb.chumpManager.view.screens.Screen;
@@ -81,6 +82,7 @@ package com.utterlySuperb.chumpManager.engine
          _loc2_.leagues[5] = makeLaLiga();
          _loc2_.leagues[6] = makeBundesliga();
          _loc2_.leagues[7] = makeLigue1();
+         markAllClubsCore(_loc2_);
          if(_loc2_.leagues[4])
          {
             _loc2_.leagues[4].numInEuropeanCup = 4;
@@ -103,6 +105,25 @@ package com.utterlySuperb.chumpManager.engine
          }
          BudgetEventProxy.dispatchEvent(GAME_MADE,null);
          return _loc2_;
+      }
+
+      private static function markAllClubsCore(param1:Game) : void
+      {
+         var _loc2_:int = 0;
+         var _loc3_:int = 0;
+         while(_loc2_ < param1.leagues.length)
+         {
+            if(param1.leagues[_loc2_])
+            {
+               _loc3_ = 0;
+               while(_loc3_ < param1.leagues[_loc2_].entrants.length)
+               {
+                  param1.leagues[_loc2_].entrants[_loc3_].club.isCore = true;
+                  _loc3_++;
+               }
+            }
+            _loc2_++;
+         }
       }
       
       public static function makeStaticInfo() : void
@@ -6209,6 +6230,8 @@ package com.utterlySuperb.chumpManager.engine
             _loc2_.fixtureList.setNextFixtures(_loc2_.weekNum);
          }
          _loc2_.goalsList = {};
+         _loc2_.assistsList = {};
+         FinanceConfigHelper.applyUclParticipationBonus(_loc2_);
          doRoundUpdates(INIT_SEASON);
          Main.instance.showScreen(Screen.MAIN_SCREEN);
       }
@@ -6440,8 +6463,7 @@ package com.utterlySuperb.chumpManager.engine
             param1.cupWinners.push(param1.fixtureList.cups[_loc3_].entrants[0].club);
             _loc3_++;
          }
-         var _loc4_:int = GameHelper.getMeritPayment();
-         param1.clubCash += _loc4_;
+         FinanceConfigHelper.applySeasonPrize(param1);
          _loc3_ = 0;
          while(_loc3_ < _loc2_.length)
          {

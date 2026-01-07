@@ -78,7 +78,7 @@ package com.utterlySuperb.chumpManager.view.screens.transfers
                }
                else
                {
-                  if(Main.currentGame.playerClub.players.length + Main.currentGame.playerOffers.length >= 30)
+                  if(Main.currentGame.playerClub.players.length + Main.currentGame.playerOffers.length >= 52)
                   {
                      _loc4_ = CopyManager.getCopy("squadLimitHeader");
                      _loc5_ = CopyManager.getCopy("squadLimitCopy");

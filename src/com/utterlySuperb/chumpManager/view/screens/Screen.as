@@ -3,9 +3,10 @@ package com.utterlySuperb.chumpManager.view.screens
    import com.utterlySuperb.chumpManager.engine.GameEngine;
    import com.utterlySuperb.chumpManager.model.CopyManager;
    import com.utterlySuperb.chumpManager.view.panels.universalPanels.StatusPanel;
-   import com.utterlySuperb.chumpManager.view.screens.transfers.PlayerSearchScreen;
-   import com.utterlySuperb.chumpManager.view.screens.transfers.SellPlayersScreen;
-   import com.utterlySuperb.chumpManager.view.screens.transfers.TransfersScreen;
+import com.utterlySuperb.chumpManager.view.screens.transfers.PlayerSearchScreen;
+import com.utterlySuperb.chumpManager.view.screens.transfers.SellPlayersScreen;
+import com.utterlySuperb.chumpManager.view.screens.transfers.TransfersScreen;
+import com.utterlySuperb.chumpManager.view.screens.AcademyScreen;
    import com.utterlySuperb.chumpManager.view.ui.buttons.ChumpButton;
    import com.utterlySuperb.chumpManager.view.ui.buttons.SmallButton;
    import com.utterlySuperb.events.IntEvent;
@@ -65,6 +66,10 @@ package com.utterlySuperb.chumpManager.view.screens
       public static const MANAGERS_SCREEN:String = "managersScreen";
       
       public static const COMPETITIONS_SCREEN:String = "competitionsScreen";
+
+      public static const ACADEMY_SCREEN:String = "academyScreen";
+
+      public static const OFFICE_SCREEN:String = "officeScreen";
       
       public static const PLAYER_SEARCH_SCREEN:String = "playerSearchScreen";
       
@@ -165,11 +170,17 @@ package com.utterlySuperb.chumpManager.view.screens
             case CLUB_SCREEN:
                _loc2_ = new ClubScreen();
                break;
-            case MANAGERS_SCREEN:
+           case MANAGERS_SCREEN:
+               _loc2_ = new ManagersScreen();
+               break;
+            case OFFICE_SCREEN:
                _loc2_ = new ManagersScreen();
                break;
             case COMPETITIONS_SCREEN:
                _loc2_ = new CompetitionsScreen();
+               break;
+            case ACADEMY_SCREEN:
+               _loc2_ = new AcademyScreen();
                break;
             case PLAYER_SEARCH_SCREEN:
                _loc2_ = new PlayerSearchScreen();

@@ -2,6 +2,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects.matches
 {
    import com.utterlySuperb.chumpManager.engine.MatchEngine;
    import com.utterlySuperb.chumpManager.engine.MatchHelper;
+   import com.utterlySuperb.chumpManager.engine.FinanceConfigHelper;
    import com.utterlySuperb.chumpManager.model.dataObjects.Formation;
    import com.utterlySuperb.chumpManager.model.dataObjects.Game;
    import com.utterlySuperb.chumpManager.model.dataObjects.Player;
@@ -297,15 +298,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects.matches
       
       public function getMatchIncome() : int
       {
-         if(this.match.isDraw())
-         {
-            return Game.CASH_PER_DRAW;
-         }
-         if(this.match.getWinner().club == Main.currentGame.playerClub)
-         {
-            return Game.CASH_PER_WIN;
-         }
-         return Game.CASH_PER_LOSS;
+         return FinanceConfigHelper.getMatchIncome(this);
       }
    }
 }

@@ -4,6 +4,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects.competitions
    import com.utterlySuperb.chumpManager.model.dataObjects.Club;
    import com.utterlySuperb.chumpManager.model.dataObjects.Message;
    import com.utterlySuperb.chumpManager.model.dataObjects.matches.Match;
+   import com.utterlySuperb.chumpManager.engine.FinanceConfigHelper;
    
    public class Cup extends Competition
    {
@@ -230,6 +231,8 @@ package com.utterlySuperb.chumpManager.model.dataObjects.competitions
                   _loc4_++;
                }
             }
+            FinanceConfigHelper.applyCupRoundPayout(this,_loc2_);
+            FinanceConfigHelper.applyUclRoundBonuses(this);
             if(entrants.length > 1)
             {
                this.makeNextMatches();
@@ -248,6 +251,7 @@ package com.utterlySuperb.chumpManager.model.dataObjects.competitions
                   _loc6_.body = CopyManager.getCopy("cupWonCopy").replace(CopyManager.CLUB_NAME_REPLACE,entrants[0].club.name).replace("{cupName}",CopyManager.getCopy(name));
                }
                Main.currentGame.userMessages.push(_loc6_);
+               FinanceConfigHelper.applyCupWinnerBonus(this);
             }
          }
       }
